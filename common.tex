@@ -1,0 +1,75 @@
+% vim: set fo=tcqw :
+\documentclass{article}
+\usepackage[latin1]{inputenc}
+\usepackage{cmbright}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,shadows,positioning}
+\begin{document}
+\pagestyle{empty}
+
+
+\tikzstyle{basic} = [rectangle, text width=3.5cm, text centered, rounded 
+corners, minimum height=1cm, line width=2pt]
+
+\colorlet{HEAD}{gray!50}
+\colorlet{old HEAD}{HEAD!50}
+\colorlet{branch}{orange!50}
+\colorlet{commit}{green!50}
+\colorlet{index}{blue!40}
+\colorlet{work}{red!40}
+
+\tikzstyle{history} = [basic, fill=commit!40, draw=commit]
+\tikzstyle{index} = [basic, fill=index!50, draw=index]
+\tikzstyle{work} = [basic, fill=work!50, draw=work]
+
+\tikzstyle{commit} = [history, text width=1.5cm, minimum height=.75cm]
+\tikzstyle{branch} = [commit, fill=branch!50, draw=branch]
+\tikzstyle{HEAD} = [commit, fill=HEAD!50, draw=HEAD]
+\tikzstyle{old HEAD} = [commit, fill=old HEAD!50, draw=old HEAD, text=black!30]
+\tikzstyle{old HEAD cross out} = [commit, shape=cross out, draw=black!20]
+
+\tikzstyle{line} = [->, >=stealth', line width=1pt, color=black!70, 
+auto=right, bend right]
+\tikzstyle{object line} = [->, >=stealth, line width=.9pt]
+\tikzstyle{commit line} = [object line, color=commit]
+\tikzstyle{HEAD line} = [object line, color=HEAD]
+\tikzstyle{old HEAD line} = [object line, color=old HEAD]
+\tikzstyle{branch line} = [object line, color=branch]
+\tikzstyle{cancel ref} = [cross out, draw=black!70, line width=1pt]
+
+\tikzstyle{cmd} = [color=black, font={\ttfamily}]
+
+\tikzstyle{main} = [node distance = 2cm, bend angle=35]
+
+\newcommand\historynode[1][0,0]{\node [history] (head) at (#1) {History};}
+\newcommand\indexnode[1][0,-1.5]{\node [index] (index) at (#1) {Stage (Index)};}
+\newcommand\worknode[1][0,-3]{\node [work] (work) at (#1) {Working Directory};}
+\newcommand\commitnodeA[1][-1,0]{\node [commit] (c1) at (#1) {3a985};}
+\newcommand\commitnodeB[1][ 1,0]{\node [commit] (c2) at (#1) {b10b9};}
+\newcommand\commitnodeC[1][ 3,0]{\node [commit] (c3) at (#1) {3325c};}
+\newcommand\commitnodeD[1][ 5,0]{\node [commit] (c4) at (#1) {947c3};}
+\newcommand\commits{\commitnodeA\commitnodeB\commitnodeC\commitnodeD
+    \path [commit line]
+        (c1) edge (c2)
+        (c2) edge (c3)
+        (c3) edge (c4)
+        (c4) edge (6.2,0)
+        ;}
+
+\def\ref [#1] "#2" : #3 -> #4;{
+    \node [#1, above=.4cm of #4] (#3) {#2};
+    \path [#1 line] (#3) edge (#4);
+    }
+\def\oldref [#1] "#2" : #3 -> #4;{
+    \ref [old #1] "#2" : old #3 -> #4;
+    \node [cancel ref, above=.2cm of #4, anchor=center] {};
+    }
+
+\def\branch #1 -> #2;{\ref [branch] "#1" : #1 -> #2;}
+\def\oldbranch #1 -> #2;{\oldref [branch] "#1" : #1 -> #2;}
+
+\def\HEAD -> #1;{\node [HEAD, above=0cm of #1] (HEAD) {HEAD};}
+\def\oldHEAD -> #1;{\node [old HEAD, above=0cm of #1] (old HEAD) {HEAD};}
+
+\def\detachedHEAD -> #1;{\ref [HEAD] "HEAD" : HEAD -> #1;}
+\def\olddetachedHEAD -> #1;{\oldref [HEAD] "HEAD" : HEAD -> #1;}

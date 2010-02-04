@@ -1,0 +1,23 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+
+\begin{tikzpicture}[main]
+    \commits
+    \indexnode
+    \worknode
+    \branch master -> c1;
+    \HEAD -> master;
+
+    \node [cmd] at (3.5, 1.75) {git checkout 3325c \emph{files}};
+    \node [cmd] at (3.5, 1.25) {\textrm{(or }git checkout HEAD\~{}2
+        \emph{files}\textrm{)}};
+
+    \path [line]
+        (c3) edge [bend left=30] (index)
+        (c3) edge [bend left=40] (work)
+        ;
+
+\end{tikzpicture}
+
+
+\end{document}

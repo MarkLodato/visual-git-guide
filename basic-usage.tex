@@ -1,0 +1,26 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+
+\begin{tikzpicture}[main]
+    \historynode
+    \indexnode[0,-2]
+    \worknode[0,-4]
+
+    \path [line]
+        (work.north east)
+            edge node[cmd] {git add \emph{files}}
+        (index.south east)
+        (index.north east)
+            edge node[cmd] {git commit}
+        (head.south east)
+        (index.south west)
+            edge node[cmd] {git checkout -- \emph{files}}
+        (work.north west)
+        (head.south west)
+            edge node[cmd] {git reset -- \emph{files}}
+        (index.north west)
+        ;
+\end{tikzpicture}
+
+
+\end{document}

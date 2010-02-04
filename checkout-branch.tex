@@ -1,0 +1,24 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+
+\begin{tikzpicture}[main]
+    \commits
+    \indexnode
+    \worknode
+    \branch master -> c1;
+    \branch maint -> c4;
+    \oldHEAD -> master;
+    \HEAD -> maint;
+
+    \node [cmd] at (2, 3) {git checkout maint};
+
+    \path [line]
+        (c4) edge [bend left=30] (index.east)
+        (c4) edge [bend left=45] (work.east)
+        (old HEAD) edge [dashed, bend left=10] (HEAD)
+        ;
+
+\end{tikzpicture}
+
+
+\end{document}
