@@ -5,7 +5,8 @@ all : basic-usage.pdf \
     checkout-after-detached.pdf \
     commit-master.pdf \
     commit-maint.pdf \
-    commit-detached.pdf
+    commit-detached.pdf \
+    reset-mixed.pdf
 
 %.pdf : %.tex common.tex
 	pdflatex $<
