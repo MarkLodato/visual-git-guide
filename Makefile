@@ -1,15 +1,16 @@
-all : basic-usage.pdf \
-    checkout-files.pdf \
+all : \
+    basic-usage.pdf \
+    checkout-after-detached.pdf \
     checkout-branch.pdf \
     checkout-detached.pdf \
-    checkout-after-detached.pdf \
-    commit-master.pdf \
-    commit-maint.pdf \
+    checkout-files.pdf \
     commit-detached.pdf \
-    reset-mixed-files.pdf \
+    commit-maint.pdf \
+    commit-master.pdf \
     reset-hard-files.pdf \
-    reset-mixed.pdf \
-    reset-hard.pdf
+    reset-hard.pdf \
+    reset-mixed-files.pdf \
+    reset-mixed.pdf
 
 %.pdf : %.tex common.tex
 	pdflatex $<
