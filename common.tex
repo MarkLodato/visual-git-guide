@@ -12,11 +12,12 @@
 corners, minimum height=1cm, line width=2pt]
 
 \colorlet{HEAD}{gray!50}
-\colorlet{old HEAD}{HEAD!50}
 \colorlet{branch}{orange!50}
 \colorlet{commit}{green!50}
 \colorlet{index}{blue!40}
 \colorlet{work}{red!40}
+\colorlet{old HEAD}{HEAD!50}
+\colorlet{old branch}{branch!50}
 
 \tikzstyle{history} = [basic, fill=commit!40, draw=commit]
 \tikzstyle{index} = [basic, fill=index!50, draw=index]
@@ -25,16 +26,17 @@ corners, minimum height=1cm, line width=2pt]
 \tikzstyle{commit} = [history, text width=1.5cm, minimum height=.75cm]
 \tikzstyle{branch} = [commit, fill=branch!50, draw=branch]
 \tikzstyle{HEAD} = [commit, fill=HEAD!50, draw=HEAD]
+\tikzstyle{old branch} = [commit, fill=old branch!50, draw=old branch, text=black!30]
 \tikzstyle{old HEAD} = [commit, fill=old HEAD!50, draw=old HEAD, text=black!30]
-\tikzstyle{old HEAD cross out} = [commit, shape=cross out, draw=black!20]
 
 \tikzstyle{line} = [->, >=stealth', line width=1pt, color=black!70, 
 auto=right, bend right]
 \tikzstyle{object line} = [->, >=stealth, line width=.9pt]
 \tikzstyle{commit line} = [object line, color=commit]
 \tikzstyle{HEAD line} = [object line, color=HEAD]
-\tikzstyle{old HEAD line} = [object line, color=old HEAD]
 \tikzstyle{branch line} = [object line, color=branch]
+\tikzstyle{old HEAD line} = [object line, color=old HEAD]
+\tikzstyle{old branch line} = [object line, color=old branch]
 \tikzstyle{cancel ref} = [cross out, draw=black!70, line width=1pt]
 
 \tikzstyle{cmd} = [color=black, font={\ttfamily}]
