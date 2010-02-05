@@ -4,8 +4,6 @@
 \usepackage{cmbright}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,shadows,positioning}
-\begin{document}
-\pagestyle{empty}
 
 \tikzset{basic/.style = {rectangle, text width=3.5cm, text centered,
 rounded corners, minimum height=1cm, line width=2pt}}
@@ -76,3 +74,6 @@ auto=right, bend right}}
 
 \def\detachedHEAD -> #1;{\ref [HEAD] "HEAD" : HEAD -> #1;}
 \def\olddetachedHEAD -> #1;{\oldref [HEAD] "HEAD" : HEAD -> #1;}
+
+\begin{document}
+\pagestyle{empty}
