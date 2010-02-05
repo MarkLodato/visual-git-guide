@@ -7,6 +7,7 @@ all : \
     commit-detached.pdf \
     commit-maint.pdf \
     commit-master.pdf \
+    diff.pdf \
     reset-hard-files.pdf \
     reset-hard.pdf \
     reset-mixed-files.pdf \
