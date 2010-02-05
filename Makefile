@@ -6,7 +6,8 @@ all : basic-usage.pdf \
     commit-master.pdf \
     commit-maint.pdf \
     commit-detached.pdf \
-    reset-mixed.pdf
+    reset-mixed.pdf \
+    reset-hard.pdf
 
 %.pdf : %.tex common.tex
 	pdflatex $<
