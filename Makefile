@@ -6,6 +6,8 @@ all : basic-usage.pdf \
     commit-master.pdf \
     commit-maint.pdf \
     commit-detached.pdf \
+    reset-mixed-files.pdf \
+    reset-hard-files.pdf \
     reset-mixed.pdf \
     reset-hard.pdf
 

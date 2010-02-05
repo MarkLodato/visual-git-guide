@@ -1,0 +1,19 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{tikzpicture}[main]
+    \commits
+    \indexnode
+    \worknode
+    \branch master -> c1;
+    \HEAD -> master;
+
+    \node [cmd, anchor=west] at (1, 2.1) {git reset};
+    \node [cmd, anchor=west] at (1, 1.6) {git reset -- \emph{files}};
+    \node [cmd, anchor=west] at (1, 1.1) {git reset -p};
+
+    \path [line]
+        (c1) edge [bend right=10] (index)
+        ;
+
+\end{tikzpicture}
+\end{document}
