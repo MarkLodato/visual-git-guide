@@ -1,3 +1,8 @@
+PDFLATEX = pdflatex
+PDFLATEX_FLAGS = -halt-on-error -file-line-error
+PDF2SVG = pdf2svg
+PDF2PNG = convert
+
 all : \
     basic-usage.pdf \
     checkout-after-detached.pdf \
@@ -14,10 +19,10 @@ all : \
     reset-mixed.pdf
 
 %.pdf : %.tex common.tex
-	pdflatex $<
+	$(PDFLATEX) $(PDFLATEX_FLAGS) $<
 
 %.svg : %.pdf
-	pdf2svg $^ $@
+	$(PDF2SVG) $^ $@
 
 %.png : %.pdf
-	convert $^ $@
+	$(PDF2PNG) $^ $@
