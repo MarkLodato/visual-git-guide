@@ -6,9 +6,6 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,shadows,positioning}
 
-\tikzset{basic/.style = {rectangle, text width=3.5cm, text centered,
-rounded corners, minimum height=1cm, line width=2pt}}
-
 \colorlet{HEAD}{gray!50}
 \colorlet{branch}{orange!50}
 \colorlet{commit}{green!50}
@@ -16,6 +13,9 @@ rounded corners, minimum height=1cm, line width=2pt}}
 \colorlet{work}{red!40}
 \colorlet{old HEAD}{HEAD!50}
 \colorlet{old branch}{branch!50}
+
+\tikzset{basic/.style = {rectangle, text width=3.5cm, text centered,
+rounded corners, minimum height=1cm, line width=2pt}}
 
 \tikzset{history/.style = {basic, fill=commit!40, draw=commit}}
 \tikzset{index/.style = {basic, fill=index!50, draw=index}}
