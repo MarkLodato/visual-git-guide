@@ -2,7 +2,7 @@
 \documentclass[12pt]{article}
 \usepackage[latin1]{inputenc}
 \usepackage{cmbright}
-\usepackage[screen,centering]{geometry}
+\usepackage[pdftex,margin=0pt,papersize={24cm,14cm},noheadfoot]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,shadows,positioning}
 
@@ -14,14 +14,14 @@
 \colorlet{old HEAD}{HEAD!50}
 \colorlet{old branch}{branch!50}
 
-\tikzset{basic/.style = {rectangle, text width=3.5cm, text centered,
-rounded corners, minimum height=1cm, line width=2pt}}
+\tikzset{basic/.style = {rectangle, text width=5cm, text centered,
+rounded corners, minimum height=1.5cm, line width=3pt}}
 
 \tikzset{history/.style = {basic, fill=commit!40, draw=commit}}
 \tikzset{index/.style = {basic, fill=index!50, draw=index}}
 \tikzset{work/.style = {basic, fill=work!50, draw=work}}
 
-\tikzset{commit/.style = {history, text width=1.5cm, minimum height=.75cm}}
+\tikzset{commit/.style = {history, text width=2cm, minimum height=1cm}}
 \tikzset{branch/.style = {commit, fill=branch!50, draw=branch}}
 \tikzset{HEAD/.style = {commit, fill=HEAD!50, draw=HEAD}}
 \tikzset{old branch/.style = {commit, fill=old branch!50, draw=old branch,
@@ -29,9 +29,9 @@ text=black!30}}
 \tikzset{old HEAD/.style = {commit, fill=old HEAD!50, draw=old HEAD,
 text=black!30}}
 
-\tikzset{line/.style = {->, >=stealth', line width=1pt, color=black!70,
+\tikzset{line/.style = {->, >=stealth', line width=1.5pt, color=black!70,
 auto=right, bend right}}
-\tikzset{object line/.style = {->, >=stealth, line width=.9pt}}
+\tikzset{object line/.style = {->, >=stealth, line width=1.5pt}}
 \tikzset{commit line/.style = {object line, color=commit}}
 \tikzset{HEAD line/.style = {object line, color=HEAD}}
 \tikzset{branch line/.style = {object line, color=branch}}
@@ -39,9 +39,10 @@ auto=right, bend right}}
 \tikzset{old branch line/.style = {object line, color=old branch}}
 \tikzset{cancel ref/.style = {cross out, draw=black!70, line width=1pt}}
 
-\tikzset{cmd/.style = {color=black, font={\ttfamily}}}
+\tikzset{cmd/.style = {color=black, font={\Large\ttfamily}}}
 
-\tikzset{main/.style = {node distance = 2cm, bend angle=35}}
+\tikzset{main/.style = {node distance=2cm, bend angle=35, font={\Large},
+    x=1.5cm, y=1.5cm}}
 
 \newcommand\boundingbox{\clip (-.5\textwidth,-.5\textheight) rectangle
     (.5\textwidth,.5\textheight);}
