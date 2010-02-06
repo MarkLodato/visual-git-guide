@@ -1,11 +1,12 @@
 % vim: set fo=tcqw :
 \input{common.tex}
+\geometry{papersize={21cm,9cm}}
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \historynode
-    \indexnode[0,-2]
-    \worknode[0,-4]
+    \historynode[0,2]
+    \indexnode[0,0]
+    \worknode[0,-2]
 
     \path [line]
         (work.north east)
