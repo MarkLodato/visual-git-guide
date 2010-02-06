@@ -15,3 +15,6 @@ all : \
 
 %.pdf : %.tex common.tex
 	pdflatex $<
+
+%.svg : %.pdf
+	pdf2svg $^ $@
