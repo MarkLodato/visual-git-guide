@@ -3,20 +3,19 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode
-    \worknode
-    \oldbranch master -> c1;
-    \branch master -> c3;
+    \usualsetup
+    \branch maint -> A;
+    \oldbranch master -> E;
+    \branch master -> B;
     \oldHEAD -> old master;
     \HEAD -> master;
 
-    \node [cmd] at (1, 3) {git reset --hard HEAD\~{}2};
+    \node [cmd] at (0, 3.75) {git reset --hard HEAD\~{}3};
 
     \path [line]
-        (c3) edge [bend left=30] (index)
-        (c3) edge [bend left=40] (work)
-        (old HEAD) edge [dashed, bend left=20] (HEAD)
+        (B) edge [bend left=20] (index)
+        (B) edge [bend left=40] (work)
+        (old HEAD) edge [dashed, bend left=15] (HEAD)
         ;
 
 \end{tikzpicture}

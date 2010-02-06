@@ -3,19 +3,16 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode
-    \worknode
-    \branch master -> c1;
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
     \HEAD -> master;
 
-    \node [cmd] at (3.5, 1.75) {git checkout 3325c \emph{files}};
-    \node [cmd] at (3.5, 1.25) {\textsf{(or }git checkout HEAD\~{}2
-        \emph{files}\textsf{)}};
+    \node [cmd] at (0, 3.75) {git checkout HEAD\~{} \emph{files}};
 
     \path [line]
-        (c3) edge [bend left=30] (index)
-        (c3) edge [bend left=40] (work)
+        (D) edge [bend right=20] (index)
+        (D) edge [bend right=45] (work)
         ;
 
 \end{tikzpicture}

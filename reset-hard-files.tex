@@ -3,17 +3,16 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode
-    \worknode
-    \branch master -> c1;
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> E;
     \HEAD -> master;
 
-    \node [cmd] at (3, 1.5) {git reset --hard};
+    \node [cmd] at (0, 3.75) {git reset --hard};
 
     \path [line]
-        (c1) edge [bend right=10] (index)
-        (c1) edge [bend right=40] (work.north west)
+        (E) edge [bend right=20] (index)
+        (E) edge [bend right=35] (work)
         ;
 
 \end{tikzpicture}

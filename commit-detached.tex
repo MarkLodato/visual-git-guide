@@ -3,21 +3,19 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \node [commit] (c0) at (1,1) {73be6};
-    \path [commit line] (c0) edge (c3);
-    \indexnode
-    \worknode
-    \branch master -> c1;
-    \branch maint -> c4;
-    \olddetachedHEAD -> c3;
-    \detachedHEAD -> c0;
+    \usualsetup
+    \commit 2eecb (2) -> B;
+    \branch master -> E;
+    \branch maint -> A;
+    \olddetachedHEAD -> B;
+    \detachedHEAD -> 2;
 
-    \node [cmd] at (4.5, 2.25) {git commit};
+    \node [cmd] at (0, 3.75) {git commit};
 
     \path [line]
-        (index) edge [bend left=30] (c0)
-        (old HEAD) edge [dashed, bend right=35] (HEAD.east)
+        ($ (index.north) + (-1,0) $) edge [bend left=20]
+            ($ (2.south west) + (.1,.05) $)
+        (old HEAD) edge [dashed, bend right=15] (HEAD)
         ;
 
 \end{tikzpicture}

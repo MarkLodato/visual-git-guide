@@ -3,19 +3,17 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode
-    \worknode
-    \branch master -> c1;
-    \branch maint -> c4;
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
     \oldHEAD -> master;
     \HEAD -> maint;
 
-    \node [cmd] at (2, 3) {git checkout maint};
+    \node [cmd] at (0, 3.75) {git checkout maint};
 
     \path [line]
-        (c4) edge [bend left=30] (index.east)
-        (c4) edge [bend left=45] (work.east)
+        (A) edge [bend left=22] (index)
+        (A) edge [bend left=35] (work)
         (old HEAD) edge [dashed, bend left=10] (HEAD)
         ;
 

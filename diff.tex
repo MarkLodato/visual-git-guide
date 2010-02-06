@@ -3,19 +3,19 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode[0,-2]
-    \worknode[0,-4]
-    \branch master -> c1;
+    \normalcommits
+    \indexnode[0,-1.5]
+    \worknode[0,-3.5]
+    \branch master -> E;
+    \branch maint -> A;
     \HEAD -> master;
 
     \path [line, bend right=20]
         (work) edge[auto=left] node[cmd] {git diff} (index)
-        (index) edge[bend left=20,pos=.25] node[cmd] {git diff --cached} (c1)
-        (work.north west) edge[bend left=30, auto=left] node[cmd] {git diff HEAD} 
-            (c1.south west)
-        (work) edge node[cmd] {git diff 947c3} (c4)
-        (c2) edge[bend left=40,auto=left] node[cmd] {git diff b10b9 947c3} (c4)
+        (index) edge[bend left=20] node[cmd] {git diff --cached} (E)
+        (work) edge[bend left=30, auto=left] node[cmd] {git diff HEAD} (E)
+        (work) edge node[cmd] {git diff maint} (A)
+        (D) edge[bend left=25,auto=left] node[cmd] {git diff da985 b325c} (B)
         ;
 
 \end{tikzpicture}

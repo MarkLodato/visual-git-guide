@@ -3,18 +3,17 @@
 \begin{document}
 \begin{tikzpicture}[main]
     \boundingbox
-    \commits
-    \indexnode
-    \worknode
-    \branch master -> c1;
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
     \HEAD -> master;
 
-    \node [cmd, anchor=west] at (1, 2.1) {git reset};
-    \node [cmd, anchor=west] at (1, 1.6) {git reset -- \emph{files}};
-    \node [cmd, anchor=west] at (1, 1.1) {git reset -p};
+    \node [cmd] (cmd1) at (0, 3.75) {git reset};
+    \node [cmd, anchor=west] at ($(cmd1.west)+(0,-.5)$) {git reset -- \emph{files}};
+    \node [cmd, anchor=west] at ($(cmd1.west)+(0,-1)$) {git reset -p};
 
     \path [line]
-        (c1) edge [bend right=10] (index)
+        (E) edge [bend right=20] (index)
         ;
 
 \end{tikzpicture}
