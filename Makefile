@@ -18,3 +18,6 @@ all : \
 
 %.svg : %.pdf
 	pdf2svg $^ $@
+
+%.png : %.pdf
+	convert $^ $@
