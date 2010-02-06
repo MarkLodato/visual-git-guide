@@ -2,6 +2,7 @@
 \input{common.tex}
 \begin{document}
 \begin{tikzpicture}[main]
+    \boundingbox
     \commits
     \node [commit] (c0) at (3,1) {49eed};
     \path [commit line] (c0) edge (c4);

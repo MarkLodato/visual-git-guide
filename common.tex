@@ -43,6 +43,9 @@ auto=right, bend right}}
 
 \tikzset{main/.style = {node distance = 2cm, bend angle=35}}
 
+\newcommand\boundingbox{\clip (-.5\textwidth,-.5\textheight) rectangle
+    (.5\textwidth,.5\textheight);}
+
 \newcommand\historynode[1][0,0]{\node [history] (head) at (#1) {History};}
 \newcommand\indexnode[1][0,-1.5]{\node [index] (index) at (#1) {Stage (Index)};}
 \newcommand\worknode[1][0,-3]{\node [work] (work) at (#1) {Working Directory};}
