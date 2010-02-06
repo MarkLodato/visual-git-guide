@@ -54,12 +54,14 @@ auto=right, bend right}}
 \newcommand\commitnodeB[1][ 1,0]{\node [commit] (c2) at (#1) {b10b9};}
 \newcommand\commitnodeC[1][ 3,0]{\node [commit] (c3) at (#1) {3325c};}
 \newcommand\commitnodeD[1][ 5,0]{\node [commit] (c4) at (#1) {947c3};}
+\newcommand\commitTerminal[1][c4]{\node [right=.5cm of #1] (cT) {\LARGE$\cdots$};}
 \newcommand\commits{\commitnodeA\commitnodeB\commitnodeC\commitnodeD
+    \commitTerminal
     \path [commit line]
         (c1) edge (c2)
         (c2) edge (c3)
         (c3) edge (c4)
-        (c4) edge (6.2,0)
+        (c4) edge (cT)
         ;}
 
 \def\ref [#1] "#2" : #3 -> #4;{
