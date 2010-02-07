@@ -1,0 +1,22 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \refbelow [branch] "master" : master -> E;
+    \oldbranch maint -> A;
+    \branch maint -> E;
+    \oldHEAD -> old maint;
+    \HEAD -> maint;
+
+    \node [cmd] at (0, 3.75) {git merge master};
+
+    \path [line]
+        (E) edge [bend left=5] (index.north west)
+        (E) edge [bend left=15] (work.north west)
+        (old HEAD) edge [dashed, bend right=10] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}
