@@ -82,6 +82,10 @@ auto=right, bend right}}
     \ref [old #1] "#2" : old #3 -> #4;
     \node [cancel ref, above=.2cm of #4, anchor=center] {};
     }
+\def\refbelow [#1] "#2" : #3 -> #4;{
+    \node [#1, below=.4cm of #4] (#3) {#2};
+    \path [#1 line] (#3) edge (#4);
+    }
 
 \newcounter{tmp}
 \def\commitTerminal #1 at (#2);{
@@ -106,6 +110,13 @@ auto=right, bend right}}
         \node [#1 label, anchor=south] (#3 label) at ($(#4.north)+(0,-3pt) $) {#2};
     \end{pgfonlayer}
 }
+\def\addHEADbelow [#1] "#2" : #3 -> #4;{
+    \begin{pgfonlayer}{HEAD}
+        \node [#1, anchor=north] (#3) at (#4.north) {};
+        \node [#1 label, anchor=north] (#3 label) at ($(#4.south)+(0,3pt) $) {#2};
+    \end{pgfonlayer}
+}
+
 
 \def\HEAD -> #1;{\addHEAD [attached HEAD] "HEAD" : HEAD -> #1;}
 \def\oldHEAD -> #1;{\addHEAD [old attached HEAD] "HEAD" : old HEAD -> #1;}

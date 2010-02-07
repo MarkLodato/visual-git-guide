@@ -9,6 +9,7 @@ all : \
     checkout-branch.pdf \
     checkout-detached.pdf \
     checkout-files.pdf \
+    commit-amend.pdf \
     commit-detached.pdf \
     commit-maint.pdf \
     commit-master.pdf \

@@ -1,0 +1,28 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+
+    % trick the code to draw the commit below instead of above
+    \pgfkeys{/child count/D=-1}
+    \commit 4ca87 (4) -> D;
+
+    % this is a special case, so I won't make high level commands for this
+    \refbelow [branch] "master" : master -> 4;
+    \addHEADbelow [attached HEAD] "HEAD" : HEAD -> master;
+
+    \branch maint -> A;
+    \oldbranch master -> E;
+    \oldHEAD -> old master;
+
+    \node [cmd] at (0, 3.75) {git commit --amend};
+
+    \path [line]
+        (index) edge [bend left=10] (4)
+        (old HEAD) edge [dashed, bend right=60] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}
