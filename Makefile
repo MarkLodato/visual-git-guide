@@ -25,10 +25,13 @@ PNG_OUT = $(PDF_OUT:.pdf=.png)
 SVG_OUT = $(PDF_OUT:.pdf=.svg)
 CRUFT = $(FILES:=.aux) $(FILES:=.log)
 
-all : pdf
+all : pdf png svg index.html
 pdf : $(PDF_OUT)
 png : $(PNG_OUT)
 svg : $(SVG_OUT)
+
+index.html : index-nosvg.html format_html.pl
+	./format_html.pl $< > $@
 
 %.pdf : %.tex common.tex
 	$(PDFLATEX) $<
@@ -40,6 +43,6 @@ svg : $(SVG_OUT)
 	$(PDF2PNG) $^ $@
 
 clean :
-	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT)
+	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT) index.html
 
 .PHONY : clean all pdf png
