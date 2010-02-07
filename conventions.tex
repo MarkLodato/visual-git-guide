@@ -1,0 +1,27 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \branch maint -> A;
+    \branch master -> E;
+    \HEAD -> master;
+
+    \path [>=stealth', draw=black!50, very thick]
+        (-5,3.75) node {reference to current branch} edge [->] (HEAD label)
+        (-6.5,2) node {current branch} edge [->] (master)
+        (5,3) node {another branch} edge [->] (maint)
+        (5,-0.5) node {files to go in next commit} edge [->] (index)
+        (5,-2) node {files that you ``see''} edge [->] (work)
+        (-5,-1) node [text width=6cm, text badly centered]
+          {commit objects, identified by SHA-1 hash}
+            edge [->] (E)
+            edge [->] (D)
+            edge [->] (C)
+
+        (1,2.25) node {child points to parent} edge [->] ($ (B)!.5!(C) $)
+        ;
+
+\end{tikzpicture}
+\end{document}

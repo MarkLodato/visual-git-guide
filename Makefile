@@ -12,6 +12,7 @@ FILES := \
     commit-detached \
     commit-maint \
     commit-master \
+    conventions \
     diff \
     merge \
     merge-ff \
