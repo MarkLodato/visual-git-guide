@@ -14,6 +14,7 @@ all : \
     commit-maint.pdf \
     commit-master.pdf \
     diff.pdf \
+    merge.pdf \
     reset-hard-files.pdf \
     reset-hard.pdf \
     reset-mixed-files.pdf \

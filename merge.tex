@@ -1,0 +1,43 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \normalcommits
+    \indexnode[-2,-3]
+    \worknode[2,-3]
+    \commit 2eecb (2) -> B;
+    \commit 33104 (3) -> 2;
+    \branch other -> 3;
+
+    % draw the old branch manually with a long line
+    \node [old branch, above=1 of E] (old master) {master};
+    \path [old branch line] (old master) edge (E);
+    \node [cancel ref, above=.2cm of E, anchor=center] {};
+    \oldHEAD -> old master;
+
+    \commit f8bc5 (F) -> E;
+    \branch master -> F;
+    \HEAD -> master;
+    \path [background line, bend left=15] (F) edge (3);
+    \path [commit line, bend left=15] (F) edge (3);
+
+    \node [cmd] at (0, 3.75) {git merge other};
+
+    \node [inner sep=8pt] (merge) at (0,-1) {3-way merge};
+
+    \path [background line]
+        (3) edge [bend left=15] (merge)
+        ;
+    \path [line]
+        (3) edge [bend left=15] (merge)
+        (B) edge [bend left=37] (merge)
+        (E) edge [bend right=20] (merge)
+        (merge) edge [bend left=10] (index)
+        (merge) edge [bend right=10] (work)
+        (index) edge [bend left=35] (F)
+        (old HEAD label) edge [dashed, bend right=35] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}
