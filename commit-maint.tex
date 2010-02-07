@@ -13,6 +13,10 @@
 
     \node [cmd] at (0, 3.75) {git commit};
 
+    % Put a white border underneath the line since it croses over the graph.
+    \path [background line]
+        ($ (index.north) + (.8,0) $) edge [bend left=13]
+            ($ (1.south west) + (.09,.01) $);
     \path [line]
         ($ (index.north) + (.8,0) $) edge [bend left=13]
             ($ (1.south west) + (.09,.01) $)
