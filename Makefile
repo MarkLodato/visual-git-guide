@@ -1,5 +1,4 @@
-PDFLATEX = pdflatex
-PDFLATEX_FLAGS = -halt-on-error -file-line-error
+PDFLATEX = pdflatex -halt-on-error -file-line-error
 PDF2SVG = pdf2svg
 PDF2PNG = convert
 
@@ -32,7 +31,7 @@ png : $(PNG_OUT)
 svg : $(SVG_OUT)
 
 %.pdf : %.tex common.tex
-	$(PDFLATEX) $(PDFLATEX_FLAGS) $<
+	$(PDFLATEX) $<
 
 %.svg : %.pdf
 	$(PDF2SVG) $^ $@
