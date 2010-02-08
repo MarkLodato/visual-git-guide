@@ -24,14 +24,14 @@ PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.png)
 SVG_OUT = $(PDF_OUT:.pdf=.svg)
 CRUFT = $(FILES:=.aux) $(FILES:=.log)
-EXTRA = index.html index-nosvg.html
+EXTRA = index.html index-svg.html
 
-all : pdf png svg index.html
+all : pdf png svg index-svg.html
 pdf : $(PDF_OUT)
 png : $(PNG_OUT)
 svg : $(SVG_OUT)
 
-index.html : index-nosvg.html format_html.pl
+index-svg.html : index.html format_html.pl
 	./format_html.pl $< > $@
 
 gh-pages : all
@@ -47,6 +47,6 @@ gh-pages : all
 	$(PDF2PNG) $^ $@
 
 clean :
-	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT) index.html
+	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT) index-svg.html
 
 .PHONY : clean all pdf png svg gh-pages
