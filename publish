@@ -18,11 +18,12 @@ fi
 HEAD=`git symbolic-ref HEAD`
 SHA=`git rev-parse HEAD`
 git symbolic-ref HEAD refs/heads/gh-pages || exit $?
-rm -f .git/index || exit $?
-git add "$@" || exit $?
+mv .git/index .git/index.old || exit $?
+git add -f "$@" || exit $?
 if git diff --quiet --cached; then
     echo "nothing to commit..."
 else
     git commit -m "build from $SHA" || exit $?
 fi
 git symbolic-ref HEAD "$HEAD" || exit $?
+mv .git/index.old .git/index || exit $?
