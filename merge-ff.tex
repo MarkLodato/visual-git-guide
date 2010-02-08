@@ -13,9 +13,9 @@
     \node [cmd] at (0, 3.75) {git merge master};
 
     \path [line]
-        (E) edge [bend left=5] (index.north west)
-        (E) edge [bend left=15] (work.north west)
-        (old HEAD) edge [dashed, bend right=10] (HEAD)
+        (E) edge [bend right=5] (index.north east)
+        (E) edge [bend right=15] (work.north east)
+        (old HEAD) edge [dashed, bend left=10] (HEAD)
         ;
 
 \end{tikzpicture}

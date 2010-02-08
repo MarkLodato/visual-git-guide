@@ -4,8 +4,8 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \normalcommits
-    \indexnode[-2,-3]
-    \worknode[2,-3]
+    \indexnode[2,-3]
+    \worknode[-2,-3]
     \commit 2eecb (2) -> B;
     \commit 33104 (3) -> 2;
     \branch other -> 3;
@@ -19,24 +19,24 @@
     \commit f8bc5 (F) -> E;
     \branch master -> F;
     \HEAD -> master;
-    \path [background line, bend left=15] (F) edge (3);
-    \path [commit line, bend left=15] (F) edge (3);
+    \path [background line, bend right=15] (F) edge (3);
+    \path [commit line, bend right=15] (F) edge (3);
 
     \node [cmd] at (0, 3.75) {git merge other};
 
     \node [inner sep=8pt] (merge) at (0,-1) {3-way merge};
 
     \path [background line]
-        (3) edge [bend left=15] (merge)
+        (3) edge [bend right=15] (merge)
         ;
     \path [line]
-        (3) edge [bend left=15] (merge)
-        (B) edge [bend left=37] (merge)
-        (E) edge [bend right=20] (merge)
-        (merge) edge [bend left=10] (index)
-        (merge) edge [bend right=10] (work)
-        (index) edge [bend left=35] (F)
-        (old HEAD label) edge [dashed, bend right=35] (HEAD)
+        (3) edge [bend right=15] (merge)
+        (B) edge [bend right=37] (merge)
+        (E) edge [bend left=20] (merge)
+        (merge) edge [bend right=10] (index)
+        (merge) edge [bend left=10] (work)
+        (index) edge [bend right=35] (F)
+        (old HEAD label) edge [dashed, bend left=35] (HEAD)
         ;
 
 \end{tikzpicture}

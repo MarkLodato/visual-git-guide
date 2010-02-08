@@ -14,12 +14,12 @@
 
     % Put a white border underneath the line since it croses over the graph.
     \path [background line]
-        ($ (index.north) + (-1,0) $) edge [bend left=20]
-            ($ (2.south west) + (.09,.01) $);
+        ($ (index.north) + (1,0) $) edge [bend right=20]
+            ($ (2.south east) + (-.09,.01) $);
     \path [line]
-        ($ (index.north) + (-1,0) $) edge [bend left=20]
-            ($ (2.south west) + (.09,.01) $)
-        (old HEAD) edge [dashed, bend right=15] (HEAD)
+        ($ (index.north) + (1,0) $) edge [bend right=20]
+            ($ (2.south east) + (-.09,.01) $)
+        (old HEAD) edge [dashed, bend left=15] (HEAD)
         ;
 
 \end{tikzpicture}

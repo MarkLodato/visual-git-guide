@@ -60,7 +60,7 @@ auto=right, bend right}}
 \newcommand\historynode[1][0,.5]{\node [history] (head) at (#1) {History};}
 \newcommand\indexnode[1][0,-1]{\node [index] (index) at (#1) {Stage (Index)};}
 \newcommand\worknode[1][0,-2.5]{\node [work] (work) at (#1) {Working Directory};}
-\newcommand\normalcommits[1][6,.75]{
+\newcommand\normalcommits[1][-6,.75]{
     \commitTerminal cT at (#1);
     \commit a47c3 (A) -> cT;
     \commit b325c (B) -> A;
@@ -94,7 +94,7 @@ auto=right, bend right}}
 }
 \def\commit #1 (#2) -> #3;{
     \setcounter{tmp}{\pgfkeysvalueof{/child count/#3}}
-    \node [commit, anchor=east] (#2) at ($ (#3.west) + (-.5,\value{tmp}) $) {#1};
+    \node [commit, anchor=west] (#2) at ($ (#3.east) + (.5,\value{tmp}) $) {#1};
     \draw [commit line] (#2) edge (#3);
     \addtocounter{tmp}{1}
     \pgfkeys{/child count/#2/.initial=0}

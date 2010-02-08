@@ -10,9 +10,9 @@
 
     \node [cmd] (cmd1) at (0, 3.75) {git reset};
 
-    \path [line]
-        (E) edge [bend right=20] (index)
-        (E) edge [bend right=30] node {(if \texttt{--hard})} (work)
+    \path [line, auto=left]
+        (E) edge [bend left=20] (index)
+        (E) edge [bend left=30] node {(if \texttt{--hard})} (work)
         ;
 
 \end{tikzpicture}

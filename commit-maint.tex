@@ -15,12 +15,12 @@
 
     % Put a white border underneath the line since it croses over the graph.
     \path [background line]
-        ($ (index.north) + (.8,0) $) edge [bend left=13]
-            ($ (1.south west) + (.09,.01) $);
+        ($ (index.north) + (-.8,0) $) edge [bend right=13]
+            ($ (1.south east) + (-.09,.01) $);
     \path [line]
-        ($ (index.north) + (.8,0) $) edge [bend left=13]
-            ($ (1.south west) + (.09,.01) $)
-        (old HEAD label) edge [dashed, bend right=10] (HEAD label)
+        ($ (index.north) + (-.8,0) $) edge [bend right=13]
+            ($ (1.south east) + (-.09,.01) $)
+        (old HEAD label) edge [dashed, bend left=10] (HEAD label)
         ;
 
 \end{tikzpicture}
