@@ -4,17 +4,17 @@
   <style type='text/css'>
     .center {text-align: center;}
     .other-link {font-style: italic;}
-    .other-link-png {display: none;}
+    .other-link-svg {display: none;}
   </style>
 </head>
 <body>
   <h1>A Visual Git Reference</h1>
 
   <p class="other-link other-link-svg">If your browser supports it, the <a
-    href="index.html">SVG</a> version of this page looks better.</p>
+    href="index-svg.html">SVG</a> version of this page might look better.</p>
 
   <p class="other-link other-link-png">If the images do not work, try the <a
-    href="index-nosvg.html">Non-SVG</a> version of this page.</p>
+    href="index.html">Non-SVG</a> version of this page.</p>
 
   <p>This page gives brief, visual reference for the most common commands
   in git.  Once you know a bit about how git works, this site may solidify
@@ -22,7 +22,7 @@
 
   <h2 id="basic-usage">Basic Usage</h2>
 
-  <div class="center"><img src='basic-usage.png'></div>
+  <div class="center"><embed src='basic-usage.svg' width='595' height='255' /><noembed><img src='basic-usage.png' /></noembed></div>
 
   <p>The four commands above copy files between the working directory, the
   stage (also called the index), and the history (in the form of commits).</p>
@@ -53,7 +53,7 @@
   <p>In the rest of this document, we will use graphs of the following
   form.</p>
 
-  <div class="center"><img src='conventions.png'></div>
+  <div class="center"><embed src='conventions.svg' width='680' height='397' /><noembed><img src='conventions.png' /></noembed></div>
 
   <p>Commits are shown in green as 5-character IDs, and they point to their
   parents.  Branches are shown in orange, and they point to particular
@@ -76,7 +76,7 @@
   parent <em>ed489</em>, and then <em>master</em> was moved to the new
   commit.</p>
 
-  <div class="center"><img src='commit-master.png'></div>
+  <div class="center"><embed src='commit-master.svg' width='680' height='397' /><noembed><img src='commit-master.png' /></noembed></div>
 
   <p>This same process happens even when the current branch is an ancestor of
   another.  Below, a commit occurs on branch <em>maint</em>, which was an
@@ -84,14 +84,14 @@
   <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
   histories, a <a href='#merge'>merge</a> (or rebase) will be necessary.</p>
 
-  <div class="center"><img src='commit-maint.png'></div>
+  <div class="center"><embed src='commit-maint.svg' width='680' height='397' /><noembed><img src='commit-maint.png' /></noembed></div>
 
   <p>Sometimes a mistake is made in a commit, but this is easy to correct with
   <tt>git commit --amend</tt>.  When you use this command, git creates a new
   commit with the same parent as the current commit.  (The old commit will be
   discarded if nothing else references it.)</p>
 
-  <div class="center"><img src='commit-amend.png'></div>
+  <div class="center"><embed src='commit-amend.svg' width='680' height='397' /><noembed><img src='commit-amend.png' /></noembed></div>
 
   <p>A fourth case is committing with a <a href="#detached">detached
     HEAD</a>, as explained later.</p>
@@ -109,7 +109,7 @@
   are copied from the stage.)  Note that the current branch is not
   changed.</p>
 
-  <div class="center"><img src='checkout-files.png'></div>
+  <div class="center"><embed src='checkout-files.svg' width='680' height='397' /><noembed><img src='checkout-files.png' /></noembed></div>
 
   <p>When a filename is <em>not</em> given but the reference is a (local)
   branch, <em>HEAD</em> is moved to that branch (that is, we "switch to" that
@@ -119,7 +119,7 @@
   (<em>ed489</em>) but not in the new one is deleted; and any file that exists
   is neither is ignored.</p>
 
-  <div class="center"><img src='checkout-branch.png'></div>
+  <div class="center"><embed src='checkout-branch.svg' width='680' height='397' /><noembed><img src='checkout-branch.png' /></noembed></div>
 
   <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
   (local) branch &mdash; say, it is a named commit, a tag, or a remote branch
@@ -132,7 +132,7 @@
   some common examples.  Any of these commands can optionally take extra
   filename arguments that limit the differences to the named files.</p>
 
-  <div class="center"><img src='diff.png'></div>
+  <div class="center"><embed src='diff.svg' width='680' height='397' /><noembed><img src='diff.png' /></noembed></div>
 
   <h3 id="merge">Merge</h3>
 
@@ -144,7 +144,7 @@
   merge.  The reference is simply moved, and then the new commit is checked
   out.</p>
 
-  <div class="center"><img src='merge-ff.png'></div>
+  <div class="center"><embed src='merge-ff.svg' width='680' height='397' /><noembed><img src='merge-ff.png' /></noembed></div>
 
   <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
   but the default is to perform a "recursive" merge, which basically takes the
@@ -155,7 +155,7 @@
   commit occurs, with an extra parent for the other commit
   (<em>33104</em>).</p>
 
-  <div class="center"><img src='merge.png'></div>
+  <div class="center"><embed src='merge.svg' width='680' height='397' /><noembed><img src='merge.png' /></noembed></div>
 
   <h3 id="reset">Reset</h3>
 
@@ -169,21 +169,21 @@
   <tt>--hard</tt> is given, the working directory is also updated.  If
   <tt>--soft</tt> is given, neither is updated.</p>
 
-  <div class="center"><img src='reset-commit.png'></div>
+  <div class="center"><embed src='reset-commit.svg' width='680' height='397' /><noembed><img src='reset-commit.png' /></noembed></div>
 
   <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
   the branch is not moved, but the stage (and optionally the working
   directory, if <tt>--hard</tt> is given) are reset to the contents of the
   last commit.</p>
 
-  <div class="center"><img src='reset.png'></div>
+  <div class="center"><embed src='reset.svg' width='680' height='397' /><noembed><img src='reset.png' /></noembed></div>
 
   <p>If a filename (and/or <tt>-p</tt>) is given, then the command works
   similarly to <a href='#checkout'>checkout</a> with a filename, except only
   the stage (and not the working directory) is updated.  (You may also specify
   the commit from which to take files, rather than <em>HEAD</em>.)</p>
 
-  <div class="center"><img src='reset-files.png'></div>
+  <div class="center"><embed src='reset-files.svg' width='680' height='397' /><noembed><img src='reset-files.png' /></noembed></div>
 
   <h3 id="detached">Detached HEAD</h3>
 
@@ -194,18 +194,18 @@
   when you switch to another branch (anonymous or not).  Suppose you checkout
   a commit, like so.</p>
 
-  <div class="center"><img src='checkout-detached.png'></div>
+  <div class="center"><embed src='checkout-detached.svg' width='680' height='397' /><noembed><img src='checkout-detached.png' /></noembed></div>
 
   <p>You can commit like normal, and <em>HEAD</em> keeps track of the current
   state.  However, no named branches get updated.</p>
 
-  <div class="center"><img src='commit-detached.png'></div>
+  <div class="center"><embed src='commit-detached.svg' width='680' height='397' /><noembed><img src='commit-detached.png' /></noembed></div>
 
   <p>Once you check out something else, say <em>master</em>, the commit is
   (presumably) no longer referenced by anything else, and gets lost.  Note
   that after the command, there is nothing referencing <em>2eecb</em>.</p>
 
-  <div class="center"><img src='checkout-after-detached.png'></div>
+  <div class="center"><embed src='checkout-after-detached.svg' width='680' height='397' /><noembed><img src='checkout-after-detached.png' /></noembed></div>
 
   <h2 id="technical-notes">Technical Notes</h2>
 
