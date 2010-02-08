@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ $# -eq 0 ]; then
+    echo "USAGE: $0 <files>" >&2
+    exit 1
+fi
+SHA=`git rev-parse HEAD`
+git checkout gh-pages && \
+rm -f .git/index && \
+git add "$@" && \
+git commit -m "build from $SHA" && \
+git checkout -
