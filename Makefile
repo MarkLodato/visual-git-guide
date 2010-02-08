@@ -16,10 +16,9 @@ FILES := \
     diff \
     merge \
     merge-ff \
-    reset-hard-files \
-    reset-hard \
-    reset-mixed-files \
-    reset-mixed
+    reset \
+    reset-commit \
+    reset-files
 
 PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.png)

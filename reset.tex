@@ -8,12 +8,11 @@
     \branch maint -> A;
     \HEAD -> master;
 
-    \node [cmd] (cmd1) at (0, 3.75) {git reset};
-    \node [cmd, anchor=west] at ($(cmd1.west)+(0,-.5)$) {git reset -- \emph{files}};
-    \node [cmd, anchor=west] at ($(cmd1.west)+(0,-1)$) {git reset -p};
+    \node [cmd] (cmd1) at (0, 3.75) {git reset [--hard]};
 
     \path [line]
         (E) edge [bend right=20] (index)
+        (E) edge [bend right=30] node {(if \texttt{--hard})} (work)
         ;
 
 \end{tikzpicture}

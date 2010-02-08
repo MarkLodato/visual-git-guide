@@ -10,11 +10,11 @@
     \oldHEAD -> old master;
     \HEAD -> master;
 
-    \node [cmd] at (0, 3.75) {git reset --hard HEAD\~{}3};
+    \node [cmd] at (0, 3.75) {git reset [--hard] HEAD\~{}3};
 
     \path [line]
         (B) edge [bend left=20] (index)
-        (B) edge [bend left=40] (work)
+        (B) edge [bend left=40] node [swap] {(if \texttt{--hard})} (work)
         (old HEAD) edge [dashed, bend left=15] (HEAD)
         ;
 
