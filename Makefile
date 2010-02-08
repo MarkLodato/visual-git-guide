@@ -5,6 +5,7 @@ PDF2PNG = convert
 FILES := \
     basic-usage \
     checkout-after-detached \
+    checkout-b-detached \
     checkout-branch \
     checkout-detached \
     checkout-files \

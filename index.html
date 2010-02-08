@@ -121,10 +121,35 @@
 
   <div class="center"><img src='checkout-branch.png'></div>
 
-  <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
-  (local) branch &mdash; say, it is a named commit, a tag, or a remote branch
-  &mdash; we get a special condition called a <a href="#detached">detached
-    HEAD</a>.  Since it is somewhat special, we cover it separately.</p>
+  <p>When a filename is <em>not</em> given and the reference is <em>not</em>
+  a (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
+  something like <em>master~3</em> &mdash; we get an anonymous branch, called
+  a <em>detached HEAD</em>.  This is useful for jumping around the history.
+  Say you want to compile verison 1.6.6.1 of git.  You can <tt>git checkout
+    v1.6.6.1</tt> (which is tag, not a branch), compile, install, and then
+  switch back to another branch, say <tt>git checkout master</tt>.  However,
+  committing works slightly differently with a detached HEAD; this is covered
+  <a href="#detached">below</a>.</p>
+
+  <div class="center"><img src='checkout-detached.png'></div>
+
+  <h3 id="detached">Committing with a Detached HEAD</h3>
+
+  <p>When <em>HEAD</em> is detached, commits work like normal, except no named
+  branch gets updated.  (You can think of this as an anonymous branch.)</p>
+
+  <div class="center"><img src='commit-detached.png'></div>
+
+  <p>Once you check out something else, say <em>master</em>, the commit is
+  (presumably) no longer referenced by anything else, and gets lost.  Note
+  that after the command, there is nothing referencing <em>2eecb</em>.</p>
+
+  <div class="center"><img src='checkout-after-detached.png'></div>
+
+  <p>If, on the other hand, you want to save this state, you can create a new
+  named branch using <tt>git checkout -b <em>name</em></tt>.</p>
+
+  <div class="center"><img src='checkout-b-detached.png'></div>
 
   <h3 id="diff">Diff</h3>
 
@@ -184,28 +209,6 @@
   the commit from which to take files, rather than <em>HEAD</em>.)</p>
 
   <div class="center"><img src='reset-files.png'></div>
-
-  <h3 id="detached">Detached HEAD</h3>
-
-  <p>If you run <a href='#checkout'>checkout</a> with no filenames and
-  something other than a local branch &mdash; such as a tag, a remote branch,
-  a SHA-1 ID, or something like <em>master~3</em> &mdash; a <em>detached
-    HEAD</em> is created.  This is an anonymous branch that will be discarded
-  when you switch to another branch (anonymous or not).  Suppose you checkout
-  a commit, like so.</p>
-
-  <div class="center"><img src='checkout-detached.png'></div>
-
-  <p>You can commit like normal, and <em>HEAD</em> keeps track of the current
-  state.  However, no named branches get updated.</p>
-
-  <div class="center"><img src='commit-detached.png'></div>
-
-  <p>Once you check out something else, say <em>master</em>, the commit is
-  (presumably) no longer referenced by anything else, and gets lost.  Note
-  that after the command, there is nothing referencing <em>2eecb</em>.</p>
-
-  <div class="center"><img src='checkout-after-detached.png'></div>
 
   <h2 id="technical-notes">Technical Notes</h2>
 

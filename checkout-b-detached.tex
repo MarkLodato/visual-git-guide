@@ -1,0 +1,23 @@
+% vim: set fo=tcqw :
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \commit 2eecb (2) -> B;
+    \branch master -> E;
+    \branch maint -> A;
+    \olddetachedHEAD -> 2;
+
+    \node [branch, above right=.4cm of 2] (new) {new};
+    \path [branch line] (new) edge (2);
+    \HEAD -> new;
+
+    \node [cmd] at (-3,3.75) {git checkout -b new};
+
+    \path [line]
+        (old HEAD) edge [dashed, bend left=15] (HEAD label)
+        ;
+
+\end{tikzpicture}
+\end{document}
