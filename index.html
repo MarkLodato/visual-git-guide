@@ -159,29 +159,6 @@
 
   <div class="center"><img src='checkout-b-detached.png'></div>
 
-  <h3 id="merge">Merge</h3>
-
-  <p>A merge creates a new commit that incorporates changes from other
-  commits.  Before merging, the stage must match the current commit.  The
-  trivial case is if the other commit is an ancestor of the current commit, in
-  which case nothing is done.  The next most simple is if the current commit
-  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
-  merge.  The reference is simply moved, and then the new commit is checked
-  out.</p>
-
-  <div class="center"><img src='merge-ff.png'></div>
-
-  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
-  but the default is to perform a "recursive" merge, which basically takes the
-  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
-  and their common ancestor (<em>b325c</em>), and performs a <a
-    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
-  The result is saved to the working directory and the stage, and then a
-  commit occurs, with an extra parent for the other commit
-  (<em>33104</em>).</p>
-
-  <div class="center"><img src='merge.png'></div>
-
   <h3 id="reset">Reset</h3>
 
   <p>The reset command moves the current branch to another position, and
@@ -209,6 +186,29 @@
   the commit from which to take files, rather than <em>HEAD</em>.)</p>
 
   <div class="center"><img src='reset-files.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>A merge creates a new commit that incorporates changes from other
+  commits.  Before merging, the stage must match the current commit.  The
+  trivial case is if the other commit is an ancestor of the current commit, in
+  which case nothing is done.  The next most simple is if the current commit
+  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
+  merge.  The reference is simply moved, and then the new commit is checked
+  out.</p>
+
+  <div class="center"><img src='merge-ff.png'></div>
+
+  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
+  but the default is to perform a "recursive" merge, which basically takes the
+  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
+  and their common ancestor (<em>b325c</em>), and performs a <a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
+  The result is saved to the working directory and the stage, and then a
+  commit occurs, with an extra parent for the other commit
+  (<em>33104</em>).</p>
+
+  <div class="center"><img src='merge.png'></div>
 
   <h2 id="technical-notes">Technical Notes</h2>
 
