@@ -32,5 +32,5 @@ License
 -------
 
 Copyright &copy; 2010, Mark Lodato.  This work is licensed under a
-[Creative Commons Attribution-Share Alike 3.0 United States
-License](http://creativecommons.org/licenses/by-sa/3.0/us/).
+[Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States
+License](http://creativecommons.org/licenses/by-nc-sa/3.0/us/).
