@@ -49,24 +49,26 @@
 
   <ul>
 
-    <li><tt>git add <em>files</em></tt> copies <em>files</em> (at their
+    <li><code>git add <em>files</em></code> copies <em>files</em> (at their
     current state) to the stage.</li>
 
-    <li><tt>git commit</tt> saves a snapshot of the stage as a commit.</li>
+    <li><code>git commit</code> saves a snapshot of the stage as a
+    commit.</li>
 
-    <li><tt>git reset -- <em>files</em></tt> unstages files; that is, it copies
-    <em>files</em> from the latest commit to the stage.  Use this command to
-    "undo" a <tt>git add <em>files</em></tt>.  You can also <tt>git reset</tt>
-    to unstage everything.</li>
+    <li><code>git reset -- <em>files</em></code> unstages files; that is, it
+    copies <em>files</em> from the latest commit to the stage.  Use this
+    command to "undo" a <code>git add <em>files</em></code>.  You can also
+    <code>git reset</code> to unstage everything.</li>
 
-    <li><tt>git checkout -- <em>files</em></tt> copies files from the stage to
-    the working directory.  Use this to throw away local changes.</li>
+    <li><code>git checkout -- <em>files</em></code> copies files from the
+    stage to the working directory.  Use this to throw away local
+    changes.</li>
 
   </ul>
 
-  <p>You can use <tt>git reset -p</tt>, <tt>git checkout -p</tt>, or <tt>git
-    add -p</tt> instead of (or in addition to) specifying particular files to
-  interactively choose which hunks copy.</p>
+  <p>You can use <code>git reset -p</code>, <code>git checkout -p</code>, or
+  <code>git add -p</code> instead of (or in addition to) specifying particular
+  files to interactively choose which hunks copy.</p>
 
   <h2 id="conventions">Conventions</h2>
 
@@ -115,9 +117,9 @@
   <div class="center"><img src='commit-maint.png'></div>
 
   <p>Sometimes a mistake is made in a commit, but this is easy to correct with
-  <tt>git commit --amend</tt>.  When you use this command, git creates a new
-  commit with the same parent as the current commit.  (The old commit will be
-  discarded if nothing else references it.)</p>
+  <code>git commit --amend</code>.  When you use this command, git creates a
+  new commit with the same parent as the current commit.  (The old commit will
+  be discarded if nothing else references it.)</p>
 
   <div class="center"><img src='commit-amend.png'></div>
 
@@ -129,12 +131,12 @@
   <p>The checkout command is used to copy files from the history (or stage) to
   the working directory, and to optionally switch branches.</p>
 
-  <p>When a filename (and/or <tt>-p</tt>) is given, git copies those files
+  <p>When a filename (and/or <code>-p</code>) is given, git copies those files
   from the given commit to the stage and the working directory.  For example,
-  <tt>git checkout HEAD~ foo.c</tt> copies the file <tt>foo.c</tt> from the
-  commit called <em>HEAD~</em> (the parent of the current commit) to the
-  working directory, and also stages it.  (If no commit name is given, files
-  are copied from the stage.)  Note that the current branch is not
+  <code>git checkout HEAD~ foo.c</code> copies the file <code>foo.c</code>
+  from the commit called <em>HEAD~</em> (the parent of the current commit) to
+  the working directory, and also stages it.  (If no commit name is given,
+  files are copied from the stage.)  Note that the current branch is not
   changed.</p>
 
   <div class="center"><img src='checkout-files.png'></div>
@@ -149,15 +151,15 @@
 
   <div class="center"><img src='checkout-branch.png'></div>
 
-  <p>When a filename is <em>not</em> given and the reference is <em>not</em>
-  a (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
+  <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
+  (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
   something like <em>master~3</em> &mdash; we get an anonymous branch, called
   a <em>detached HEAD</em>.  This is useful for jumping around the history.
-  Say you want to compile verison 1.6.6.1 of git.  You can <tt>git checkout
-    v1.6.6.1</tt> (which is a tag, not a branch), compile, install, and then
-  switch back to another branch, say <tt>git checkout master</tt>.  However,
-  committing works slightly differently with a detached HEAD; this is covered
-  <a href="#detached">below</a>.</p>
+  Say you want to compile verison 1.6.6.1 of git.  You can <code>git checkout
+    v1.6.6.1</code> (which is a tag, not a branch), compile, install, and then
+  switch back to another branch, say <code>git checkout master</code>.
+  However, committing works slightly differently with a detached HEAD; this is
+  covered <a href="#detached">below</a>.</p>
 
   <div class="center"><img src='checkout-detached.png'></div>
 
@@ -175,7 +177,7 @@
   <div class="center"><img src='checkout-after-detached.png'></div>
 
   <p>If, on the other hand, you want to save this state, you can create a new
-  named branch using <tt>git checkout -b <em>name</em></tt>.</p>
+  named branch using <code>git checkout -b <em>name</em></code>.</p>
 
   <div class="center"><img src='checkout-b-detached.png'></div>
 
@@ -188,19 +190,19 @@
 
   <p>If a commit is given with no filenames, the current branch is moved to
   that commit, and then the stage is updated to match this commit.  If
-  <tt>--hard</tt> is given, the working directory is also updated.  If
-  <tt>--soft</tt> is given, neither is updated.</p>
+  <code>--hard</code> is given, the working directory is also updated.  If
+  <code>--soft</code> is given, neither is updated.</p>
 
   <div class="center"><img src='reset-commit.png'></div>
 
   <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
   the branch is not moved, but the stage (and optionally the working
-  directory, if <tt>--hard</tt> is given) are reset to the contents of the
+  directory, if <code>--hard</code> is given) are reset to the contents of the
   last commit.</p>
 
   <div class="center"><img src='reset.png'></div>
 
-  <p>If a filename (and/or <tt>-p</tt>) is given, then the command works
+  <p>If a filename (and/or <code>-p</code>) is given, then the command works
   similarly to <a href='#checkout'>checkout</a> with a filename, except only
   the stage (and not the working directory) is updated.  (You may also specify
   the commit from which to take files, rather than <em>HEAD</em>.)</p>
@@ -247,8 +249,8 @@
   <p>If you make a commit using a detached HEAD, the last commit really is
   referenced by something: the reflog for HEAD.  However, this will expire
   after a while, so the commit will eventually be garbage collected, similar
-  to commits discarded with <tt>git commit --amend</tt> or <tt>git
-    rebase</tt>.</p>
+  to commits discarded with <code>git commit --amend</code> or <code>git
+    rebase</code>.</p>
 
   <hr>
   <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
