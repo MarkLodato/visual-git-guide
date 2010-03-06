@@ -34,7 +34,7 @@
         (E) edge [bend left=20] (merge)
         (merge) edge [bend right=10] (index)
         (merge) edge [bend left=10] (work)
-        (index) edge [bend right=35] (F)
+        (index) edge [bend right=35] node [near start] {(if no conflicts)} (F)
         (old HEAD label) edge [dashed, bend left=35] (HEAD)
         ;
 
