@@ -22,18 +22,15 @@ FILES := \
     reset-files
 
 PDF_OUT = $(FILES:=.pdf)
-PNG_OUT = $(PDF_OUT:.pdf=.png)
+PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
 SVG_OUT = $(PDF_OUT:.pdf=.svg)
 CRUFT = $(FILES:=.aux) $(FILES:=.log)
-EXTRA = index.html index-svg.html
+EXTRA = index.html
 
-all : pdf png svg index-svg.html
+all : pdf png svg
 pdf : $(PDF_OUT)
 png : $(PNG_OUT)
 svg : $(SVG_OUT)
-
-index-svg.html : index.html format_html.pl
-	./format_html.pl $< > $@
 
 gh-pages : all
 	./publish $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(EXTRA)
@@ -44,10 +41,10 @@ gh-pages : all
 %.svg : %.pdf
 	$(PDF2SVG) $^ $@
 
-%.png : %.pdf
+%.svg.png : %.pdf
 	$(PDF2PNG) $^ $@
 
 clean :
-	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT) index-svg.html
+	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT)
 
 .PHONY : clean all pdf png svg gh-pages
