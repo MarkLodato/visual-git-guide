@@ -1,6 +1,6 @@
 PDFLATEX = pdflatex -halt-on-error -file-line-error
 PDF2SVG = pdf2svg
-PDF2PNG = convert
+PDF2PNG = convert -density 88
 
 FILES := \
     basic-usage \
