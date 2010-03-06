@@ -18,7 +18,7 @@
     \commit f8bc5 (F) -> E;
     \branch master -> F;
     \HEAD -> master;
-    \path [background line, bend right=15] (F) edge (3);
+    \path [background line, bend right=15] (F) edge[-] (3);
     \path [commit line, bend right=15] (F) edge (3);
 
     \node [cmd] at (0, 3.75) {git merge other};
@@ -26,7 +26,7 @@
     \node [inner sep=8pt] (merge) at (0,-1) {3-way merge};
 
     \path [background line]
-        (3) edge [bend right=15] (merge)
+        (3) edge [-, bend right=15] (merge)
         ;
     \path [line]
         (3) edge [bend right=15] (merge)
