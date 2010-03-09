@@ -21,6 +21,7 @@ rounded corners, minimum height=1.5cm, line width=3pt}}
 \tikzset{work/.style = {basic, fill=work!50, draw=work}}
 
 \tikzset{commit/.style = {history, text width=2cm, minimum height=1cm}}
+\tikzset{new commit/.style = {commit, double shadow}}
 \tikzset{branch/.style = {commit, fill=branch!50, draw=branch}}
 \tikzset{HEAD/.style = {commit, fill=HEAD!50, draw=HEAD}}
 \tikzset{old branch/.style = {commit, fill=old branch!50, draw=old branch,
@@ -32,10 +33,19 @@ text=black!30}}
 \tikzset{old attached HEAD/.style = {old HEAD, minimum height=2cm}}
 \tikzset{old attached HEAD label/.style = {attached HEAD label, text=black!30}}
 
+\tikzset{
+double shadow/.style={
+    preaction={fill=#1,transform canvas={xshift=2mm,yshift=-2mm}},
+    preaction={fill=#1,transform canvas={xshift=-2mm,yshift=2mm}},
+    },
+double shadow/.default=yellow!75,
+}
+
 \tikzset{line/.style = {>=stealth', line width=1.5pt, draw=black!70,
 auto=right, bend right}}
 \tikzset{object line/.style = {>=stealth, line width=1.5pt}}
 \tikzset{commit line/.style = {object line, color=commit}}
+\tikzset{new commit line/.style = {commit line}}
 \tikzset{HEAD line/.style = {object line, color=HEAD}}
 \tikzset{branch line/.style = {object line, color=branch}}
 \tikzset{old HEAD line/.style = {object line, color=old HEAD}}
@@ -92,14 +102,17 @@ auto=right, bend right}}
     \node (#1) at (#2) {\LARGE$\cdots$};
     \pgfkeys{/child count/#1/.initial=0}
 }
-\def\commit #1 (#2) -> #3;{
-    \setcounter{tmp}{\pgfkeysvalueof{/child count/#3}}
-    \node [commit, anchor=west] (#2) at ($ (#3.east) + (.5,\value{tmp}) $) {#1};
-    \draw [commit line] (#2) edge (#3);
+\def\commitcommon [#1] #2 (#3) -> [#4] #5;{
+    \setcounter{tmp}{\pgfkeysvalueof{/child count/#5}}
+    \node [#1, anchor=west] (#3) at ($ (#5.east) + (.5,\value{tmp}) $) {#2};
+    \draw [#4] (#3) edge (#5);
     \addtocounter{tmp}{1}
-    \pgfkeys{/child count/#2/.initial=0}
-    \pgfkeys{/child count/#3=\value{tmp}}
+    \pgfkeys{/child count/#3/.initial=0}
+    \pgfkeys{/child count/#5=\value{tmp}}
 }
+\def\commit #1 (#2) -> #3;{\commitcommon [commit] #1 (#2) -> [commit line] #3;}
+\def\newcommit #1 (#2) -> #3;{\commitcommon [new commit] #1 (#2) ->
+[new commit line] #3;}
 
 \def\branch #1 -> #2;{\ref [branch] "#1" : #1 -> #2;}
 \def\oldbranch #1 -> #2;{\oldref [branch] "#1" : #1 -> #2;}
