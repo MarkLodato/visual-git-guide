@@ -13,53 +13,53 @@
 \colorlet{old HEAD}{HEAD!50}
 \colorlet{old branch}{branch!50}
 
-\tikzset{basic/.style = {rectangle, text width=5cm, text centered,
-rounded corners, minimum height=1.5cm, line width=3pt}}
-
-\tikzset{history/.style = {basic, fill=commit!40, draw=commit}}
-\tikzset{index/.style = {basic, fill=index!50, draw=index}}
-\tikzset{work/.style = {basic, fill=work!50, draw=work}}
-
-\tikzset{commit/.style = {history, text width=2cm, minimum height=1cm}}
-\tikzset{new commit/.style = {commit, double shadow}}
-\tikzset{branch/.style = {commit, fill=branch!50, draw=branch}}
-\tikzset{HEAD/.style = {commit, fill=HEAD!50, draw=HEAD}}
-\tikzset{old branch/.style = {commit, fill=old branch!50, draw=old branch,
-text=black!30}}
-\tikzset{old HEAD/.style = {commit, fill=old HEAD!50, draw=old HEAD,
-text=black!30}}
-\tikzset{attached HEAD/.style = {HEAD, minimum height=2cm}}
-\tikzset{attached HEAD label/.style = {basic, minimum height=1cm, text width=2cm}}
-\tikzset{old attached HEAD/.style = {old HEAD, minimum height=2cm}}
-\tikzset{old attached HEAD label/.style = {attached HEAD label, text=black!30}}
-
 \tikzset{
+basic/.style={rectangle, text width=5cm, text centered,
+    rounded corners, minimum height=1.5cm, line width=3pt},
+%
+history/.style={basic, fill=commit!40, draw=commit},
+index/.style={basic, fill=index!50, draw=index},
+work/.style={basic, fill=work!50, draw=work},
+%
+commit/.style={history, text width=2cm, minimum height=1cm},
+new commit/.style={commit, double shadow},
+branch/.style={commit, fill=branch!50, draw=branch},
+HEAD/.style={commit, fill=HEAD!50, draw=HEAD},
+old branch/.style={commit, fill=old branch!50, draw=old branch,
+    text=black!30},
+old HEAD/.style={commit, fill=old HEAD!50, draw=old HEAD,
+    text=black!30},
+attached HEAD/.style={HEAD, minimum height=2cm},
+attached HEAD label/.style={basic, minimum height=1cm, text width=2cm},
+old attached HEAD/.style={old HEAD, minimum height=2cm},
+old attached HEAD label/.style={attached HEAD label, text=black!30},
+%
 double shadow/.style={
     preaction={fill=#1,transform canvas={xshift=2mm,yshift=-2mm}},
     preaction={fill=#1,transform canvas={xshift=-2mm,yshift=2mm}},
     },
-double shadow/.default=yellow!75,
+double shadow/.default={yellow!75},
+%
+line/.style={>=stealth', line width=1.5pt, draw=black!70, auto=right,
+    bend right},
+object line/.style={>=stealth, line width=1.5pt},
+commit line/.style={object line, color=commit},
+new commit line/.style={commit line},
+HEAD line/.style={object line, color=HEAD},
+branch line/.style={object line, color=branch},
+old HEAD line/.style={object line, color=old HEAD},
+old branch line/.style={object line, color=old branch},
+cancel ref/.style={cross out, draw=black!70, line width=1pt},
+%
+background line/.style={draw=white, line width=6pt,
+    shorten >=6pt, shorten <=6pt},
+%
+cmd/.style={color=black, font={\Large\ttfamily}},
+%
+main/.style={node distance=.7cm, bend angle=35, font={\Large},
+    x=1.5cm, y=1.5cm},
+every edge/.style={draw, ->},
 }
-
-\tikzset{line/.style = {>=stealth', line width=1.5pt, draw=black!70,
-auto=right, bend right}}
-\tikzset{object line/.style = {>=stealth, line width=1.5pt}}
-\tikzset{commit line/.style = {object line, color=commit}}
-\tikzset{new commit line/.style = {commit line}}
-\tikzset{HEAD line/.style = {object line, color=HEAD}}
-\tikzset{branch line/.style = {object line, color=branch}}
-\tikzset{old HEAD line/.style = {object line, color=old HEAD}}
-\tikzset{old branch line/.style = {object line, color=old branch}}
-\tikzset{cancel ref/.style = {cross out, draw=black!70, line width=1pt}}
-
-\tikzset{background line/.style = {draw=white, line width=6pt,
-    shorten >=6pt, shorten <=6pt}}
-
-\tikzset{cmd/.style = {color=black, font={\Large\ttfamily}}}
-
-\tikzset{main/.style = {node distance=.7cm, bend angle=35, font={\Large},
-    x=1.5cm, y=1.5cm}}
-\tikzset{every edge/.style = {draw, ->}}
 
 \pgfdeclarelayer{HEAD}
 \pgfsetlayers{HEAD,main}
