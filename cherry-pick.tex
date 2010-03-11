@@ -16,15 +16,11 @@
 
     \node [cmd] at (0, 3.75) {git cherry-pick 2c33a};
 
-    \path [line, auto=left]
-        (1) edge [bend left=20] node {$\Delta_1$} (2)
-        (E) edge [bend left=20] node {$\Delta_1$} (F)
-        ;
-
     \path [line]
-        (F) edge [bend left=15] (index)
+        (F) edge [bend left=20] (index)
         (F) edge [bend left=30] (work)
         (old HEAD) edge [dashed, bend left=50] (HEAD)
+        (2) edge [loosely dashed, bend right=35] (F)
         ;
 
 \end{tikzpicture}

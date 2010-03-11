@@ -21,15 +21,11 @@
 
     \node [cmd,right] at (1, 3.75) {git rebase --onto master 169a6};
 
-    \path [line, auto=left]
-        (1) edge [bend left=20] node {$\Delta_1$} (2)
-        (D) edge [bend left=20] node {$\Delta_1$} (E)
-        ;
-
     \path [line]
-        (E) edge [bend left=15] (index)
+        (E) edge [bend left=20] (index)
         (E) edge [bend left=30] (work)
         (old HEAD label) edge [dashed, bend left=10] (HEAD label)
+        (2) edge [loosely dashed, bend right=40] (E)
         ;
 
 \end{tikzpicture}
