@@ -1,0 +1,31 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \newcommit f142b (F) -> E;
+    \commit 169a6 (1) -> A;
+    \commit 2c33a (2) -> 1;
+    \commit 3ba22 (3) -> 2;
+    \branch topic -> 3;
+
+    \oldbranch master -> E;
+    \oldHEAD -> old master;
+    \branch master -> F;
+    \HEAD -> master;
+
+    \node [cmd] at (0, 3.75) {git cherry-pick 2c33a};
+
+    \path [line, auto=left]
+        (1) edge [bend left=20] node {$\Delta_1$} (2)
+        (E) edge [bend left=20] node {$\Delta_1$} (F)
+        ;
+
+    \path [line]
+        (F) edge [bend left=15] (index)
+        (F) edge [bend left=30] (work)
+        (old HEAD) edge [dashed, bend left=50] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}

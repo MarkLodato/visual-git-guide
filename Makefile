@@ -9,6 +9,7 @@ FILES := \
     checkout-branch \
     checkout-detached \
     checkout-files \
+    cherry-pick \
     commit-amend \
     commit-detached \
     commit-maint \

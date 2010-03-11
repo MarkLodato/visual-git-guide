@@ -81,6 +81,7 @@
         <li><a href="#detached">Committing with a Detached HEAD</a></li>
         <li><a href="#reset">Reset</a></li>
         <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
         <li><a href="#rebase">Rebase</a></li>
       </ol>
     </li>
@@ -280,12 +281,21 @@
 
   <div class="center"><img src='merge.svg.png'></div>
 
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>The cherry-pick command "copies" a commit, creating a new commit on the
+  current branch with the same message and patch as another commit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
   <h3 id="rebase">Rebase</h3>
 
   <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
   multiple branches.  Whereas a merge creates a single commit with two
   parents, leaving a non-linear history, a rebase replays the commits from the
-  current branch onto another, leaving a linear history.</p>
+  current branch onto another, leaving a linear history.  In essence, this is
+  an automated way of performing several <a
+    href='#cherry-pick'>cherry-pick</a>s in a row.</p>
 
   <div class="center"><img src='rebase.svg.png'></div>
 
