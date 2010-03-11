@@ -1,0 +1,39 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \indexnode
+    \worknode
+    \commitTerminal cT at (-6,.75);
+    \commit a47c3 (A) -> cT;
+    \commit b325c (B) -> A;
+    \commit c10b9 (C) -> B;
+    \commit da985 (D) -> C;
+    \newcommit e57cf (E) -> D;
+    \newcommit f7e63 (F) -> E;
+    \commit 169a6 (1) -> A;
+    \commit 2c33a (2) -> 1;
+
+    \oldbranch topic -> 2;
+    \oldHEAD -> old topic;
+    \branch master -> D;
+    \branch topic -> F;
+    \HEAD -> topic;
+
+    \node [cmd,right] at (1, 3.75) {git rebase master};
+
+    \path [line, auto=left]
+        (A) edge [bend left=20] node {$\Delta_1$} (1)
+        (1) edge [bend left=20] node {$\Delta_2$} (2)
+        (D) edge [bend left=20] node {$\Delta_1$} (E)
+        (E) edge [bend left=20] node {$\Delta_2$} (F)
+        ;
+
+    \path [line]
+        (F) edge [bend left=15] (index)
+        (F) edge [bend left=30] (work)
+        (old HEAD label) edge [dashed, bend left=10] (HEAD label)
+        ;
+
+\end{tikzpicture}
+\end{document}

@@ -17,6 +17,8 @@ FILES := \
     diff \
     merge \
     merge-ff \
+    rebase \
+    rebase-onto \
     reset \
     reset-commit \
     reset-files
