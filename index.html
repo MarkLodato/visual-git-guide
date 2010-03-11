@@ -81,6 +81,7 @@
         <li><a href="#detached">Committing with a Detached HEAD</a></li>
         <li><a href="#reset">Reset</a></li>
         <li><a href="#merge">Merge</a></li>
+        <li><a href="#rebase">Rebase</a></li>
       </ol>
     </li>
     <li><a href="#technical-notes">Technical Notes</a></li>
@@ -158,7 +159,8 @@
   another.  Below, a commit occurs on branch <em>maint</em>, which was an
   ancestor of <em>master</em>, resulting in <em>1800b</em>.  Afterward,
   <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
-  histories, a <a href='#merge'>merge</a> (or rebase) will be necessary.</p>
+  histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
+  will be necessary.</p>
 
   <div class="center"><img src='commit-maint.svg.png'></div>
 
@@ -277,6 +279,35 @@
   (<em>33104</em>).</p>
 
   <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
+  multiple branches.  Whereas a merge creates a single commit with two
+  parents, leaving a non-linear history, a rebase replays the commits from the
+  current branch onto another, leaving a linear history.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>The above command takes all the commits that exist in <em>topic</em> but
+  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
+  them onto <em>master</em>, and then moves the branch head to the new tip.
+  Note that the old commits will be garbage collected if they are no longer
+  referenced.</p>
+
+  <p>To limit how far back to go, use the <code>--onto</code> option.  The
+  following command replays onto <em>master</em> the most recent commits on
+  the current branch since <em>169a6</em> (exclusive), namely
+  <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>There is also <code>git rebase --interactive</code>, which allows one to
+  do more complicated things than simply replaying commits, namely dropping,
+  reordering, modifying, and squashing commits.  There is no obvious picture
+  to draw for this; see <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
+  for more details.</p>
 
   <h2 id="technical-notes">Technical Notes</h2>
 
