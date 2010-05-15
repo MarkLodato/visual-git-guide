@@ -9,10 +9,10 @@
     \olddetachedHEAD -> 2;
 
     \begin{pgfonlayer}{HEAD}
-    \node [branch, double shadow, above right=.4cm of 2, draw=none, fill=none]  
-        {};
+    \node [branch, double shadow, above right=.4\g of 2, draw=none, fill=none]  
+    {};
     \end{pgfonlayer}
-    \node [branch, above right=.4cm of 2] (new) {new};
+    \node [branch, above right=.4\g of 2] (new) {new};
     \path [branch line] (new) edge (2);
     \HEAD -> new;
 

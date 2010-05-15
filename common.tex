@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[latin1]{inputenc}
 \usepackage{cmbright}
-\usepackage[pdftex,margin=0pt,papersize={24cm,14cm},noheadfoot]{geometry}
+\usepackage[pdftex,margin=0pt,noheadfoot]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,shadows,positioning,calc}
 
@@ -13,15 +13,27 @@
 \colorlet{old HEAD}{HEAD!50}
 \colorlet{old branch}{branch!50}
 
+% Global Scaling Factors
+% Values that seem reasonable:
+%        1cm /  1pt / \Large
+%       .5cm / .5pt / \scriptsize
+\newlength\g
+\setlength\g{1cm}
+\newlength\gLine
+\setlength\gLine{1pt}
+\newcommand\gFont{\Large}
+
+\geometry{papersize={24\g,14\g}}
+
 \tikzset{
-index/.style={rectangle, text width=5cm, text centered, rounded corners,
-    minimum height=1.5cm, line width=3pt, fill=#1!50, draw=#1},
+index/.style={rectangle, text width=5\g, text centered, rounded corners,
+    minimum height=1.5\g, line width=3\gLine, fill=#1!50, draw=#1},
 index/.default={index},
 history/.style={index=commit, fill=commit!40},
 work/.style={index=work},
 %
-object/.style={rectangle, text width=2cm, text centered, rounded corners,
-    minimum height=1cm, line width=3pt, fill=#1!50, draw=#1},
+object/.style={rectangle, text width=2\g, text centered, rounded corners,
+    minimum height=1\g, line width=3\gLine, fill=#1!50, draw=#1},
 object/.default={red},
 commit/.style={object=commit, fill=commit!40},
 new commit/.style={commit, double shadow},
@@ -29,35 +41,35 @@ branch/.style={object=branch},
 HEAD/.style={object=HEAD},
 old branch/.style={object=old branch, text=black!30},
 old HEAD/.style={object=old HEAD, text=black!30},
-attached HEAD/.style={HEAD, minimum height=2cm},
+attached HEAD/.style={HEAD, minimum height=2\g},
 attached HEAD label/.style={object, draw=none, fill=none},
-old attached HEAD/.style={old HEAD, minimum height=2cm},
+old attached HEAD/.style={old HEAD, minimum height=2\g},
 old attached HEAD label/.style={attached HEAD label, text=black!30},
 %
 double shadow/.style={
-    preaction={fill=#1,transform canvas={xshift=.2cm,yshift=-.2cm}},
-    preaction={fill=#1,transform canvas={xshift=-.2cm,yshift=.2cm}},
+    preaction={fill=#1,transform canvas={xshift=.2\g,yshift=-.2\g}},
+    preaction={fill=#1,transform canvas={xshift=-.2\g,yshift=.2\g}},
     },
 double shadow/.default={yellow!75},
 %
-line/.style={>=stealth', line width=1.5pt, draw=black!70, auto=right,
+line/.style={>=stealth', line width=1.5\gLine, draw=black!70, auto=right,
     bend right},
-object line/.style={>=stealth, line width=1.5pt},
+object line/.style={>=stealth, line width=1.5\gLine},
 commit line/.style={object line, color=commit},
 new commit line/.style={commit line},
 HEAD line/.style={object line, color=HEAD},
 branch line/.style={object line, color=branch},
 old HEAD line/.style={object line, color=old HEAD},
 old branch line/.style={object line, color=old branch},
-cancel ref/.style={cross out, draw=black!70, line width=1pt},
+cancel ref/.style={cross out, draw=black!70, line width=1\gLine},
 %
-background line/.style={draw=white, line width=6pt,
-    shorten >=6pt, shorten <=6pt},
+background line/.style={draw=white, line width=6\gLine,
+    shorten >=6\gLine, shorten <=6\gLine},
 %
-cmd/.style={color=black, font={\Large\ttfamily}},
+cmd/.style={color=black, font={\gFont\ttfamily}},
 %
-main/.style={node distance=.7cm, bend angle=35, font={\Large},
-    x=1.5cm, y=1.5cm},
+main/.style={node distance=.7\g, bend angle=35, font={\gFont},
+    x=1.5\g, y=1.5\g},
 every edge/.style={draw, ->},
 }
 
@@ -85,15 +97,15 @@ every edge/.style={draw, ->},
 }
 
 \def\ref [#1] "#2" : #3 -> #4;{
-    \node [#1, above=.4cm of #4] (#3) {#2};
+    \node [#1, above=.4\g of #4] (#3) {#2};
     \path [#1 line] (#3) edge (#4);
     }
 \def\oldref [#1] "#2" : #3 -> #4;{
     \ref [old #1] "#2" : old #3 -> #4;
-    \node [cancel ref, above=.2cm of #4, anchor=center] {};
+    \node [cancel ref, above=.2\g of #4, anchor=center] {};
     }
 \def\refbelow [#1] "#2" : #3 -> #4;{
-    \node [#1, below=.4cm of #4] (#3) {#2};
+    \node [#1, below=.4\g of #4] (#3) {#2};
     \path [#1 line] (#3) edge (#4);
     }
 
@@ -120,13 +132,15 @@ every edge/.style={draw, ->},
 \def\addHEAD [#1] "#2" : #3 -> #4;{
     \begin{pgfonlayer}{HEAD}
         \node [#1, anchor=south] (#3) at (#4.south) {};
-        \node [#1 label, anchor=south] (#3 label) at ($(#4.north)+(0,-3pt) $) {#2};
+        \node [#1 label, anchor=south] (#3 label) at ($(#4.north)+(0,-3\gLine) 
+        $) {#2};
     \end{pgfonlayer}
 }
 \def\addHEADbelow [#1] "#2" : #3 -> #4;{
     \begin{pgfonlayer}{HEAD}
         \node [#1, anchor=north] (#3) at (#4.north) {};
-        \node [#1 label, anchor=north] (#3 label) at ($(#4.south)+(0,3pt) $) {#2};
+        \node [#1 label, anchor=north] (#3 label) at ($(#4.south)+(0,3\gLine) 
+        $) {#2};
     \end{pgfonlayer}
 }
 

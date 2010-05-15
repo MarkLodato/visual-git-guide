@@ -12,7 +12,7 @@
     % draw the old branch manually with a long line
     \node [old branch, above=1 of E] (old master) {master};
     \path [old branch line] (old master) edge (E);
-    \node [cancel ref, above=.2cm of E, anchor=center] {};
+    \node [cancel ref, above=.2\g of E, anchor=center] {};
     \oldHEAD -> old master;
 
     \newcommit f8bc5 (F) -> E;
@@ -23,7 +23,7 @@
 
     \node [cmd] at (0, 3.75) {git merge other};
 
-    \node [inner sep=8pt] (merge) at (0,-1) {3-way merge};
+    \node [inner sep=8\gLine] (merge) at (0,-1) {3-way merge};
 
     \path [background line]
         (3) edge [-, bend right=15] (merge)
