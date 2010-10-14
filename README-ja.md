@@ -6,15 +6,15 @@
 
 ブラウザで本文を読みたい場合は、以下のURLにアクセスして下さい。
 
-	<http://www.mew.org/~kazu/proj/visual-git-guide/>
+<http://www.mew.org/~kazu/proj/visual-git-guide/>
 
 オリジナルのページは、以下を参照して下さい。
 
-	<http://marklodato.github.com/visual-git-guide/>
+<http://marklodato.github.com/visual-git-guide/>
 
 また、オリジナルのソースは、以下を参照して下さい。
 
-	<http://github.com/MarkLodato/visual-git-guide>
+<http://github.com/MarkLodato/visual-git-guide>
 
 お願い
 ======
