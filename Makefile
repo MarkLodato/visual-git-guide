@@ -24,11 +24,15 @@ FILES := \
     reset-commit \
     reset-files
 
+HTML := \
+    index-en.html \
+    index-ja.html
+
 PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
 SVG_OUT = $(PDF_OUT:.pdf=.svg)
 CRUFT = $(FILES:=.aux) $(FILES:=.log)
-EXTRA = index.html
+EXTRA := index.html visual-git-guide.css visual-git-guide.js
 
 all : pdf png svg
 pdf : $(PDF_OUT)
@@ -36,7 +40,7 @@ png : $(PNG_OUT)
 svg : $(SVG_OUT)
 
 gh-pages : all
-	./publish $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(EXTRA)
+	./publish $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(HTML) $(EXTRA)
 
 %.pdf : %.tex common.tex
 	$(PDFLATEX) $<
