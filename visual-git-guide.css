@@ -7,3 +7,38 @@
 ol ol {
     list-style-type: lower-alpha;
 }
+#language-box {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-family: sans-serif;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#language-box a {
+    color: blue;
+    display: block;
+    padding-bottom: .5ex;
+}
+#language-box ul {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+#language-box ul li {
+    padding: .2ex 0;
+}
+#language-box ul li.selected {
+    font-weight: bold;
+}
+#language-box li:hover ul {
+    display: block;
+}
+@media print {
+    #language-box {
+        display: none;
+    }
+}
