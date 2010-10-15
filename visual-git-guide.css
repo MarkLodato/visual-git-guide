@@ -1,0 +1,9 @@
+.center {
+    text-align: center;
+}
+#link-to-png, #link-to-svg {
+    font-style: italic; display: none;
+}
+ol ol {
+    list-style-type: lower-alpha;
+}
