@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>図解 Git</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">図解 Git</h1>
+
+  <ul id="language-box">
+    <li><a>他の言語 <small>▼</small></a>
+    <ul>
+      <li><a href='index-en.html'>English</a></li>
+      <li class="selected">日本語</li>
+    </ul></li>
+  </ul>
+
+  <p id="link-to-png">もし図の表示がおかしかったら、このページの <a
+    href="?no-svg">SVGでない</a>バージョンを試して下さい。</p>
+
+  <p id="link-to-svg">SVG の画像処理を中止しています。
+  <a href="index.html">(SVG の画像処理を再開)</a></p>
+
+  <p>このページのオリジナルは、Mark Lodato さんが執筆した <a href="http://marklodato.github.com/visual-git-guide/">A Visual Git Reference</a>です。</p>
+
+  <p>このページでは、よく使われる git のコマンドを簡潔に図を用いて説明します。
+  git について少し知識があるなら、このページはその知識を整理するのに役立つかもしれません。このページがどのようにして作られたのか興味があるなら、私の<a href='http://github.com/MarkLodato/visual-git-guide'>GitHub リポジトリ</a>を見て下さい。(<a href="http://github.com/kazu-yamamoto/visual-git-guide">日本語訳の GitHub リポジトリ)</a></p>
+  <h2 id="contents">内容</h2>
+  <ol>
+    <li><a href="#basic-usage">基本的な使い方</a></li>
+    <li><a href="#conventions">凡例</a></li>
+    <li><a href="#commands-in-detail">コマンドの詳細</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">分離HEADでの commit</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">技術メモ</a></li>
+  </ol>
+
+  <h2 id="basic-usage">基本的な使い方</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>上記4つのコマンドは、作業ディレクトリ、ステージ(インデックスとも呼ばれる)、および履歴(一連のコミット)間でファイルをコピーします。</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> は <em>files</em> (の現在の状態)をステージにコピーします。</li>
+
+    <li><code>git commit</code> は、ステージの内容をコミットとして保存します。</li>
+
+    <li><code>git reset -- <em>files</em></code> は、<em>files</em> のステージングを取りやめます。つまり、<em>files</em>を最新のコミットからステージへコピーします。これは、<code>git add <em>files</em></code> を取り消すのに使えます。また、<code>git reset</code> として、すべてのステージングを取り消すこともできます。</li>
+Use this
+
+    <li><code>git checkout -- <em>files</em></code> は、<em>files</em>をステージから作業ディレクトリへコピーします。ローカルの変更をすべて破棄するには、このコマンドを使って下さい。</li>
+
+  </ul>
+  
+  <p>ファイルを特定しないで(あるいはファイルに加えて)、<code>git reset -p</code>、<code>git checkout -p</code>、あるいは
+  <code>git add -p</code> を使えば、対話的にどのハンクを対象にするのか選べます。</p>
+
+  <h2 id="conventions">凡例</h2>
+
+  <p>これ以降、以下のような図を使っていきます。(訳注：図中の英語を日本語にする方法が分かりません。orz)</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>緑色はコミットで、5文字の識別子が付いており、自分の親を指しています。ブランチはオレンジ色で示してあり、ある特定のコミットを指しています。現在のブランチは、特殊な参照である <em>HEAD</em> によって識別され、その情報はブランチに*くっついて*います。この図では、最新の5つのコミットが表示されており、一番新しいコミットには <em>ed489</em> という識別子が付いています。現在のブランチである <em>master</em> は、このコミットを指しています。一方、もう一つのブランチ <em>maint</em> は、<em>master</em> が指すコミットの祖先を指しています。</p>
+
+  <h2 id="commands-in-detail">コマンドの詳細</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>差分を取る方法は、たくさんあります。以下によく使われるコマンドの例を示します。すべてのコマンドには、ファイル名を指定することもでき、その場合は差分の計算をそのファイルに限定します。</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>コミットを実行すると、git はステージングされたファイルから、新しいコミットオブジェクトを作り、その親として最新のコミットを設定します。そして、現在のブランチをこの新しいコミットへ移動させます。以下の図では、現在のブランチは<em>master</em>です。このコマンドを実行する前は、<em>master</em>は、<em>ed489</em>を指していました。実行後は、新しいコミット <em>f0cec</em> が作られ、親が <em>ed489</em>となり、<em>master</em>がこの新しいコミットへ移動します。</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>たとえ、現在のブランチが中間のコミット(あるコミットの親であるコミット)であっても、同じことが起きます。以下の図では、<em>master</em>の祖先である<em>maint</em>でコミットが発生し、その結果が<em>1800b</em>となりました。これ以降、<em>maint</em>は、<em>master</em>の祖先ではなくなります。この二つの履歴を統合するには、<a href='#merge'>merge</a> (あるいは <a href='#rebase'>rebase</a>) を実行する必要があります。</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>ときどき、間違ったコミットを実行してしまうこともあるでしょう。<code>git commit --amend</code> を使えば、簡単に訂正できます。このコマンドを使うと、git は最新のコミットと同じ親を持つ新しいコミットを作ります。(古いコミットは、何からも参照されていなければ破棄されます。)</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>4番目の使い方は <a href="#detached">分離HEAD</a>へのコミットですが、これについては後述します。</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>checkout コマンドは、履歴(またはステージ)から作業ディレクトリへファイルをコピーするために使います。条件によっては、ブランチを切り替えます。</p>
+
+  <p>ファイル名(と加えて<code>-p</code>と)が与えられると、git は指定されたファイルを指定されたコミットからステージと作業ディレクトリへコピーします。たとえば、<code>git checkout HEAD~ foo.c</code> はファイル <code>foo.c</code> を <em>HEAD~</em> というコミット(最新のコミットの親)から作業ディレクトリへコピーし、同時にステージングします(もしコミット名が指定されないと、ファイルはステージからコピーされます)。現在のブランチには、何の変更もないことに注意しましょう。</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>ファイル名が指定*されず*、参照がローカルのブランチである場合、<em>HEAD</em>がそのブランチに移動し(つまり、ブランチが切り替わり)、ステージと作業ディレクトリがそのコミットの内容になるよう設定されます。(下の図では <em>a47c3</em> という名前の)現在コミットに存在するファイルすべてがコピーされます。(<em>ed489</em> という名前の)以前のコミットに存在するが、現在のコミットには存在しないファイルは、削除されます。どちらにも存在しないファイルは、そのまま残されます。</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>ファイル名が指定されず、参照がローカルのブランチでない場合、すなわちタグやリモートブランチ、SHA-1 の名前、あるいは <em>master~3</em> のように指定された場合は、無名のブランチができます。これは、<em>分離HEAD</em>と呼ばれます。この機能を使えば、履歴の中を飛び回れます。たとえば、git バージョン 1.6.6.1 をコンパイルしたいなら、<code>git checkout v1.6.6.1</code> (v1.6.6.1 はブランチではなくタグ)とした後に、コンパイルしてインストールし、<code>git checkout master</code> のようにブランチに戻ってくればよいのです。ただし、分離HEADへのコミットは、通常とは若干ことなる動作をします。これについては、<a href="#detached">以下</a>で説明します。</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">分離HEADでの commit</h3>
+
+  <p><em>HEAD</em> が分離されている場合、名前のついたブランチは何も更新されないという点を除いて、commit は通常と同じ動作をします。(これを無名ブランチだと考えてもよいでしょう。)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>なんらかのコマンド、たとえば <em>master</em> を checkout すると、このコミットは他の何からも参照されなくなるので、削除されます。以下の図で、このコマンドを実行した後、<em>2eecb</em> は何からも参照されていないことに注意して下さい。</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>逆にもし、この状態を保存したいなら、<code>git checkout -b <em>name</em></code> を使って、名前付きのブランチを新しく作ればよいのです。</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>reset コマンドは、現在のブランチの位置を他へ移動されます。条件によっては、ステージと作業ディレクトリの内容を更新します。このコマンドは、作業ディレクトリを変更せずに、履歴からステージへファイルをコピーする目的でも使われます。</p>
+
+  <p>ファイル名なしでコミットが指定されると、現在のブランチがそのコミットに移動し、ステージの内容はそのコミットと同じになります。<code>--hard</code> が指定されると、作業ディレクトリも更新されます。<code>--soft</code>が指定されると、どちらも更新されません。</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>もしコミットが指定されないと、<em>HEAD</em> が指定されたことになります。この場合、ブランチは移動しませんが、ステージの内容が、最新のコミットの内容にリセットされます。(もし <code>--hard</code> が指定されると、作業ディレクトリもリセットされます。)</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>もしファイル名(および <code>-p</code>)が指定されると、ファイル名を指定した <a href='#checkout'>checkout</a> のように動作しますが、更新されるのは作業ディレクトリではなく、ステージのみです。(<em>HEAD</em>以外のコミットからファイルをコピーするように、コミットを指定することもできます。)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>merge は、他のコミットから変更を受け入れるための新しいコミットを作成します。merge する前は、ステージが最新のコミットと一致していないといけません。つまらない例としては、他のコミットが現在のコミットの祖先である場合が挙げられます。この場合は、何も起きません。次に簡単な例としては、現在のコミットが他のコミットの祖先である場合です。これは、<em>fast-forward</em> マージとなります。単に参照が移動して、移動先のコミットが checkout されます。</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>それ以外の場合では、本当のマージが起こります。マージの戦略は選択可能ですが、通常は再帰マージが選ばれます。この戦略では基本的に、現在のコミット(<em>ed489</em> below) と指定されたコミット(<em>33104</em>、other) の共通の先祖であるコミット(<em>b325c</em>) が特定され、<a href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way マージ</a>が実行されます。結果は、作業ディレクトリとステージに反映され、commit が実行されます。このコミットでは、二人目の親として (<em>33104</em>)が指定されます。</p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>cherry-pick コマンドは、あるコミットからメッセージとパッチをコピーし、現在のブランチに新しいコミットを作ります。</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>rebase は、<a href='#merge'>merge</a> の代替コマンドあり、複数のブランチを接ぎ木します。merge は 2 つの親を持つ 1 つのコミットを作成し、履歴を一直線に保ちませんが、rebase は現在のブランチにあるコミットを他のブランチで再現することで履歴を一直線に保ちます。本質的に、rebase は自動的に連続で <a href='#cherry-pick'>cherry-pick</a> をすることに他なりません。</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>上記のコマンドは、<em>topic</em>ブランチに存在するが<em>master</em>には存在しないすべてのコミット(すなわち<em>169a6</em>と <em>2c33a</em>)を<em>master</em>ブランチ上で再現します。そして、ブランチを新しい先端に移動させます。古いコミットは、他から参照されてないので、ゴミとして回収されます。</p>
+
+  <p>履歴をどれだけたどるかを制限するためには、<code>--onto</code> オプションを使います。次のコマンドは、現在のブランチの  <em>169a6</em> より後 (それ自体は含まない)のコミット(つまり<em>2c33a</em>)を<em>master</em>ブランチで再現します。
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>コミットを再現するだけでなく、もっと複雑なことを指定できるコマンド <code>git rebase --interactive</code> もあります。このコマンドでは、コミットを削除したり、変更したり、コミット同士を統合したりできます。これを表現する適切な図は存在しません。詳細は、<a href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a> を参照して下さい。</p>
+
+  <h2 id="technical-notes">技術メモ</h2>
+
+  <p>ファイルの内容は実際には、インデックスファイル(<em>.git/index</em>)やコミットオブジェクトの中には格納されません。ファイルはオブジェクトデーダベース(<em>.git/objects</em>)に<em>blob</em>として格納され、SHA-1 ハッシュで識別されます。インデックスファイルは、ファイル名、対応するblobの識別子、そして他のデータの一覧です。他にもtreeというデータ型があって、これもハッシュで識別されます。treeは作業ディレクトリに含まれるディレクトリに対応し、treeやそのディレクトリに含まれるファイルに対応するblobを格納しています。それぞれのコミットは、最上位のtreeの識別子を格納しており、そのtreeは commit されるすべての blob と他のtreeを格納しています。</p>
+
+  <p>分離HEADを使って commit すると、最後のコミットは HEAD の reflog によって参照されます。しかし、これはしばらくするとなくなり、コミットはゴミとして回収されます。これは、<code>git commit --amend</code> や <code>git rebase</code> で破棄されたコミットと同様です。</p>
+
+  <hr>
+  <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
+    Lodato</a>.  This work is licensed under a <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    License</a>.</p>
+  <p>訳の著作権は<a href="http://www.mew.org/~kazu/">山本和彦</a>に属します。</p>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-13167645-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
