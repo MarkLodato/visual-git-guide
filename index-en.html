@@ -79,6 +79,27 @@
   <code>git add -p</code> instead of (or in addition to) specifying particular
   files to interactively choose which hunks copy.</p>
 
+  <p>It is also possible to jump over the stage and check out files directly 
+  from the history or commit files without staging first.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> is equivalent to running <tt>git add</tt> 
+    on all filenames that existed in the latest commit, and then running 
+    <tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>files</em></code> creates a new commit containing 
+    the contents of the latest commit, plus a snapshot of <em>files</em> taken 
+    from the working directory.  Additionally, <em>files</em> are copied to 
+    the stage.</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> copies <em>files</em> 
+    from the latest commit to both the stage and the working directory.</li>
+
+  </ul>
+
   <h2 id="conventions">Conventions</h2>
 
   <p>In the rest of this document, we will use graphs of the following
