@@ -4,6 +4,7 @@ PDF2PNG = convert -density 88
 
 FILES := \
     basic-usage \
+    basic-usage-2 \
     checkout-after-detached \
     checkout-b-detached \
     checkout-branch \
