@@ -81,6 +81,26 @@
   <code>git add -p</code> 명령과 같이 -p 옵션을 사용하여 파일을 지정하지
   않고 어떤 파일에 대해 명령을 적용할 지 대화형 명령을 사용할 수
   있습니다.</p>
+  
+  <p>Stage 영역을 거치지 않고 직접 History로부터 파일을 Checkout 하거나, Stage
+  영역을 거치지 않고 직접 Commit을 할 수도 있습니다.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> 명령은 마지막 커밋에 존재하는 모든 파일들에 대하여
+    <tt>git add</tt> 명령을 적용한 후 <tt>git commit</tt> 명령을 적용하는 것과 다르지 않다.</li>
+    
+    <li><code>git commit <em>files</em></code> 명령을 실행하면 마지막 커밋을 기반으로
+    <em>files</em>의 변경된 내용을 포함하는 새로운 커밋을 하나 만든다. 이 때 <em>files</em>은
+    Stage 영역에 추가된다.</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> 명령은 <em>files</em> 
+    을 마지막 커밋으로부터 Stage 영역과 현재 작업 디렉토리에 동시에 복사한다.</li>
+
+  </ul>
+
 
   <h2 id="conventions">관례</h2>
 
