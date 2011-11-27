@@ -4,6 +4,7 @@ PDF2PNG = convert -density 88
 
 FILES := \
     basic-usage \
+    basic-usage-2 \
     checkout-after-detached \
     checkout-b-detached \
     checkout-branch \
@@ -26,7 +27,8 @@ FILES := \
 
 HTML := \
     index-en.html \
-    index-ja.html
+    index-ja.html \
+    index-ko.html
 
 PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
