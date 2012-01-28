@@ -104,29 +104,29 @@
 
   </ul>
 
-  <h2 id="conventions">Conventions</h2>
+  <h2 id="conventions">Соглашения</h2>
 
-  <p>In the rest of this document, we will use graphs of the following
-  form.</p>
+  <p>Иллюстрации в этой справке выдержаны в единой цветовой схеме.</p>
 
   <div class="center"><img src='conventions.svg.png'></div>
 
-  <p>Commits are shown in green as 5-character IDs, and they point to their
-  parents.  Branches are shown in orange, and they point to particular
-  commits.  The current branch is identified by the special reference
-  <em>HEAD</em>, which is "attached" to that branch.  In this image, the five
-  latest commits are shown, with <em>ed489</em> being the most recent.
-  <em>master</em> (the current branch) points to this commit, while
-  <em>maint</em> (another branch) points to an ancestor of <em>master</em>'s
-  commit.</p>
+  <p>Коммиты раскрашены зеленым цветом и подписаны 5-ти буквенными
+  идентификаторами.  Каждый коммит указывает на своего родителя зеленой
+  стрелочкой.  Ветки раскрашены оранжевым цветом; ветки указывают на коммиты.
+  Специальная ссылка <em>HEAD</em> указывает на текущую ветку.  На иллюстрации
+  вы можете увидеть последние пять коммитов. Самый последний коммит имеет хеш
+  <em>ed489</em>. <em>master</em> (текущая ветка) указывает на этот коммит,
+  <em>maint</em> (другая ветка) указывает на предка <em>master</em>-ового
+  коммита.</p>
 
-  <h2 id="commands-in-detail">Commands in Detail</h2>
+  <h2 id="commands-in-detail">Подробно о командах</h2>
 
   <h3 id="diff">Diff</h3>
 
-  <p>There are various ways to look at differences between commits.  Below are
-  some common examples.  Any of these commands can optionally take extra
-  filename arguments that limit the differences to the named files.</p>
+  <p>Есть много способов посмотреть изменения между коммитами.  Ниже вы
+  увидите несколько простых примеров.  К каждой из этих команд можно добавить
+  имена файлов в качестве дополнительного аргумента.  Так мы выведем
+  информацию об изменениях только для перечисленных файлов.</p>
 
   <div class="center"><img src='diff.svg.png'></div>
 
