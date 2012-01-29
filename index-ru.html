@@ -132,34 +132,36 @@
 
   <h3 id="commit">Commit</h3>
 
-  <p>When you commit, git creates a new commit object using the files from the
-  stage and sets the parent to the current commit.  It then points the current
-  branch to this new commit.  In the image below, the current branch is
-  <em>master</em>.   Before the command was run, <em>master</em> pointed to
-  <em>ed489</em>.  Afterward, a new commit, <em>f0cec</em>, was created, with
-  parent <em>ed489</em>, and then <em>master</em> was moved to the new
-  commit.</p>
+  <p>Когда вы делаете коммит, git создает новый объект коммита, используя файлы
+  со сцены, а текущей коммит становится родителем для нового. После этого
+  указатель текущей ветки перемещается на новый коммит.  Вы это видите на
+  картинке, где <em>master</em> — это текущая ветка.  До совершения коммита
+  <em>master</em> указывал на коммит <em>ed489</em>.  После добавления нового
+  коммита <em>f0cec</em>, родителем которого стал <em>ed489</em>, указатель
+  ветки <em>master</em> был перемещен на новый коммит.</p>
 
   <div class="center"><img src='commit-master.svg.png'></div>
 
-  <p>This same process happens even when the current branch is an ancestor of
-  another.  Below, a commit occurs on branch <em>maint</em>, which was an
-  ancestor of <em>master</em>, resulting in <em>1800b</em>.  Afterward,
-  <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
-  histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
-  will be necessary.</p>
+  <p>То же самое происходит, если одна ветка является предком другой ветки.
+  Ниже показан пример нового коммита <em>1800b</em> в ветке <em>maint</em>,
+  которая является предком ветки <em>master</em>.  После этого ветка
+  <em>maint</em> уже больше не является предком ветки <em>master</em>. И в 
+  случае необходимости объединения работы, проделанной в этих разделенных
+  ветках, вам следует воспользоваться командой <a href='#merge'>merge</a> (что
+  более предпочтительно) или <a href='#rebase'>rebase</a>.</p>
 
   <div class="center"><img src='commit-maint.svg.png'></div>
 
-  <p>Sometimes a mistake is made in a commit, but this is easy to correct with
-  <code>git commit --amend</code>.  When you use this command, git creates a
-  new commit with the same parent as the current commit.  (The old commit will
-  be discarded if nothing else references it.)</p>
+  <p>Если вы сделали ошибку в последнем коммите, её легко исправить с помощью
+  команды <code>git commit --amend</code>.  Эта команда создает новый коммит,
+  родителем которого будет родитель ошибочного коммита. Старый ошибочный
+  коммит будет отброшен, конечно же если только на него не будет ещё
+  каких-либо других ссылок, что маловероятно.</p>
 
   <div class="center"><img src='commit-amend.svg.png'></div>
 
-  <p>A fourth case is committing with a <a href="#detached">detached
-    HEAD</a>, as explained later.</p>
+  <p>Четвертый случай коммита из состояния «<a href="#detached">detached
+    HEAD</a>» будет рассмотрен далее.</p>
 
   <h3 id="checkout">Checkout</h3>
 
