@@ -165,56 +165,65 @@
 
   <h3 id="checkout">Checkout</h3>
 
-  <p>The checkout command is used to copy files from the history (or stage) to
-  the working directory, and to optionally switch branches.</p>
+  <p>Команда checkout используется для копирования файлов из истории или сцены
+  в рабочую директорию. Также она может использоваться для переключения между
+  ветками.</p>
 
-  <p>When a filename (and/or <code>-p</code>) is given, git copies those files
-  from the given commit to the stage and the working directory.  For example,
-  <code>git checkout HEAD~ foo.c</code> copies the file <code>foo.c</code>
-  from the commit called <em>HEAD~</em> (the parent of the current commit) to
-  the working directory, and also stages it.  (If no commit name is given,
-  files are copied from the stage.)  Note that the current branch is not
-  changed.</p>
+  <p>Когда вы указываете имя файла (и/или ключ <code>-p</code>), git копирует
+  эти файлы из указанного коммита на сцену и в рабочую директорию.  Например,
+  <code>git checkout HEAD~ foo.c</code> копирует файл <code>foo.c</code>
+  из коммита <em>HEAD~</em> (предка текущего коммита) в рабочу директорию и на
+  сцену.  Если имя коммита не указано, то файл будет скопирован со сцены в
+  рабочую директорию.  Следует заметить, что в приведенных выше примерах
+  не было переключения между ветками.</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
-  <p>When a filename is <em>not</em> given but the reference is a (local)
-  branch, <em>HEAD</em> is moved to that branch (that is, we "switch to" that
-  branch), and then the stage and working directory are set to match the
-  contents of that commit.  Any file that exists in the new commit
-  (<em>a47c3</em> below) is copied; any file that exists in the old commit
-  (<em>ed489</em>) but not in the new one is deleted; and any file that exists
-  in neither is ignored.</p>
+  <p>В том случае если мы <em>не указываем</em> имя файла, но указываем имя
+  (локальной) ветки, то указатель <em>HEAD</em> будет перемещен на эту ветку
+  (мы переключимся на эту ветку). При этом сцена и рабочая директория будут
+  приведены в соответствие с этим коммитом. Любой файл, который присутствует в
+  новом коммите (<em>a47c3</em> ниже) будет скопирован из истории; любой файл,
+  который был в старом коммите (<em>ed489</em>), но отсутствует в новом, будет
+  удален; любой файл, который не записан ни в одном коммите, будет
+  проигнорирован.</p>
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
-  (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
-  something like <em>master~3</em> &mdash; we get an anonymous branch, called
-  a <em>detached HEAD</em>.  This is useful for jumping around the history.
-  Say you want to compile version 1.6.6.1 of git.  You can <code>git checkout
-    v1.6.6.1</code> (which is a tag, not a branch), compile, install, and then
-  switch back to another branch, say <code>git checkout master</code>.
-  However, committing works slightly differently with a detached HEAD; this is
-  covered <a href="#detached">below</a>.</p>
+  <p>В том случае если мы <em>не указываем</em> имя файла, и
+  <em>не указываем</em> имя (локальной) ветки, а указываем тег, удаленная
+  (remote) ветка, SHA-1 хеш коммита или что-то вроде <em>master~3</em>, то мы
+  получаем безымянную ветку, называемую «<em>Detached HEAD</em>» (оторванная
+  голова). Это очень полезная штука для если нам надо осмотреться в истории
+  коммитов. К примеру, вам захочется скомпилировать git версии 1.6.6.1. Вы
+  можете набрать <code>git checkout v1.6.6.1</code> (это тег, не ветка),
+  скомпилировать, установить, а затем вернуться в другую ветку, скажем
+  <code>git checkout master</code>. Тем не менее, коммиты из состояния
+  «Detached HEAD» происходят по своим особым важным правилам, и мы рассмотрим
+  их <a href="#detached">ниже</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <h3 id="detached">Committing with a Detached HEAD</h3>
+  <h3 id="detached">Коммит из состояния «Detached HEAD»</h3>
 
-  <p>When <em>HEAD</em> is detached, commits work like normal, except no named
-  branch gets updated.  (You can think of this as an anonymous branch.)</p>
+  <p>Когда мы находимся в состоянии оторванной головы
+  (<em>Detached HEAD</em>), коммит совершается по тем же правилам, что и
+  обычно за исключением одной маленькой особенности: ни один указатель ветки
+  не будет изменен или добавлен к новому коммиту.  Вы можете представить эту
+  ситуацию как работу с анонимной веткой.</p>
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Once you check out something else, say <em>master</em>, the commit is
-  (presumably) no longer referenced by anything else, and gets lost.  Note
-  that after the command, there is nothing referencing <em>2eecb</em>.</p>
+  <p>Если после такого коммита вы переключитесь в ветку <em>master</em>, то
+  то коммит <em>2eecb</em>, совершенный из состояния «Detached HEAD»
+  потеряется и попросту будет уничтожен очередной сборкой мусора только потому
+  нет ни одного объекта, который бы на него ссылался: ни ветки, ни тега.</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
-  <p>If, on the other hand, you want to save this state, you can create a new
-  named branch using <code>git checkout -b <em>name</em></code>.</p>
+  <p>В том случае, если вы хотите сохранить этот коммит на будущее, вы можете
+  создать на основе его новую ветку командой
+  <code>git checkout -b <em>new</em></code>.</p>
 
   <div class="center"><img src='checkout-b-detached.svg.png'></div>
 
