@@ -229,29 +229,33 @@
 
   <h3 id="reset">Reset</h3>
 
-  <p>The reset command moves the current branch to another position, and
-  optionally updates the stage and the working directory.  It also is used to
-  copy files from the history to the stage without touching the working
-  directory.</p>
+  <p>Команда reset перемещает указатель текущей ветки в другую позицию, и
+  дополнительно может обновить сцену и рабочую директорию. Эту команду можно
+  также использовать для того чтобы скопировать файл из истории на сцену, не
+  задевая рабочую директорию.</p>
 
-  <p>If a commit is given with no filenames, the current branch is moved to
-  that commit, and then the stage is updated to match this commit.  If
-  <code>--hard</code> is given, the working directory is also updated.  If
-  <code>--soft</code> is given, neither is updated.</p>
+  <p>Если коммит указан без имен файлов, указатель ветки будет перемещен на
+  этот коммит, а затем сцена приведется в соответствие с этим коммитом. Если
+  мы используем ключ <code>--soft</code>, то сцена не будет изменена. Если мы
+  используем ключ <code>--hard</code>, то будет обновлена и сцена, и рабочая
+  директория.</p>
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
-  <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
-  the branch is not moved, but the stage (and optionally the working
-  directory, if <code>--hard</code> is given) are reset to the contents of the
-  last commit.</p>
+  <p>Если имя коммита не будет указано, по умолчанию оно будет <em>HEAD</em>.
+  В этом случае указатель ветки не будет перемещен, но сцена (и возможно
+  рабочая директория, если был использован ключ <code>--hard</code>) будут
+  приведены к состоянию последнего коммита.</p>
 
   <div class="center"><img src='reset.svg.png'></div>
 
-  <p>If a filename (and/or <code>-p</code>) is given, then the command works
-  similarly to <a href='#checkout'>checkout</a> with a filename, except only
-  the stage (and not the working directory) is updated.  (You may also specify
-  the commit from which to take files, rather than <em>HEAD</em>.)</p>
+  <p>Если в команде указано имя файла (и/или ключ <code>-p</code>), то команда
+  работает также как <a href='#checkout'>checkout</a> с именем файла, за
+  исключением того, что только сцена (но не рабочая директория) будет
+  изменена. Если вы подставите имя коммита на место двойной черты, вы сможете
+  получить состояние файла из этого коммита, тогда как в случае с двойной
+  чертой вы получите состояние файла из коммита, на который указывает
+  <em>HEAD</em>.</p>
 
   <div class="center"><img src='reset-files.svg.png'></div>
 
