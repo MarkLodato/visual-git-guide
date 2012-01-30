@@ -295,34 +295,36 @@
 
   <h3 id="rebase">Rebase</h3>
 
-  <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
-  multiple branches.  Whereas a merge creates a single commit with two
-  parents, leaving a non-linear history, a rebase replays the commits from the
-  current branch onto another, leaving a linear history.  In essence, this is
-  an automated way of performing several <a
-    href='#cherry-pick'>cherry-pick</a>s in a row.</p>
+  <p>Перебазирование (rebase) — это альтернатива <a href='#merge'>слиянию</a>
+  для задач объединения нескольких веток. Если слияние создает новый коммит с
+  двумя родителями, оставляя нелинейную историю, то перебазирование применяет
+  все коммиты один за одним из одной ветки в другую, оставляя за собой
+  линейную историю коммитов. По сути это автоматическое выполнение нескольких
+  команд <a href='#cherry-pick'>cherry-pick</a> подряд.</p>
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>The above command takes all the commits that exist in <em>topic</em> but
-  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
-  them onto <em>master</em>, and then moves the branch head to the new tip.
-  Note that the old commits will be garbage collected if they are no longer
-  referenced.</p>
+  <p>На схеме выше вы видите как команда берет все коммиты, которые есть в
+  ветке <em>topic</em>, но отсутствуют в ветке <em>master</em> (коммиты
+  <em>169a6</em> and <em>2c33a</em>), и воспроизводит их в ветке
+  <em>master</em>. Затем указатель ветки перемещается на новое место. Следует
+  заметить, что старые коммиты будут уничтожены сборщиком мусора, если на них
+  уже не будет ничего ссылаться.</p>
 
-  <p>To limit how far back to go, use the <code>--onto</code> option.  The
-  following command replays onto <em>master</em> the most recent commits on
-  the current branch since <em>169a6</em> (exclusive), namely
-  <em>2c33a</em>.</p>
+  <p>Используйте ключ <code>--onto</code> чтобы ограничить глубину захвата
+  объединяемой ветки. На следующей схеме вы можете увидеть как в ветку
+  <em>master</em> приходят лишь последние коммиты из текущей ветки, а именно
+  коммиты после (но не включая) <em>169a6</em>, т. е. <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
-  <p>There is also <code>git rebase --interactive</code>, which allows one to
-  do more complicated things than simply replaying commits, namely dropping,
-  reordering, modifying, and squashing commits.  There is no obvious picture
-  to draw for this; see <a
-    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
-  for more details.</p>
+  <p>Есть также интерактивный режим перебазирования <code>git rebase
+  --interactive</code>, с помощью которого вы сможете сделать вещи похитрее
+  простого линейного применения коммитов, а именно сбрасывание (dropping),
+  изменение порядка (reordering), правка (modifying) и выдавливание
+  (squashing) коммитов. Нет наглядной схемы, чтобы показать эти возможности;
+  за описанием лучше обратиться к справке по <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>.</p>
 
   <h2 id="technical-notes">Technical Notes</h2>
 
