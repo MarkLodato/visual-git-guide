@@ -326,25 +326,25 @@
   за описанием лучше обратиться к справке по <a
     href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>.</p>
 
-  <h2 id="technical-notes">Technical Notes</h2>
+  <h2 id="technical-notes">Технические заметки</h2>
 
-  <p>The contents of files are not actually stored in the index
-  (<em>.git/index</em>) or in commit objects.  Rather, each file is stored in
-  the object database (<em>.git/objects</em>) as a <em>blob</em>, identified
-  by its SHA-1 hash.  The index file lists the filenames along with the
-  identifier of the associated blob, as well as some other data.  For commits,
-  there is an additional data type, a <em>tree</em>, also identified by its
-  hash.  Trees correspond to directories in the working directory, and contain
-  a list of trees and blobs corresponding to each filename within that
-  directory.  Each commit stores the identifier of its top-level tree, which
-  in turn contains all of the blobs and other trees associated with that
-  commit.</p>
+  <p>Содержание файлов не хранится в индексе (<em>.git/index</em>) или в
+  объектах коммитов. Правильнее было бы сказать, что каждый файл хранится в
+  базе данных объектов (<em>.git/objects</em>) в <em>двоичном
+  представлении</em>; найти этот файл можно по его SHA-1 хешу. В файле индекса
+  записаны имена файлов, их хеши и дополнительная информация. В информации о
+  коммитах вы встретите тип данных <em>дерево</em>, для идентификации которого
+  также используется SHA-1 хеш. Деревья описывают директории в рабочей
+  директории, а также содержат информацию о других деревьях и файлах в
+  принадлежащей к обозначенному дереву. Каждый коммит хранит идентификатор
+  своего верхнего дерева, которое содержит все файлы и другие деревья,
+  измененные в этом коммите.</p>
 
-  <p>If you make a commit using a detached HEAD, the last commit really is
-  referenced by something: the reflog for HEAD.  However, this will expire
-  after a while, so the commit will eventually be garbage collected, similar
-  to commits discarded with <code>git commit --amend</code> or <code>git
-    rebase</code>.</p>
+  <p>Если вы делаете коммит из состояния «оторванной головы» (detached HEAD),
+  то на этот коммит будет ссылаться ссылка истории HEAD. Но рано или поздно
+  время хранения этой ссылки истечет, и этот коммит будет уничтожен сборщиком
+  мусора точно также, как это делается при выполнении команд
+  <code>git commit --amend</code> и <code>git rebase</code>.</p>
 
   <hr>
   <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
