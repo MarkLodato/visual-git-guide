@@ -261,24 +261,27 @@
 
   <h3 id="merge">Merge</h3>
 
-  <p>A merge creates a new commit that incorporates changes from other
-  commits.  Before merging, the stage must match the current commit.  The
-  trivial case is if the other commit is an ancestor of the current commit, in
-  which case nothing is done.  The next most simple is if the current commit
-  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
-  merge.  The reference is simply moved, and then the new commit is checked
-  out.</p>
+  <p>Команда merge (слияние) создает новый коммит на основе текущего коммита,
+  применяя изменения других коммитов. Перед слиянием сцена должна быть
+  приведена в соответствие с текущим коммитом. Самый простой случай слияния —
+  это когда другой коммит является предком текущего коммита: в этом случае
+  ничего не происходит. Другой простой случай слияния — когда текущий коммит
+  является предком другого коммита: в этом случае происходит <em>быстрая
+  перемотка</em> (<em>fast-forward</em>). Ссылка текущей ветки будет просто
+  перемещена на новый коммит, а сцена и рабочая директория будут приведены в
+  соответствие с новым коммитом.</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
 
-  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
-  but the default is to perform a "recursive" merge, which basically takes the
-  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
-  and their common ancestor (<em>b325c</em>), and performs a <a
-    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
-  The result is saved to the working directory and the stage, and then a
-  commit occurs, with an extra parent (<em>33104</em>) for the new commit.
-  </p>
+  <p>Во всех других случаях выполняется «настоящее» слияние. Вы можете
+  изменить стратегию слияния, но по умолчанию будет выполнено «рекурсивное»
+  слияние, для которого будет взят текущий коммит (<em>ed489</em> ниже на
+  схеме), другой коммит (<em>33104</em>) и их общий предок (<em>b325c</em>); и
+  для этих трех коммитов будет выполнено
+  <a href='http://en.wikipedia.org/wiki/Three-way_merge'>трехстороннее
+  слияние</a>. Результат этого слияние будет записан в рабочую директорию и на
+  сцену, и будет добавлен результирующий коммит со вторым родителем
+  (<em>33104</em>).</p>
 
   <div class="center"><img src='merge.svg.png'></div>
 
