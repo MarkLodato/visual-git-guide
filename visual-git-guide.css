@@ -15,27 +15,21 @@ ol ol {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-#language-box a {
-    color: blue;
-    display: block;
-    padding-bottom: .5ex;
+    text-align: right;
 }
 #language-box ul {
-    display: none;
+    display: inline;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 0 -0.5em;
+    padding: 0.5em;
     width: 100%;
 }
 #language-box ul li {
     padding: .2ex 0;
+    display: inline;
 }
 #language-box ul li.selected {
-    font-weight: bold;
-}
-#language-box li:hover ul {
-    display: block;
+    display: none;
 }
 @media print {
     #language-box {
