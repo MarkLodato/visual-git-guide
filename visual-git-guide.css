@@ -25,9 +25,11 @@ ol ol {
 #language-box ul {
     display: none;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 0 -0.5em;
+    padding: 0.5em;
     width: 100%;
+    border: 1px black dashed;
+    background-color: white;
 }
 #language-box ul li {
     padding: .2ex 0;
