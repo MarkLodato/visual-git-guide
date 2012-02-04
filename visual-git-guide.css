@@ -37,7 +37,7 @@ ol ol {
 #language-box ul li.selected {
     font-weight: bold;
 }
-#language-box li:hover ul {
+#language-box:hover ul {
     display: block;
 }
 @media print {
