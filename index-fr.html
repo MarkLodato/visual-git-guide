@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="fr-FR">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>A Visual Git Reference</title>
@@ -7,98 +7,98 @@
   <script type="text/javascript" src='visual-git-guide.js'></script>
 </head>
 <body onload="replace_all_PNGs();">
-  <h1 id="top">A Visual Git Reference</h1>
+  <h1 id="top">Une Référence Visuelle de Git</h1>
 
   <div id="language-box">
-    <a>Other Languages:</a>
+    <a>Autres langues :</a>
     <ul>
-      <li class="selected">English</li>
+      <li><a href='index-en.html'>English</a></li>
       <li><a href='index-ja.html'>日本語</a></li>
       <li><a href='index-ko.html'>한국어</a></li>
       <li><a href='index-ru.html'>Русский</a></li>
-      <li><a href='index-fr.html'>Français</a></li>
+      <li class="selected">Français</li>
     </ul>
   </div>
 
-  <p id="link-to-png">If the images do not work, you can try the <a
-    href="?no-svg">Non-SVG</a> version of this page.</p>
+  <p id="link-to-png">Si les images ne s'affichent pas, vous pouvez utiliser la version <a
+    href="?no-svg">Non-SVG</a> de cette page.</p>
 
-  <p id="link-to-svg">SVG images have been disabled.
-  <a href="index.html">(Re-enable SVG)</a></p>
+  <p id="link-to-svg">Les images SVG ont été désactivées.
+  <a href="index.html">(Réactiver SVG)</a></p>
 
-  <p>This page gives brief, visual reference for the most common commands
-  in git.  Once you know a bit about how git works, this site may solidify
-  your understanding.  If you're interested in how this site was created, see
-  my <a href='http://github.com/MarkLodato/visual-git-guide'>GitHub
-    repository</a>.</p>
+  <p>Cette page donne une brève référence visuelle des principales commandes
+  git. Une fois que vous connaissez un peu comment fonctionne git, cette page
+  vous permettra consolider votre compréhension.
+  Si vous voulez savoir comment ce site a été créé, allez voir mon
+  <a href='http://github.com/MarkLodato/visual-git-guide'>dépôt GitHub</a>.</p>
 
-  <h2 id="contents">Contents</h2>
+  <h2 id="contents">Sommaire</h2>
   <ol>
-    <li><a href="#basic-usage">Basic Usage</a></li>
+    <li><a href="#basic-usage">Utilisation basique</a></li>
     <li><a href="#conventions">Conventions</a></li>
-    <li><a href="#commands-in-detail">Commands in Detail</a>
+    <li><a href="#commands-in-detail">Commandes en détail</a>
       <ol>
         <li><a href="#diff">Diff</a></li>
         <li><a href="#commit">Commit</a></li>
         <li><a href="#checkout">Checkout</a></li>
-        <li><a href="#detached">Committing with a Detached HEAD</a></li>
+        <li><a href="#detached">Faire un commit avec une HEAD détachée</a></li>
         <li><a href="#reset">Reset</a></li>
         <li><a href="#merge">Merge</a></li>
         <li><a href="#cherry-pick">Cherry Pick</a></li>
         <li><a href="#rebase">Rebase</a></li>
       </ol>
     </li>
-    <li><a href="#technical-notes">Technical Notes</a></li>
+    <li><a href="#technical-notes">Notes techniques</a></li>
   </ol>
 
-  <h2 id="basic-usage">Basic Usage</h2>
+  <h2 id="basic-usage">Utilisation basique</h2>
 
   <div class="center"><img src='basic-usage.svg.png'></div>
 
-  <p>The four commands above copy files between the working directory, the
-  stage (also called the index), and the history (in the form of commits).</p>
+  <p>Les quatre commandes ci-dessus copient des fichiers entre la working copy (copie de travail),
+  le stage (aussi appelé l'index), et l'histoire (sous la forme de commits).</p>
 
   <ul>
 
-    <li><code>git add <em>files</em></code> copies <em>files</em> (at their
-    current state) to the stage.</li>
+    <li><code>git add <em>fichiers</em></code> copie les <em>fichiers</em> (dans leur
+    état courant) vers le stage.</li>
 
-    <li><code>git commit</code> saves a snapshot of the stage as a
+    <li><code>git commit</code> fait un cliché du stage sous la forme d'un
     commit.</li>
 
-    <li><code>git reset -- <em>files</em></code> unstages files; that is, it
-    copies <em>files</em> from the latest commit to the stage.  Use this
-    command to "undo" a <code>git add <em>files</em></code>.  You can also
-    <code>git reset</code> to unstage everything.</li>
+    <li><code>git reset -- <em>fichiers</em></code> supprime les fichiers du stage; i.e. elle
+    copie les <em>fichiers</em> du dernier commit vers le stage.  Utilisez cette
+    commande pour annuler une commande <code>git add <em>fichiers</em></code>.  Vous pouvez aussi faire un
+    <code>git reset</code> pour vider complètement le stage.</li>
 
-    <li><code>git checkout -- <em>files</em></code> copies <em>files</em> from 
-    the stage to the working directory.  Use this to throw away local
-    changes.</li>
+    <li><code>git checkout -- <em>fichiers</em></code> copie les <em>fichiers</em> du
+    stage vers la working directory (copie de travail).  Utilisez cette commande pour annuler
+    des changements locaux (ceux de votre copie de travail).</li>
 
   </ul>
 
-  <p>You can use <code>git reset -p</code>, <code>git checkout -p</code>, or
-  <code>git add -p</code> instead of (or in addition to) specifying particular
-  files to interactively choose which hunks copy.</p>
+  <p>Vous pouvez utiliser <code>git reset -p</code>, <code>git checkout -p</code>, ou
+  <code>git add -p</code> au lieu de (ou en plus de) spécifier des fichiers particuliers
+  pour choisir interactivement quels morceaux doivent être copiés.</p>
 
-  <p>It is also possible to jump over the stage and check out files directly 
-  from the history or commit files without staging first.</p>
+  <p>Il est également possible de contourner complètement le stage et de sortir (check out) les fichiers
+  directement de l'histoire, ou de commiter les fichiers sans les faire passer préalablement par le stage.</p>
 
   <div class="center"><img src='basic-usage-2.svg.png'></div>
 
   <ul>
 
-    <li><code>git commit -a </code> is equivalent to running <tt>git add</tt> 
-    on all filenames that existed in the latest commit, and then running 
+    <li><code>git commit -a </code> revient à exécuter successivement <tt>git add</tt>
+    sur tous les fichiers qui existaient dans le dernier commit, puis
     <tt>git commit</tt>.</li>
 
-    <li><code>git commit <em>files</em></code> creates a new commit containing 
-    the contents of the latest commit, plus a snapshot of <em>files</em> taken 
-    from the working directory.  Additionally, <em>files</em> are copied to 
-    the stage.</li>
+    <li><code>git commit <em>fichiers</em></code> crée un nouveau commit
+    incluant le contenu du dernier commit, plus un cliché des <em>fichiers</em> pris
+    dans la working directory (copie de travail).  De plus, les <em>fichiers</em> sont copiés dans
+    le stage.</li>
 
-    <li><code>git checkout HEAD -- <em>files</em></code> copies <em>files</em> 
-    from the latest commit to both the stage and the working directory.</li>
+    <li><code>git checkout HEAD -- <em>fichiers</em></code> copie les <em>fichiers</em>
+    depuis le dernier commit vers à la fois le stage et la working copy (copie de travail).</li>
 
   </ul>
 
