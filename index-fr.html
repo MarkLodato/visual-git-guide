@@ -36,7 +36,7 @@
   <ol>
     <li><a href="#basic-usage">Utilisation basique</a></li>
     <li><a href="#conventions">Conventions</a></li>
-    <li><a href="#commands-in-detail">Commandes en détail</a>
+    <li><a href="#commands-in-detail">Les commandes en détail</a>
       <ol>
         <li><a href="#diff">Diff</a></li>
         <li><a href="#commit">Commit</a></li>
@@ -119,210 +119,208 @@
   <em>maint</em> (une autre branche) pointe vers un ancêtre du commit <em>master</em>
   </p>
 
-  <h2 id="commands-in-detail">Commands in Detail</h2>
+  <h2 id="commands-in-detail">Les commandes en détail</h2>
 
   <h3 id="diff">Diff</h3>
 
-  <p>There are various ways to look at differences between commits.  Below are
-  some common examples.  Any of these commands can optionally take extra
-  filename arguments that limit the differences to the named files.</p>
+  <p>Il y a plusieurs façons de visualiser les différences entre commits. Vous
+  trouverez ci-dessous quelques exemples courants. Toutes ces commandes peuvent également
+  prendre des noms de fichers en arguments supplémentaires. Ils restreignent alors les différences
+  affichées aux fichiers concernés.</p>
 
   <div class="center"><img src='diff.svg.png'></div>
 
   <h3 id="commit">Commit</h3>
 
-  <p>When you commit, git creates a new commit object using the files from the
-  stage and sets the parent to the current commit.  It then points the current
-  branch to this new commit.  In the image below, the current branch is
-  <em>master</em>.   Before the command was run, <em>master</em> pointed to
-  <em>ed489</em>.  Afterward, a new commit, <em>f0cec</em>, was created, with
-  parent <em>ed489</em>, and then <em>master</em> was moved to the new
+  <p>Quand vous commitez, git crée un nouvel objet de type "commit" en utilisant
+  les fichiers présents dans le stage, et en prenant comme parent le commit courant.
+  Il déplace aussi la branche courante sur ce nouveau commit. Sur l'image ci-dessous,
+  la branche courante est
+  <em>master</em>. Avant que la commande ne soit exécutée, <em>master</em> pointait sur
+  <em>ed489</em>. Après l'exécution de la commande, un nouveau commit <em>f0cec</em> est créé,
+  avec <em>ed489</em> comme parent, et <em>master</em> est déplacé pour pointer sur ce nouveau
   commit.</p>
 
   <div class="center"><img src='commit-master.svg.png'></div>
 
-  <p>This same process happens even when the current branch is an ancestor of
-  another.  Below, a commit occurs on branch <em>maint</em>, which was an
-  ancestor of <em>master</em>, resulting in <em>1800b</em>.  Afterward,
-  <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
-  histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
-  will be necessary.</p>
+  <p>Ce fonctionnement est systématique, même si la branche courante est une ancêtre d'une autre.
+  Ci dessous, un commit a lieu sur une branche <em>maint</em>, qui est un ancêtre de <em>master</em>.
+  Le commit résultant est : <em>1800b</em>. <em>maint</em> n'est alors plus un ancêtre de<em>master</em>.
+  Pour consolider ces deux histoires (maintenant divergentes), un <a href='#merge'>merge</a>
+  (ou un <a href='#rebase'>rebase</a>) va être nécessaire.</p>
 
   <div class="center"><img src='commit-maint.svg.png'></div>
 
-  <p>Sometimes a mistake is made in a commit, but this is easy to correct with
-  <code>git commit --amend</code>.  When you use this command, git creates a
-  new commit with the same parent as the current commit.  (The old commit will
-  be discarded if nothing else references it.)</p>
+  <p>Si vous commettez une erreur dans un commit, il est facile de la corriger avec
+  <code>git commit --amend</code>. Quand vous utilisez cette commande, git crée un
+  nouveau commit avec le même parent que le commit courant. (L'ancien commit sera supprimé
+  s'il n'y a plus aucun élément &mdash; une branche par exemple &mdash; qui le référence)</p>
 
   <div class="center"><img src='commit-amend.svg.png'></div>
 
-  <p>A fourth case is committing with a <a href="#detached">detached
-    HEAD</a>, as explained later.</p>
+  <p>Une quatrième situation un peu particulière consiste à commiter avec une <a href="#detached">detached
+    HEAD</a> (HEAD détachée), comme expliqué ci-après.</p>
 
   <h3 id="checkout">Checkout</h3>
 
-  <p>The checkout command is used to copy files from the history (or stage) to
-  the working directory, and to optionally switch branches.</p>
+  <p>La commande checkout est utilisée pour copier des fichiers de l'histoire (ou du stage)
+  vers la working copy, et également pour passer d'une branche à une autre.</p>
 
-  <p>When a filename (and/or <code>-p</code>) is given, git copies those files
-  from the given commit to the stage and the working directory.  For example,
-  <code>git checkout HEAD~ foo.c</code> copies the file <code>foo.c</code>
-  from the commit called <em>HEAD~</em> (the parent of the current commit) to
-  the working directory, and also stages it.  (If no commit name is given,
-  files are copied from the stage.)  Note that the current branch is not
-  changed.</p>
+  <p>Quand un nom de fichier (ou <code>-p</code>) est passé en paramètre, git copie ces fichiers
+  depuis le commit concerné vers le stage et vers la working copy. Par exemple,
+  <code>git checkout HEAD~ foo.c</code> copie le fichier <code>foo.c</code>
+  depuis le commit nommé <em>HEAD~</em> (le parent du commit courant) vers
+  la working directory, et le place aussi dans le stage. (Si aucun nom de commit n'est donné,
+  les fichiers sont copiés depuis le stage). Notez que la branche courante n'est pas modifiée.</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
-  <p>When a filename is <em>not</em> given but the reference is a (local)
-  branch, <em>HEAD</em> is moved to that branch (that is, we "switch to" that
-  branch), and then the stage and working directory are set to match the
-  contents of that commit.  Any file that exists in the new commit
-  (<em>a47c3</em> below) is copied; any file that exists in the old commit
-  (<em>ed489</em>) but not in the new one is deleted; and any file that exists
-  in neither is ignored.</p>
+  <p>Quand <em>aucun</em> nom de fichier n'est passé en argument, mais que la référence est
+  une branche (locale), <em>HEAD</em> est déplacée vers cette branche (i.e. on "bascule" vers
+  sur cette branche), et le stage ainsi que la working copy s'ajustent pour correspondre au contenu
+  de ce commit. Les fichiers qui existent dans le nouveau commit (<em>a47c3</em> below) sont copiés;
+  Les fichiers qui existent dans l'ancien commit (<em>ed489</em>) mais pas dans le nouveau sont supprimés;
+  et les fichiers qui n'existent dans aucun des deux sont ignorés.</p>
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
-  (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
-  something like <em>master~3</em> &mdash; we get an anonymous branch, called
-  a <em>detached HEAD</em>.  This is useful for jumping around the history.
-  Say you want to compile version 1.6.6.1 of git.  You can <code>git checkout
-    v1.6.6.1</code> (which is a tag, not a branch), compile, install, and then
-  switch back to another branch, say <code>git checkout master</code>.
-  However, committing works slightly differently with a detached HEAD; this is
-  covered <a href="#detached">below</a>.</p>
+  <p>Quand <em>aucun</em> nom de fichier n'est donné et que la référence n'est <em>pas</em> une
+  banche (locale) &mdash; i.e. c'est un tag, une branche distante, un ID SHA-1 ou un truc du genre
+  <em>master~3</em> &mdash; on se retrouve avec une branche anonyme appelée
+  une <em>detached HEAD</em>. Ceci est utile pour se balader rapidement dans l'histoire.
+  Supposons que vous souhaitiez compiler la version 1.6.6.1 de git. Vous pouvez faire un
+  <code>git checkout v1.6.6.1</code> (qui est un tag, et non une branche), compiler, installer, 
+  et rebasculer sur une autre branche, avec par exemple <code>git checkout master</code>.
+  Cela dit, commiter fonctionne légèrement différemment avec une "detached HEAD";
+  voir les détails<a href="#detached">ci-dessous</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <h3 id="detached">Committing with a Detached HEAD</h3>
+  <h3 id="detached">Commiter avec une "Detached HEAD"</h3>
 
-  <p>When <em>HEAD</em> is detached, commits work like normal, except no named
-  branch gets updated.  (You can think of this as an anonymous branch.)</p>
+  <p>Quand votre <em>HEAD</em> est détachée, la commande commit fonctionne normalement,
+  excepté le fait qu'aucune branche (nommée) n'est mise à jour.
+  (Vous pouvez voir ça comme une branche anonyme).</p>
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Once you check out something else, say <em>master</em>, the commit is
-  (presumably) no longer referenced by anything else, and gets lost.  Note
-  that after the command, there is nothing referencing <em>2eecb</em>.</p>
+  <p>Une fois que vous basculez sur une autre branche, par exemple <em>master</em>,
+  le commit n'est (possiblement) plus référencé par aucun élément (branche, tag, ...),
+  et est perdu. Notez qu'après la commande, le commit <em>2eecb</em> n'est plus référencé.</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
-  <p>If, on the other hand, you want to save this state, you can create a new
-  named branch using <code>git checkout -b <em>name</em></code>.</p>
+  <p>Si, au contraire, vous souhaitez conserver cet état, vous pouvez créer une nouvelle
+  branche (nommée), en utilisant <code>git checkout -b <em>nom_de_la_branche</em></code>.</p>
 
   <div class="center"><img src='checkout-b-detached.svg.png'></div>
 
   <h3 id="reset">Reset</h3>
 
-  <p>The reset command moves the current branch to another position, and
-  optionally updates the stage and the working directory.  It also is used to
-  copy files from the history to the stage without touching the working
-  directory.</p>
+  <p>La commande reset déplace la branche courante à une autre position et
+  éventuellement met à jour le stage et la working copy. Elle est également utilisée
+  pour copier des fichiers depuis l'histoire vers la stage, sans toucher à la working copy.</p>
 
-  <p>If a commit is given with no filenames, the current branch is moved to
-  that commit, and then the stage is updated to match this commit.  If
-  <code>--hard</code> is given, the working directory is also updated.  If
-  <code>--soft</code> is given, neither is updated.</p>
+  <p>Si un commit est passé en argument, sans nom de fichier, la branche courante est
+  déplacée vers ce commit, et le stage est mis à jour pour correspondre à ce commit.
+  Si l'option <code>--hard</code> est passée en argument, la working copy est aussi mise à jour.
+  Si l'option <code>--soft</code> est passée en argument, aucun des deux n'est mis à jour.</p>
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
-  <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
-  the branch is not moved, but the stage (and optionally the working
-  directory, if <code>--hard</code> is given) are reset to the contents of the
-  last commit.</p>
+  <p>Si aucun commit n'est passé en argument, la valeur par défaut est <em>HEAD</em>.
+  Dans ce cas, la branche n'est pas déplacée, mais le stage (et éventuellement la working copy,
+  si l'option <code>--hard</code> est passée en argument) sont remis à zéro pour correspondre
+  au contenu du dernier commit.</p>
 
   <div class="center"><img src='reset.svg.png'></div>
 
-  <p>If a filename (and/or <code>-p</code>) is given, then the command works
-  similarly to <a href='#checkout'>checkout</a> with a filename, except only
-  the stage (and not the working directory) is updated.  (You may also specify
-  the commit from which to take files, rather than <em>HEAD</em>.)</p>
+  <p>Si un fichier (et/ou l'option <code>-p</code>) est passé en argument, alors la commande
+  se comporte comme <a href='#checkout'>checkout</a> avec un nom de fichier, hormis le fait
+  que seul le stage (et pas la working copy) est mis à jour. (Vous pouvez aussi spécifier
+  le commit à partir duquel prendre les fichiers, au lieu de <em>HEAD</em>.)</p>
 
   <div class="center"><img src='reset-files.svg.png'></div>
 
   <h3 id="merge">Merge</h3>
 
-  <p>A merge creates a new commit that incorporates changes from other
-  commits.  Before merging, the stage must match the current commit.  The
-  trivial case is if the other commit is an ancestor of the current commit, in
-  which case nothing is done.  The next most simple is if the current commit
-  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
-  merge.  The reference is simply moved, and then the new commit is checked
-  out.</p>
+  <p>Un merge créee un nouveau commit qui incorpore les changements d'autres commits.
+  Avant de merger, le stage doit correspondre au contenu du commit courant.
+  Le cas trivial est si l'autre commit correspond à un ancêtre du commit courant. Dans ce
+  cas, rien n'est fait. Un autre cas simple, est si le commit courant est un ancêtre de
+  l'autre commit. L'opération résultante est nommée <em>fast-forward</em> (avance rapide).
+  La référence est simplement déplacée, et le nouveau commit est "checked out".</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
 
-  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
-  but the default is to perform a "recursive" merge, which basically takes the
-  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
-  and their common ancestor (<em>b325c</em>), and performs a <a
-    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
-  The result is saved to the working directory and the stage, and then a
-  commit occurs, with an extra parent (<em>33104</em>) for the new commit.
-  </p>
+  <p>Dans les autres cas, un "vrai" merge est effectué. Vous pouvez choisir d'autres stratégies,
+  mais par défaut c'est un merge "récursif" qui est effectué. Il consiste à prendre le commit courant
+  (<em>ed489</em> ci-dessous), et l'autre commit (<em>33104</em>),
+  et leur ancêtre commun (<em>b325c</em>), et à effectuer un "<a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>".
+  Le résultat est placé dans la working copy et dans le stage, et un commit
+  est effectué, avec un parent supplémentaire (<em>33104</em>).</p>
 
   <div class="center"><img src='merge.svg.png'></div>
 
   <h3 id="cherry-pick">Cherry Pick</h3>
 
-  <p>The cherry-pick command "copies" a commit, creating a new commit on the
-  current branch with the same message and patch as another commit.</p>
+  <p>La commande cherry-pick copie un commit, en créant un nouveau commit sur la branche
+  courante, avec le même message et le même "patch" que le commit concerné.</p>
 
   <div class="center"><img src='cherry-pick.svg.png'></div>
 
   <h3 id="rebase">Rebase</h3>
 
-  <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
-  multiple branches.  Whereas a merge creates a single commit with two
-  parents, leaving a non-linear history, a rebase replays the commits from the
-  current branch onto another, leaving a linear history.  In essence, this is
-  an automated way of performing several <a
-    href='#cherry-pick'>cherry-pick</a>s in a row.</p>
+  <p>Un "rebase" est une alternative au <a href='#merge'>merge</a> pour combiner
+  plusieurs branches. Alors q'un merge crée un commit unique avec deux parents, produisant
+  une histoire non linéaire, un rebase rejoue les commits de la branche courante sur une autre branche,
+  produisant une histoire linéaire. En fait, c'est une façon automatique d'effectuer
+  plusieurs <a href='#cherry-pick'>cherry-pick</a>s à la fois.</p>
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>The above command takes all the commits that exist in <em>topic</em> but
-  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
-  them onto <em>master</em>, and then moves the branch head to the new tip.
-  Note that the old commits will be garbage collected if they are no longer
-  referenced.</p>
+  <p>La commande ci-dessus prend tous les commits qui existent dans <em>topic</em> 
+  mais pas dans <em>master</em> (i.e. <em>169a6</em> et <em>2c33a</em>), les rejoue
+  sur <em>master</em>, puis déplace la branche (<em>topic</em>) en conséquence.
+  Notez que les anciens commits seront supprimés (garbage collection) s'ils ne sont
+  plus référencés.</p>
 
-  <p>To limit how far back to go, use the <code>--onto</code> option.  The
-  following command replays onto <em>master</em> the most recent commits on
-  the current branch since <em>169a6</em> (exclusive), namely
+  <p>Pour indiquer jusqu'où vous souhaitez remonter dans l'histoire, utilisez
+  l'otpion <code>--onto</code>.
+  La command suivante rejour sur <em>master</em> les commits les plus récents
+  de la branche courante depuis <em>169a6</em> (exclu), autrement dit 
   <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
-  <p>There is also <code>git rebase --interactive</code>, which allows one to
-  do more complicated things than simply replaying commits, namely dropping,
-  reordering, modifying, and squashing commits.  There is no obvious picture
-  to draw for this; see <a
+  <p>Il y aussi <code>git rebase --interactive</code>, qui permet d'effectuer
+  des opérations plus complexes au delà de simplement rejouer des commits.
+  Comme par exemple supprimer des commits, réordonner des commits, modifier des commits
+  et rassembler plusieurs commit en un seul. Il n'y a pas de schéma évident pour ces opérations; voir <a
     href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
-  for more details.</p>
+  pour de plus amples détails.</p>
 
-  <h2 id="technical-notes">Technical Notes</h2>
+  <h2 id="technical-notes">Notes techniques</h2>
 
-  <p>The contents of files are not actually stored in the index
-  (<em>.git/index</em>) or in commit objects.  Rather, each file is stored in
-  the object database (<em>.git/objects</em>) as a <em>blob</em>, identified
-  by its SHA-1 hash.  The index file lists the filenames along with the
-  identifier of the associated blob, as well as some other data.  For commits,
-  there is an additional data type, a <em>tree</em>, also identified by its
-  hash.  Trees correspond to directories in the working directory, and contain
-  a list of trees and blobs corresponding to each filename within that
-  directory.  Each commit stores the identifier of its top-level tree, which
-  in turn contains all of the blobs and other trees associated with that
+  <p>Le contenu des fichiers n'est pas vraiment stocké dans l'index
+  (<em>.git/index</em>) ou dans les commits.  En réalité, chaque fichier est stocké
+  dans la base de données d'objets (<em>.git/objects</em>) sous forme d'un <em>blob</em>, 
+  identifié par son hash SHA-1. Le fichier d'index liste les noms de fichier ainsi que
+  l'identifiant de leur blob associé et quelques autres données.
+  Pour les commits, il existe un autre type de donnée appelé <em>tree</em>, lui
+  aussi identifié par son hash. Un "tree" correpond à un dossier dans la 
+  working copy, et contient une liste de "trees" et de "blobs" représentant
+  respectivement ses sous-dossiers et ses sous-fichiers.
+  Chaque commit stocke l'identifiant de son "tree" de plus haut niveau,
+  qui lui-même contient tous les "blobs" et "trees" associés avec ce
   commit.</p>
 
-  <p>If you make a commit using a detached HEAD, the last commit really is
-  referenced by something: the reflog for HEAD.  However, this will expire
-  after a while, so the commit will eventually be garbage collected, similar
-  to commits discarded with <code>git commit --amend</code> or <code>git
-    rebase</code>.</p>
+  <p>Si vous commitez avec une "detached HEAD", le dernier commit est en fait
+  référencé par quelque chose : le "reflog" de HEAD. Néanmoins, il finira par
+  expirer, et le commit sera finalement perdu (garbage collection), de même que
+  les commits neutralisés par un <code>git commit --amend</code> ou un <code>git
+  rebase</code>.</p>
 
   <hr>
   <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
@@ -332,6 +330,7 @@
     Lee</a>.
   Russian translation &copy; 2012, <a href='mailto:alex@sychev.com'>Alex
     Sychev</a>.
+  French translation &copy; 2012, <a href='mailto:michel.lefranc@gmail.com'>Michel Lefranc</a>.
   This work is licensed under a <a rel="license"
     href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
     Commons Attribution-Noncommercial-Share Alike 3.0 United States
