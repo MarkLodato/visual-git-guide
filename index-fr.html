@@ -28,7 +28,7 @@
 
   <p>Cette page donne une brève référence visuelle des principales commandes
   git. Une fois que vous connaissez un peu comment fonctionne git, cette page
-  vous permettra consolider votre compréhension.
+  vous permettra d'asseoir votre compréhension.
   Si vous voulez savoir comment ce site a été créé, allez voir mon
   <a href='http://github.com/MarkLodato/visual-git-guide'>dépôt GitHub</a>.</p>
 
@@ -63,16 +63,16 @@
     <li><code>git add <em>fichiers</em></code> copie les <em>fichiers</em> (dans leur
     état courant) vers le stage.</li>
 
-    <li><code>git commit</code> fait un cliché du stage sous la forme d'un
+    <li><code>git commit</code> fait un "cliché" du stage sous la forme d'un
     commit.</li>
 
-    <li><code>git reset -- <em>fichiers</em></code> supprime les fichiers du stage; i.e. elle
+    <li><code>git reset -- <em>fichiers</em></code> supprime les fichiers du stage ; i.e. elle
     copie les <em>fichiers</em> du dernier commit vers le stage.  Utilisez cette
     commande pour annuler une commande <code>git add <em>fichiers</em></code>.  Vous pouvez aussi faire un
     <code>git reset</code> pour vider complètement le stage.</li>
 
     <li><code>git checkout -- <em>fichiers</em></code> copie les <em>fichiers</em> du
-    stage vers la working directory (copie de travail).  Utilisez cette commande pour annuler
+    stage vers la working copy (copie de travail).  Utilisez cette commande pour annuler
     des changements locaux (ceux de votre copie de travail).</li>
 
   </ul>
@@ -94,17 +94,17 @@
 
     <li><code>git commit <em>fichiers</em></code> crée un nouveau commit
     incluant le contenu du dernier commit, plus un cliché des <em>fichiers</em> pris
-    dans la working directory (copie de travail).  De plus, les <em>fichiers</em> sont copiés dans
+    dans la working copy.  De plus, les <em>fichiers</em> sont copiés dans
     le stage.</li>
 
     <li><code>git checkout HEAD -- <em>fichiers</em></code> copie les <em>fichiers</em>
-    depuis le dernier commit vers à la fois le stage et la working copy (copie de travail).</li>
+    depuis le dernier commit vers à la fois le stage et la working copy.</li>
 
   </ul>
 
   <h2 id="conventions">Conventions</h2>
 
-  <p>Dans le restee de ce document, nous allons utiliser des graphiques de
+  <p>Dans la suite de ce document, nous allons utiliser des graphiques de
   la forme suivante.</p>
 
   <div class="center"><img src='conventions.svg.png'></div>
@@ -116,7 +116,7 @@
   Dans cette image les cinq derniers commits sont représentés, <em>ed489</em> étant
   le plus récent.
   <em>master</em> (la branche courante) pointe vers ce commit, alors que
-  <em>maint</em> (une autre branche) pointe vers un ancêtre du commit <em>master</em>
+  <em>maint</em> (une autre branche) pointe vers un ancêtre du commit <em>master</em>.
   </p>
 
   <h2 id="commands-in-detail">Les commandes en détail</h2>
@@ -125,8 +125,8 @@
 
   <p>Il y a plusieurs façons de visualiser les différences entre commits. Vous
   trouverez ci-dessous quelques exemples courants. Toutes ces commandes peuvent également
-  prendre des noms de fichers en arguments supplémentaires. Ils restreignent alors les différences
-  affichées aux fichiers concernés.</p>
+  prendre des noms de fichers comme arguments supplémentaires. Ils restreignent alors les différences
+  affichées aux fichiers désignés.</p>
 
   <div class="center"><img src='diff.svg.png'></div>
 
@@ -134,7 +134,7 @@
 
   <p>Quand vous commitez, git crée un nouvel objet de type "commit" en utilisant
   les fichiers présents dans le stage, et en prenant comme parent le commit courant.
-  Il déplace aussi la branche courante sur ce nouveau commit. Sur l'image ci-dessous,
+  Il déplace aussi la branche courante vers ce nouveau commit. Sur l'image ci-dessous,
   la branche courante est
   <em>master</em>. Avant que la commande ne soit exécutée, <em>master</em> pointait sur
   <em>ed489</em>. Après l'exécution de la commande, un nouveau commit <em>f0cec</em> est créé,
@@ -143,9 +143,9 @@
 
   <div class="center"><img src='commit-master.svg.png'></div>
 
-  <p>Ce fonctionnement est systématique, même si la branche courante est une ancêtre d'une autre.
-  Ci dessous, un commit a lieu sur une branche <em>maint</em>, qui est un ancêtre de <em>master</em>.
-  Le commit résultant est : <em>1800b</em>. <em>maint</em> n'est alors plus un ancêtre de<em>master</em>.
+  <p>Ce fonctionnement est systématique, même si la branche courante est un ancêtre d'une autre.
+  Ci-dessous, un commit a lieu sur une branche <em>maint</em>, qui est un ancêtre de <em>master</em>.
+  Le commit résultant est : <em>1800b</em> ; <em>maint</em> n'est alors plus un ancêtre de <em>master</em>.
   Pour consolider ces deux histoires (maintenant divergentes), un <a href='#merge'>merge</a>
   (ou un <a href='#rebase'>rebase</a>) va être nécessaire.</p>
 
@@ -154,7 +154,7 @@
   <p>Si vous commettez une erreur dans un commit, il est facile de la corriger avec
   <code>git commit --amend</code>. Quand vous utilisez cette commande, git crée un
   nouveau commit avec le même parent que le commit courant. (L'ancien commit sera supprimé
-  s'il n'y a plus aucun élément &mdash; une branche par exemple &mdash; qui le référence)</p>
+  s'il n'y a plus aucun élément &mdash; une branche par exemple &mdash; qui le référence).</p>
 
   <div class="center"><img src='commit-amend.svg.png'></div>
 
@@ -164,22 +164,22 @@
   <h3 id="checkout">Checkout</h3>
 
   <p>La commande checkout est utilisée pour copier des fichiers de l'histoire (ou du stage)
-  vers la working copy, et également pour passer d'une branche à une autre.</p>
+  vers la working copy, mais également pour passer d'une branche à une autre.</p>
 
   <p>Quand un nom de fichier (ou <code>-p</code>) est passé en paramètre, git copie ces fichiers
   depuis le commit concerné vers le stage et vers la working copy. Par exemple,
   <code>git checkout HEAD~ foo.c</code> copie le fichier <code>foo.c</code>
   depuis le commit nommé <em>HEAD~</em> (le parent du commit courant) vers
-  la working directory, et le place aussi dans le stage. (Si aucun nom de commit n'est donné,
+  la working copy, et le place aussi dans le stage. (Si aucun nom de commit n'est donné,
   les fichiers sont copiés depuis le stage). Notez que la branche courante n'est pas modifiée.</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
-  <p>Quand <em>aucun</em> nom de fichier n'est passé en argument, mais que la référence est
-  une branche (locale), <em>HEAD</em> est déplacée vers cette branche (i.e. on "bascule" vers
+  <p>Quand <em>aucun</em> nom de fichier n'est passé en argument, et que la référence est
+  une branche (locale), <em>HEAD</em> est déplacée vers cette branche (i.e. on "bascule"
   sur cette branche), et le stage ainsi que la working copy s'ajustent pour correspondre au contenu
-  de ce commit. Les fichiers qui existent dans le nouveau commit (<em>a47c3</em> below) sont copiés;
-  Les fichiers qui existent dans l'ancien commit (<em>ed489</em>) mais pas dans le nouveau sont supprimés;
+  de ce commit. Les fichiers qui existent dans le nouveau commit (<em>a47c3</em> ci-dessous) sont copiés ;
+  les fichiers qui existent dans l'ancien commit (<em>ed489</em>) mais pas dans le nouveau sont supprimés ;
   et les fichiers qui n'existent dans aucun des deux sont ignorés.</p>
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
@@ -187,12 +187,12 @@
   <p>Quand <em>aucun</em> nom de fichier n'est donné et que la référence n'est <em>pas</em> une
   banche (locale) &mdash; i.e. c'est un tag, une branche distante, un ID SHA-1 ou un truc du genre
   <em>master~3</em> &mdash; on se retrouve avec une branche anonyme appelée
-  une <em>detached HEAD</em>. Ceci est utile pour se balader rapidement dans l'histoire.
+  une <em>detached HEAD</em>. Ceci est utile pour se déplacer rapidement dans l'histoire.
   Supposons que vous souhaitiez compiler la version 1.6.6.1 de git. Vous pouvez faire un
   <code>git checkout v1.6.6.1</code> (qui est un tag, et non une branche), compiler, installer, 
   et rebasculer sur une autre branche, avec par exemple <code>git checkout master</code>.
-  Cela dit, commiter fonctionne légèrement différemment avec une "detached HEAD";
-  voir les détails<a href="#detached">ci-dessous</a>.</p>
+  Cela dit, commiter fonctionne légèrement différemment avec une "detached HEAD" ;
+  voir les détails <a href="#detached">ci-dessous</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
@@ -218,8 +218,8 @@
   <h3 id="reset">Reset</h3>
 
   <p>La commande reset déplace la branche courante à une autre position et
-  éventuellement met à jour le stage et la working copy. Elle est également utilisée
-  pour copier des fichiers depuis l'histoire vers la stage, sans toucher à la working copy.</p>
+  met éventuellement à jour le stage et la working copy. Elle est également utilisée
+  pour copier des fichiers depuis l'histoire vers le stage, sans toucher à la working copy.</p>
 
   <p>Si un commit est passé en argument, sans nom de fichier, la branche courante est
   déplacée vers ce commit, et le stage est mis à jour pour correspondre à ce commit.
@@ -244,12 +244,12 @@
 
   <h3 id="merge">Merge</h3>
 
-  <p>Un merge créee un nouveau commit qui incorpore les changements d'autres commits.
+  <p>Un merge crée un nouveau commit qui incorpore les changements d'autres commits.
   Avant de merger, le stage doit correspondre au contenu du commit courant.
   Le cas trivial est si l'autre commit correspond à un ancêtre du commit courant. Dans ce
   cas, rien n'est fait. Un autre cas simple, est si le commit courant est un ancêtre de
-  l'autre commit. L'opération résultante est nommée <em>fast-forward</em> (avance rapide).
-  La référence est simplement déplacée, et le nouveau commit est "checked out".</p>
+  l'autre commit. L'opération résultante est nommée <em>fast-forward</em> (avance rapide) ;
+  la référence est alors simplement déplacée, et le nouveau commit est "checked out".</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
 
@@ -266,7 +266,7 @@
   <h3 id="cherry-pick">Cherry Pick</h3>
 
   <p>La commande cherry-pick copie un commit, en créant un nouveau commit sur la branche
-  courante, avec le même message et le même "patch" que le commit concerné.</p>
+  courante, avec le même message et le même "patch" que le commit désigné.</p>
 
   <div class="center"><img src='cherry-pick.svg.png'></div>
 
@@ -288,18 +288,18 @@
 
   <p>Pour indiquer jusqu'où vous souhaitez remonter dans l'histoire, utilisez
   l'otpion <code>--onto</code>.
-  La command suivante rejour sur <em>master</em> les commits les plus récents
+  La command suivante rejoue sur <em>master</em> les commits les plus récents
   de la branche courante depuis <em>169a6</em> (exclu), autrement dit 
   <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
   <p>Il y aussi <code>git rebase --interactive</code>, qui permet d'effectuer
-  des opérations plus complexes au delà de simplement rejouer des commits.
-  Comme par exemple supprimer des commits, réordonner des commits, modifier des commits
-  et rassembler plusieurs commit en un seul. Il n'y a pas de schéma évident pour ces opérations; voir <a
-    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
-  pour de plus amples détails.</p>
+  des opérations plus complexes, au delà de simplement rejouer des commits.
+  Comme par exemple supprimer des commits, réordonner des commits, modifier des commits,
+  ou rassembler plusieurs commit en un seul. Il n'y a pas de schéma évident pour ces opérations ; voir
+  <a href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
+  pour les détails.</p>
 
   <h2 id="technical-notes">Notes techniques</h2>
 
@@ -307,7 +307,7 @@
   (<em>.git/index</em>) ou dans les commits.  En réalité, chaque fichier est stocké
   dans la base de données d'objets (<em>.git/objects</em>) sous forme d'un <em>blob</em>, 
   identifié par son hash SHA-1. Le fichier d'index liste les noms de fichier ainsi que
-  l'identifiant de leur blob associé et quelques autres données.
+  l'identifiant du blob associé et quelques autres données.
   Pour les commits, il existe un autre type de donnée appelé <em>tree</em>, lui
   aussi identifié par son hash. Un "tree" correpond à un dossier dans la 
   working copy, et contient une liste de "trees" et de "blobs" représentant
@@ -316,7 +316,7 @@
   qui lui-même contient tous les "blobs" et "trees" associés avec ce
   commit.</p>
 
-  <p>Si vous commitez avec une "detached HEAD", le dernier commit est en fait
+  <p>Si vous commitez avec une "detached HEAD", le dernier commit est en fait toujours
   référencé par quelque chose : le "reflog" de HEAD. Néanmoins, il finira par
   expirer, et le commit sera finalement perdu (garbage collection), de même que
   les commits neutralisés par un <code>git commit --amend</code> ou un <code>git
