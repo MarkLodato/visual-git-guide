@@ -29,7 +29,8 @@ HTML := \
     index-en.html \
     index-ja.html \
     index-ko.html \
-    index-ru.html
+    index-ru.html \
+    index-fr.html
 
 PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
