@@ -1,0 +1,25 @@
+\input{common.tex}
+\geometry{papersize={21\g,9\g}}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \historynode[0,2]
+    \indexnode[0,0]
+    \worknode[0,-2]
+
+    \path [line]
+        (work.north east)
+            edge node[cmd] {git add \emph{files}}
+        (index.south east)
+        (index.north east)
+            edge node[cmd] {git commit}
+        (head.south east)
+        (index.south west)
+            edge node[cmd] {git checkout -- \emph{files}}
+        (work.north west)
+        (head.south west)
+            edge node[cmd] {git reset -- \emph{files}}
+        (index.north west)
+        ;
+\end{tikzpicture}
+\end{document}

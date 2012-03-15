@@ -1,0 +1,18 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
+    \HEAD -> master;
+
+    \node [cmd] at (0, 3.75) {git checkout HEAD\~{} \emph{files}};
+
+    \path [line]
+        (D) edge [bend left=20] (index)
+        (D) edge [bend left=45] (work)
+        ;
+
+\end{tikzpicture}
+\end{document}

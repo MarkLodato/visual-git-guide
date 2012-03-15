@@ -1,0 +1,22 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \branch maint -> A;
+    \oldbranch master -> E;
+    \branch master -> B;
+    \oldHEAD -> old master;
+    \HEAD -> master;
+
+    \node [cmd] at (0, 3.75) {git reset HEAD\~{}3};
+
+    \path [line, auto=left]
+        (B) edge [bend right=20] node [near end]
+          {(if not \texttt{--soft})} (index)
+        (B) edge [bend right=40] node [swap] {(if \texttt{--hard})} (work)
+        (old HEAD) edge [dashed, bend right=15] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}

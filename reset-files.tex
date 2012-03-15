@@ -1,0 +1,17 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
+    \HEAD -> master;
+
+    \node [cmd] (cmd1) at (0, 3.75) {git reset -- \emph{files}};
+
+    \path [line]
+        (E) edge [bend left=20] (index)
+        ;
+
+\end{tikzpicture}
+\end{document}

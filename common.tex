@@ -1,0 +1,155 @@
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{cmbright}
+\usepackage[pdftex,margin=0pt,noheadfoot]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,shadows,positioning,calc}
+
+\colorlet{HEAD}{gray!50}
+\colorlet{branch}{orange!50}
+\colorlet{commit}{green!50}
+\colorlet{index}{blue!40}
+\colorlet{work}{red!40}
+\colorlet{old HEAD}{HEAD!50}
+\colorlet{old branch}{branch!50}
+
+% Global Scaling Factors
+% Values that seem reasonable:
+%        1cm /  1pt / \Large
+%       .5cm / .5pt / \scriptsize
+\newlength\g
+\setlength\g{1cm}
+\newlength\gLine
+\setlength\gLine{1pt}
+\newcommand\gFont{\Large}
+
+\geometry{papersize={24\g,14\g}}
+
+\tikzset{
+index/.style={rectangle, text width=5\g, text centered, rounded corners,
+    minimum height=1.5\g, line width=3\gLine, fill=#1!50, draw=#1},
+index/.default={index},
+history/.style={index=commit, fill=commit!40},
+work/.style={index=work},
+%
+object/.style={rectangle, text width=2\g, text centered, rounded corners,
+    minimum height=1\g, line width=3\gLine, fill=#1!50, draw=#1},
+object/.default={red},
+commit/.style={object=commit, fill=commit!40},
+new commit/.style={commit, double shadow},
+branch/.style={object=branch},
+HEAD/.style={object=HEAD},
+old branch/.style={object=old branch, text=black!30},
+old HEAD/.style={object=old HEAD, text=black!30},
+attached HEAD/.style={HEAD, minimum height=2\g},
+attached HEAD label/.style={object, draw=none, fill=none},
+old attached HEAD/.style={old HEAD, minimum height=2\g},
+old attached HEAD label/.style={attached HEAD label, text=black!30},
+%
+double shadow/.style={
+    preaction={fill=#1,transform canvas={xshift=.2\g,yshift=-.2\g}},
+    preaction={fill=#1,transform canvas={xshift=-.2\g,yshift=.2\g}},
+    },
+double shadow/.default={yellow!75},
+%
+line/.style={>=stealth', line width=1.5\gLine, draw=black!70, auto=right,
+    bend right},
+object line/.style={>=stealth, line width=1.5\gLine},
+commit line/.style={object line, color=commit},
+new commit line/.style={commit line},
+HEAD line/.style={object line, color=HEAD},
+branch line/.style={object line, color=branch},
+old HEAD line/.style={object line, color=old HEAD},
+old branch line/.style={object line, color=old branch},
+cancel ref/.style={cross out, draw=black!70, line width=1\gLine},
+%
+background line/.style={draw=white, line width=6\gLine,
+    shorten >=6\gLine, shorten <=6\gLine},
+%
+cmd/.style={color=black, font={\gFont\ttfamily}},
+%
+main/.style={node distance=.7\g, bend angle=35, font={\gFont},
+    x=1.5\g, y=1.5\g},
+every edge/.style={draw, ->},
+}
+
+\pgfdeclarelayer{HEAD}
+\pgfsetlayers{HEAD,main}
+
+\newcommand\boundingbox{\clip (-.5\textwidth,-.5\textheight) rectangle
+    (.5\textwidth,.5\textheight);}
+
+\newcommand\historynode[1][0,.5]{\node [history] (head) at (#1) {History};}
+\newcommand\indexnode[1][0,-1]{\node [index] (index) at (#1) {Stage (Index)};}
+\newcommand\worknode[1][0,-2.5]{\node [work] (work) at (#1) {Working Directory};}
+\newcommand\normalcommits[1][-6,.75]{
+    \commitTerminal cT at (#1);
+    \commit a47c3 (A) -> cT;
+    \commit b325c (B) -> A;
+    \commit c10b9 (C) -> B;
+    \commit da985 (D) -> C;
+    \commit ed489 (E) -> D;
+}
+\newcommand\usualsetup{
+    \normalcommits
+    \indexnode
+    \worknode
+}
+
+\def\ref [#1] "#2" : #3 -> #4;{
+    \node [#1, above=.4\g of #4] (#3) {#2};
+    \path [#1 line] (#3) edge (#4);
+    }
+\def\oldref [#1] "#2" : #3 -> #4;{
+    \ref [old #1] "#2" : old #3 -> #4;
+    \node [cancel ref, above=.2\g of #4, anchor=center] {};
+    }
+\def\refbelow [#1] "#2" : #3 -> #4;{
+    \node [#1, below=.4\g of #4] (#3) {#2};
+    \path [#1 line] (#3) edge (#4);
+    }
+
+\newcounter{tmp}
+\def\commitTerminal #1 at (#2);{
+    \node (#1) at (#2) {\LARGE$\cdots$};
+    \pgfkeys{/child count/#1/.initial=0}
+}
+\def\commitcommon [#1] #2 (#3) -> [#4] #5;{
+    \setcounter{tmp}{\pgfkeysvalueof{/child count/#5}}
+    \node [#1, anchor=west] (#3) at ($ (#5.east) + (.5,\value{tmp}) $) {#2};
+    \draw [#4] (#3) edge (#5);
+    \addtocounter{tmp}{1}
+    \pgfkeys{/child count/#3/.initial=0}
+    \pgfkeys{/child count/#5=\value{tmp}}
+}
+\def\commit #1 (#2) -> #3;{\commitcommon [commit] #1 (#2) -> [commit line] #3;}
+\def\newcommit #1 (#2) -> #3;{\commitcommon [new commit] #1 (#2) ->
+[new commit line] #3;}
+
+\def\branch #1 -> #2;{\ref [branch] "#1" : #1 -> #2;}
+\def\oldbranch #1 -> #2;{\oldref [branch] "#1" : #1 -> #2;}
+
+\def\addHEAD [#1] "#2" : #3 -> #4;{
+    \begin{pgfonlayer}{HEAD}
+        \node [#1, anchor=south] (#3) at (#4.south) {};
+        \node [#1 label, anchor=south] (#3 label) at ($(#4.north)+(0,-3\gLine) 
+        $) {#2};
+    \end{pgfonlayer}
+}
+\def\addHEADbelow [#1] "#2" : #3 -> #4;{
+    \begin{pgfonlayer}{HEAD}
+        \node [#1, anchor=north] (#3) at (#4.north) {};
+        \node [#1 label, anchor=north] (#3 label) at ($(#4.south)+(0,3\gLine) 
+        $) {#2};
+    \end{pgfonlayer}
+}
+
+
+\def\HEAD -> #1;{\addHEAD [attached HEAD] "HEAD" : HEAD -> #1;}
+\def\oldHEAD -> #1;{\addHEAD [old attached HEAD] "HEAD" : old HEAD -> #1;}
+
+\def\detachedHEAD -> #1;{\ref [HEAD] "HEAD" : HEAD -> #1;}
+\def\olddetachedHEAD -> #1;{\oldref [HEAD] "HEAD" : HEAD -> #1;}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}

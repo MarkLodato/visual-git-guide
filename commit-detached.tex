@@ -1,0 +1,25 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \newcommit 2eecb (2) -> B;
+    \branch master -> E;
+    \branch maint -> A;
+    \olddetachedHEAD -> B;
+    \detachedHEAD -> 2;
+
+    \node [cmd] at (0, 3.75) {git commit};
+
+    % Put a white border underneath the line since it croses over the graph.
+    \path [background line]
+        ($ (index.north) + (1,0) $) edge [-, bend right=20]
+            ($ (2.south east) + (-.09,.01) $);
+    \path [line]
+        ($ (index.north) + (1,0) $) edge [bend right=20]
+            ($ (2.south east) + (-.09,.01) $)
+        (old HEAD) edge [dashed, bend left=15] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}

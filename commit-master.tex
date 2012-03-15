@@ -1,0 +1,21 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \newcommit f0cec (F) -> E;
+    \oldbranch master -> E;
+    \branch master -> F;
+    \branch maint -> A;
+    \oldHEAD -> old master;
+    \HEAD -> master;
+
+    \node [cmd] at (0, 3.75) {git commit};
+
+    \path [line]
+        (index) edge [bend right=20] (F)
+        (old HEAD) edge [dashed, bend left=50] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}

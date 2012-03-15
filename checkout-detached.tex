@@ -1,0 +1,20 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \branch master -> E;
+    \branch maint -> A;
+    \oldHEAD -> master;
+    \detachedHEAD -> B;
+
+    \node [cmd] at (0, 3.75) {git checkout master\~{}3};
+
+    \path [line]
+        (B) edge [bend right=20] (index)
+        (B) edge [bend right=40] (work)
+        (old HEAD label) edge [dashed, bend right=10] (HEAD)
+        ;
+
+\end{tikzpicture}
+\end{document}

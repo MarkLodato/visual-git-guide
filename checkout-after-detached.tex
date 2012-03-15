@@ -1,0 +1,21 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \commit 2eecb (2) -> B;
+    \branch master -> E;
+    \branch maint -> A;
+    \olddetachedHEAD -> 2;
+    \HEAD -> master;
+
+    \node [cmd] at (0,3.75) {git checkout master};
+
+    \path [line]
+        (E) edge [bend left=20] (index)
+        (E) edge [bend left=35] (work)
+        (old HEAD) edge [dashed, bend left=15] (HEAD label)
+        ;
+
+\end{tikzpicture}
+\end{document}

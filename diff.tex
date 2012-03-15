@@ -1,0 +1,21 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \normalcommits
+    \indexnode[0,-1.5]
+    \worknode[0,-3.5]
+    \branch master -> E;
+    \branch maint -> A;
+    \HEAD -> master;
+
+    \path [line, bend right=20]
+        (index) edge node[cmd, auto=left] {git diff} (work)
+        (E) edge[bend left=20] node[cmd] {git diff --cached} (index)
+        (E) edge[bend left=30, auto=left] node[cmd] {git diff HEAD} (work)
+        (A) edge node[cmd] {git diff maint} (work)
+        (D) edge[bend right=25] node[cmd] {git diff da985 b325c} (B)
+        ;
+
+\end{tikzpicture}
+\end{document}

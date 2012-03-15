@@ -1,0 +1,26 @@
+\input{common.tex}
+\begin{document}
+\begin{tikzpicture}[main]
+    \boundingbox
+    \usualsetup
+    \newcommit 1800b (1) -> A;
+    \branch master -> E;
+    \oldbranch maint -> A;
+    \branch maint -> 1;
+    \oldHEAD -> old maint;
+    \HEAD -> maint;
+
+    \node [cmd] at (0, 3.75) {git commit};
+
+    % Put a white border underneath the line since it croses over the graph.
+    \path [background line]
+        ($ (index.north) + (-.8,0) $) edge [-, bend right=13]
+            ($ (1.south east) + (-.09,.01) $);
+    \path [line]
+        ($ (index.north) + (-.8,0) $) edge [bend right=13]
+            ($ (1.south east) + (-.09,.01) $)
+        (old HEAD label) edge [dashed, bend left=10] (HEAD label)
+        ;
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,38 @@
+.center {
+    text-align: center;
+}
+#link-to-png, #link-to-svg {
+    font-style: italic; display: none;
+}
+ol ol {
+    list-style-type: lower-alpha;
+}
+#language-box {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-family: sans-serif;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+#language-box ul {
+    display: inline;
+    list-style: none;
+    margin: 0 0 0 -0.5em;
+    padding: 0.5em;
+    width: 100%;
+}
+#language-box ul li {
+    padding: .2ex 0;
+    display: inline;
+}
+#language-box ul li.selected {
+    display: none;
+}
+@media print {
+    #language-box {
+        display: none;
+    }
+}
