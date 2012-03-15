@@ -141,35 +141,26 @@
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <h3 id="detached">Committing with a Detached HEAD</h3>
+  <h3 id="detached">用分离HEAD提交(找不到好的译法)</h3>
 
-  <p>When <em>HEAD</em> is detached, commits work like normal, except no named
-  branch gets updated.  (You can think of this as an anonymous branch.)</p>
+  <p><em>HEAD</em>是分离的时候, 提交可以正常进行, 但是没有更新已命名的分支. 。(可以看作是匿名分支。)</p>
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Once you check out something else, say <em>master</em>, the commit is
-  (presumably) no longer referenced by anything else, and gets lost.  Note
-  that after the command, there is nothing referencing <em>2eecb</em>.</p>
+  <p>如果此时切换到别的分支，那么所作的工作会全部丢失。注意这个命令之后就不存在<em>2eecb</em>了。</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
-  <p>If, on the other hand, you want to save this state, you can create a new
-  named branch using <code>git checkout -b <em>name</em></code>.</p>
+  <p>如果你想保存当前的状态，可以用这个命令创建一个新的分支:
+ <code>git checkout -b <em>name</em></code>。</p>
 
   <div class="center"><img src='checkout-b-detached.svg.png'></div>
 
   <h3 id="reset">Reset</h3>
 
-  <p>The reset command moves the current branch to another position, and
-  optionally updates the stage and the working directory.  It also is used to
-  copy files from the history to the stage without touching the working
-  directory.</p>
+  <p>reset命令把当前分支指向另一个位置，并且有选择的变动工作目录和索引。也用来在从历史仓库中复制文件到索引，而不动工作目录。</p>
 
-  <p>If a commit is given with no filenames, the current branch is moved to
-  that commit, and then the stage is updated to match this commit.  If
-  <code>--hard</code> is given, the working directory is also updated.  If
-  <code>--soft</code> is given, neither is updated.</p>
+  <p>如果不给选项，那么当前分支指向到那个提交。如果用<code>--hard</code>选项，那么工作目录也更新，如果用<code>--soft</code>选项，那么都不变。</p>
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
@@ -177,13 +168,10 @@
   the branch is not moved, but the stage (and optionally the working
   directory, if <code>--hard</code> is given) are reset to the contents of the
   last commit.</p>
-
+如果没有给出提交点的版本号，那么默认用<em>HEAD</em>。这样，分支指向不变，但是索引会回滚到最后一次提交，如果用<code>--hard</code>选项，工作目录也同样。
   <div class="center"><img src='reset.svg.png'></div>
 
-  <p>If a filename (and/or <code>-p</code>) is given, then the command works
-  similarly to <a href='#checkout'>checkout</a> with a filename, except only
-  the stage (and not the working directory) is updated.  (You may also specify
-  the commit from which to take files, rather than <em>HEAD</em>.)</p>
+  <p>如果给了文件名(或者 <code>-p</code>选项), 那么工作效果和带文件名的<a href='#checkout'>checkout</a>差不多，除了索引被更新。</p>
 
   <div class="center"><img src='reset-files.svg.png'></div>
 
