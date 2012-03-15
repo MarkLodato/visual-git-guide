@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>图解Git</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">图解Git</h1>
+
+  <div id="language-box">
+    <a>其他语言:</a>
+    <ul>
+      <li class="selected">English</li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li><a href='index-fr.html'>Fran?ais</a></li>
+	  <li><a href='index-zh-cn.html'>简体中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">如果图片不能显示，试试<a href="?no-svg">无图版</a></p>
+
+  <p id="link-to-svg">不显示图片
+  <a href="index.html">(显示图片)</a></p>
+
+  <p>此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。
+  如果你想知道这个站点怎样产生，请前往<a href='http://github.com/MarkLodato/visual-git-guide'>GitHub
+    repository</a>。</p>
+
+	
+	
+  <h2 id="contents">正文</h2>
+  <ol>
+    <li><a href="#basic-usage">基本用法</a></li>
+    <li><a href="#conventions">约定</a></li>
+    <li><a href="#commands-in-detail">命令详解</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">分离HEAD提交</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">技术说明</a></li>
+  </ol>
+
+  <h2 id="basic-usage">基本用法</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> 把当前文件放入暂存区域。</li>
+
+    <li><code>git commit</code> 给暂存区域生成快照并提交。</li>
+
+    <li><code>git reset -- <em>files</em></code> 用来撤销最后一次<code>git add <em>files</em></code>，你也可以用<code>git reset</code>
+	撤销所有暂存区域文件。</li>
+
+    <li><code>git checkout -- <em>files</em></code> 把文件从暂存区域复制到工作目录，用来丢弃本地修改。</li>
+
+  </ul>
+
+  <p>你可以用 <code>git reset -p</code>, <code>git checkout -p</code>, or
+  <code>git add -p</code>进入交互模式。</p>
+
+  <p>也可以跳过暂存区域直接从仓库取出文件或者直接提交代码。</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> 相当于运行 <tt>git add</tt> 
+    把所有当前目录下的文件加入暂存区域再运行。<tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>files</em></code> 进行一次包含最后一次提交加上工作目录中文件快照的提交。并且文件被添加到暂存区域。</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> 回滚到复制最后一次提交。</li>
+
+  </ul>
+
+  <h2 id="conventions">约定</h2>
+
+  <p>后文中以下面的形式使用图片。</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>绿色的5位字符表示提交的ID，分别指向父节点。分支用橘色显示，分别指向特定的提交。当前分支由附在其上的<em>HEAD</em>标识。
+这张图片里显示最后5次提交，<em>ed489</em>是最新提交。 <em>master</em>分支指向此次提交，另一个<em>maint</em>分支指向祖父提交节点。</p>
+
+  <h2 id="commands-in-detail">命令详解</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>有许多种方法查看两次提交之间的变动。下面是一些示例。</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>提交时，git用暂存区域的文件创建一个新的提交，并把此时的节点设为父节点。然后把当前分支指向新的提交节点。下图中，当前分支是<em>master</em>。
+在运行命令之前，<em>master</em>指向<em>ed489</em>，提交后，<em>master</em>指向新的节点<em>f0cec</em>并以<em>ed489</em>作为父节点。</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>即便当前分支是某次提交的祖父节点，git会同样操作。下图中，在<em>master</em>分支的祖父节点<em>maint</em>分支进行一次提交，生成了<em>1800b</em>。
+这样，<em>maint</em>分支就不再是<em>master</em>分支的祖父节点。此时，<a href='#merge'>合并</a> (或者 <a href='#rebase'>衍合</a>) 是必须的。</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>如果想更改一次提交，使用  <code>git commit --amend</code>。git会使用与当前提交相同的父节点进行一次新提交，旧的提交会被取消。</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>另一个例子是<a href="#detached"分离HEAD提交</a>,后文讲。</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>checkout命令通常用来从仓库中取出文件，或者在分支中切换。</p>
+
+  <p>checkout命令让git把文件复制到工作目录和暂存区域。比如<code>git checkout HEAD~ foo.c</code>把文件从<code>foo.c</code>提交节点<em>HEAD~</em>
+(当前提交节点)复制到工作目录并且生成索引。注意当前分支没有变化。</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>如果没有指定文件名，而是一个本地分支，那么将切换到那个分支去。同时把索引和工作目录切换到那个分支对应的状态。</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>如果既没有指定文件名，也没有指定分支名，而是一个标签、远程分支、SHA-1值或者是像<em>master~3</em>类似的东西，就得到一个匿名分支，称作<em>detached HEAD</em>。
+这样可以很方便的在历史版本之间互相切换。但是，这样的提交是完全不同的，详细的在<a href="#detached">下面</a>。</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Committing with a Detached HEAD</h3>
+
+  <p>When <em>HEAD</em> is detached, commits work like normal, except no named
+  branch gets updated.  (You can think of this as an anonymous branch.)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>Once you check out something else, say <em>master</em>, the commit is
+  (presumably) no longer referenced by anything else, and gets lost.  Note
+  that after the command, there is nothing referencing <em>2eecb</em>.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>If, on the other hand, you want to save this state, you can create a new
+  named branch using <code>git checkout -b <em>name</em></code>.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>The reset command moves the current branch to another position, and
+  optionally updates the stage and the working directory.  It also is used to
+  copy files from the history to the stage without touching the working
+  directory.</p>
+
+  <p>If a commit is given with no filenames, the current branch is moved to
+  that commit, and then the stage is updated to match this commit.  If
+  <code>--hard</code> is given, the working directory is also updated.  If
+  <code>--soft</code> is given, neither is updated.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
+  the branch is not moved, but the stage (and optionally the working
+  directory, if <code>--hard</code> is given) are reset to the contents of the
+  last commit.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>If a filename (and/or <code>-p</code>) is given, then the command works
+  similarly to <a href='#checkout'>checkout</a> with a filename, except only
+  the stage (and not the working directory) is updated.  (You may also specify
+  the commit from which to take files, rather than <em>HEAD</em>.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>A merge creates a new commit that incorporates changes from other
+  commits.  Before merging, the stage must match the current commit.  The
+  trivial case is if the other commit is an ancestor of the current commit, in
+  which case nothing is done.  The next most simple is if the current commit
+  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
+  merge.  The reference is simply moved, and then the new commit is checked
+  out.</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
+  but the default is to perform a "recursive" merge, which basically takes the
+  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
+  and their common ancestor (<em>b325c</em>), and performs a <a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
+  The result is saved to the working directory and the stage, and then a
+  commit occurs, with an extra parent (<em>33104</em>) for the new commit.
+  </p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>The cherry-pick command "copies" a commit, creating a new commit on the
+  current branch with the same message and patch as another commit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
+  multiple branches.  Whereas a merge creates a single commit with two
+  parents, leaving a non-linear history, a rebase replays the commits from the
+  current branch onto another, leaving a linear history.  In essence, this is
+  an automated way of performing several <a
+    href='#cherry-pick'>cherry-pick</a>s in a row.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>The above command takes all the commits that exist in <em>topic</em> but
+  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
+  them onto <em>master</em>, and then moves the branch head to the new tip.
+  Note that the old commits will be garbage collected if they are no longer
+  referenced.</p>
+
+  <p>To limit how far back to go, use the <code>--onto</code> option.  The
+  following command replays onto <em>master</em> the most recent commits on
+  the current branch since <em>169a6</em> (exclusive), namely
+  <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>There is also <code>git rebase --interactive</code>, which allows one to
+  do more complicated things than simply replaying commits, namely dropping,
+  reordering, modifying, and squashing commits.  There is no obvious picture
+  to draw for this; see <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
+  for more details.</p>
+
+  <h2 id="technical-notes">Technical Notes</h2>
+
+  <p>The contents of files are not actually stored in the index
+  (<em>.git/index</em>) or in commit objects.  Rather, each file is stored in
+  the object database (<em>.git/objects</em>) as a <em>blob</em>, identified
+  by its SHA-1 hash.  The index file lists the filenames along with the
+  identifier of the associated blob, as well as some other data.  For commits,
+  there is an additional data type, a <em>tree</em>, also identified by its
+  hash.  Trees correspond to directories in the working directory, and contain
+  a list of trees and blobs corresponding to each filename within that
+  directory.  Each commit stores the identifier of its top-level tree, which
+  in turn contains all of the blobs and other trees associated with that
+  commit.</p>
+
+  <p>If you make a commit using a detached HEAD, the last commit really is
+  referenced by something: the reflog for HEAD.  However, this will expire
+  after a while, so the commit will eventually be garbage collected, similar
+  to commits discarded with <code>git commit --amend</code> or <code>git
+    rebase</code>.</p>
+
+  <hr>
+  <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
+    Lodato</a>.  Japanese translation &copy; 2010,
+  <a href='http://github.com/kazu-yamamoto'>Kazu Yamamoto</a>.
+  Korean translation &copy; 2011, <a href='mailto:sean@weaveus.com'>Sean
+    Lee</a>.
+  Russian translation &copy; 2012, <a href='mailto:alex@sychev.com'>Alex
+    Sychev</a>.
+  French translation &copy; 2012, <a href='mailto:michel.lefranc@gmail.com'>Michel Lefranc</a>.
+  This work is licensed under a <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    License</a>.</p>
+
+</body>
+</html>

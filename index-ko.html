@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>A Visual Git Reference</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">A Visual Git Reference</h1>
+
+  <div id="language-box">
+    <a>다른 언어로 보기</a>
+    <ul>
+      <li><a href='index-en.html'>English</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li class="selected">한국어</li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li><a href='index-fr.html'>Français</a></li>
+	   <li><a href='index-zh-cn.html'>简体中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">이미지가 보이지 않을 경우 <a
+    href="?no-svg">Non-SVG</a> 버전의 페이지로 보시기 바랍니다.</p>
+
+  <p id="link-to-svg">SVG 형식의 이미지를 지원하지 않는 브라우저입니다.
+  <a href="index.html">(Re-enable SVG)</a></p>
+
+  <p>이 문서는 Git에서 주로 사용하는 명령들에 대해 여러 그래프와 함께
+  요약하여 설명하고 있습니다. 이 문서를 통해 Git이 어떻게 돌아가는지
+  한번 살짝 살펴보고 나면 Git을 이해하는데 있어 밝은 등대가 되어줄 것입니다.
+  이 문서가 어떻게 만들어졌는지 관심있는 분은 
+  <a href='http://github.com/MarkLodato/visual-git-guide'>GitHub 저장소</a>로
+  찾아와서 살펴보시기 바랍니다.</p>
+
+  <h2 id="contents">목차</h2>
+  <ol>
+    <li><a href="#basic-usage">기초 사용법</a></li>
+    <li><a href="#conventions">관례</a></li>
+    <li><a href="#commands-in-detail">명령어 살펴보기</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit(커밋)</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">Detached HEAD와 Commit</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">기술적인 내용</a></li>
+  </ol>
+
+  <h2 id="basic-usage">기초 사용법</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>위의 네 가지 명령을 사용하여 작업 디렉토리, Stage 영역(Index 라고도
+  부르는), 히스토리(저장된 커밋들) 사이에 파일을 복사합니다.</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> 명령은 (현재의) <em>files</em>
+    파일들을 Stage 영역으로 복사합니다.</li>
+
+    <li><code>git commit</code> 명령은 Stage 영역의 현재 Snapshot을 
+    커밋으로 저장합니다.</li>
+
+    <li><code>git reset -- <em>files</em></code> 명령은 마지막 커밋에서
+    Stage 영역으로 <em>files</em> 파일들을 복사합니다. 
+    <code>git add <em>files</em></code> 명령에 대한 '되돌리기' 명령입니다.
+    <code>git reset</code> 명령으로 모든 파일을 이전 커밋으로 
+    복원할 수 있습니다.</li>
+
+    <li><code>git checkout -- <em>files</em></code> 명령은 Stage 영역에서
+    작업 디렉토리로 파일을 복사합니다. Stage 영역에 추가하지 않은 변경 내용에
+    대한 되돌리기 명령입니다.</li>
+
+  </ul>
+
+  <p><code>git reset -p</code>나 <code>git checkout -p</code> 또는 
+  <code>git add -p</code> 명령과 같이 -p 옵션을 사용하여 파일을 지정하지
+  않고 어떤 파일에 대해 명령을 적용할 지 대화형 명령을 사용할 수
+  있습니다.</p>
+  
+  <p>Stage 영역을 거치지 않고 직접 History로부터 파일을 Checkout 하거나, Stage
+  영역을 거치지 않고 직접 Commit을 할 수도 있습니다.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> 명령은 마지막 커밋에 존재하는 모든 파일들에 대하여
+    <tt>git add</tt> 명령을 적용한 후 <tt>git commit</tt> 명령을 적용하는 것과 다르지 않다.</li>
+    
+    <li><code>git commit <em>files</em></code> 명령을 실행하면 마지막 커밋을 기반으로
+    <em>files</em>의 변경된 내용을 포함하는 새로운 커밋을 하나 만든다. 이 때 <em>files</em>은
+    Stage 영역에 추가된다.</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> 명령은 <em>files</em> 
+    을 마지막 커밋으로부터 Stage 영역과 현재 작업 디렉토리에 동시에 복사한다.</li>
+
+  </ul>
+
+
+  <h2 id="conventions">관례</h2>
+
+  <p>이 문서는 다음과 같은 그래프를 사용하여 Git 사용법을 설명 합니다.</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>커밋은 5글자의 ID로 표현하며, 부모 커밋을 화살표로 가리킵니다.
+  브랜치는 오렌지색이며 어떤 특정 커밋을 가리키고 있습니다. <em>HEAD</em>
+  라는 이름으로 현재 브랜치 가리킬 수 있습니다. 위의 그림에는 5개의 커밋이
+  있으며 <em>ed489</em> 커밋이 가장 최근의 커밋입니다. <em>master</em>
+  브랜치(현재 선택한 브랜치)는 가장 최근의 커밋을 가리키고 있으며
+  <em>maint</em> 브랜치는 <em>master</em> 브랜치의 뿌리 부분(Ancestor)
+  입니다.</p>
+
+  <h2 id="commands-in-detail">명령어 살펴보기</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>커밋간의 변경된 사항을 살펴보는 방법은 여러가지가 있습니다. 아래 예제는
+  여러 방법 중 대표적인 것들입니다. 파일 이름을 옵션으로 지정하면 특정 파일에
+  대한 변경사항만 확인할 수 도 있습니다.</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit(커밋)</h3>
+
+  <p>커밋을 하면 Git은 Stage 영역의 파일들과 부모 커밋 정보 그리고 현재 커밋
+  정보를 사용하여 새로운 커밋 개체(Commit Object)를 만듭니다. 그리고 현재
+  브랜치가 이 새로 만들어진 커밋을 가리키도록 만듭니다. 아래 그림에 보면 현재
+  브랜치는 <em>master</em> 이고 명령을 실행하기 전에는 <em>ed489</em> 커밋을
+  가리키고 있습니다. 새로 커밋을 하게 되면 커밋의 부모가 <em>ed489</em>
+  인<em>f0cec</em> 커밋이 만들어지고 <em>master</em> 브랜치는 <em>f0cec</em>
+  커밋을 가리키게 됩니다.</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>이런 새로운 커밋이 추가되는 과정은 현재 브랜치가 다른 브랜치의 뿌리 
+  부분(Ancestor)이라고 해도 가능한 일입니다. 아래 그림을 보면 
+  <em>master</em> 브랜치의 뿌리가 되는 <em>maint</em> 브랜치에서 커밋을 할
+  경우 <em>1800b</em> 커밋이 만들어집니다. 이렇게 되면 <em>maint</em> 브랜치는
+  <em>master</em> 브랜치의 직접적인 뿌리 부분이 되지는 않습니다. 이 두 개의
+  히스토리 내용을 합치기 위해서는 Merge(통합, 병합) 또는 Rebase 명령이
+  필요합니다.</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>가끔 커밋을 할 때 실수를 할 수 있습니다. 하지만 이미 커밋을 했다고 해도
+  <code>git commit --amend</code> 명령으로 쉽게 실수를 고칠 수 있습니다. 이
+  명령을 사용하면 현재 커밋과 부모가 같은 새 커밋을 만듭니다. (실수했던 커밋을
+  다른 커밋이나 브랜치가 사용하지 않았다면 자동으로 없어질 것입니다.)</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>마지막 경우는 <a href="#detached">detached HEAD</a>에서 커밋을 하는 것인데
+  아래에서 다시 다루기로 한다.</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>Checkout 명령은 히스토리나 Stage 영역으로부터 현재 작업 디렉토리로 파일을
+  복사하는 명령입니다. 또는 브랜치를 변경할 때 사용하기도 합니다.</p>
+
+  <p>Checkout 명령에 파일 이름이 주어지면 (또는 <code>-p</code> 옵션) Git은
+  해당 파일을 마지막 커밋에서 Stage 영역과 작업 디렉토리로 복사합니다.
+  예를 들어 <code>git checkout HEAD~ foo.c</code> 명령을 실행하면
+  <em>HEAD~</em> 커밋(현재 커밋보다 한 단계 앞의 커밋)으로부터 
+  <code>foo.c</code> 파일을 작업 디렉토리에 복사하고 Stage 영역에도 추가합니다.
+  (커밋 이름을 지정하지 않으면 Stage 영역에서 복사해옵니다.) 현재 브랜치가
+  가리키는 커밋은 바뀌지 않았다는 점을 주목해봅니다.</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>파일 이름을 지정하지 않고 브랜치 이름만 지정하면 Git은 <em>HEAD</em>를
+  지정한 브랜치를 가리키도록 변경합니다. 이것은 결과적으로 브랜치를 변경한
+  것과 같습니다. 따라서 자동으로 현재 디렉토리의 내용은 해당 브랜치의 내용으로
+  변경됩니다. <em>a47c3</em> 커밋에 포함된 파일들을 현재 디렉토리로 복사할 것이며
+  이전 <em>ed489</em> 커밋에는 포함되었지만 <em>a47c3</em> 커밋에 포함되어있지
+  않은 파일들은 삭제될 것입니다. 두 커밋에 모두에 포함되지 않은 파일은 무시될
+  것입니다.</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>파일 이름을 지정하지 않고 브랜치 이름만 지정한 경우, 그리고 브랜치 이름이
+  로컬에 존재하지 않는 브랜치 이거나 태그, SHA-1 해시 모양의 커밋, 또는
+  <em>master~3</em> 과 같은 인자로 지정했다면, <em>detached HEAD</em>라고 부르는
+  익명 브랜치(Anonymous Branch)를 사용하게 되는데 프로젝트의 히스토리를
+  옮겨다닐 때 유용하게 사용할 수 있습니다. 'Git 프로젝트'의 1.6.6.1 버전을 컴파일
+  해보고 싶다면 <code>git checkout v1.6.6.1</code> 명령으로 소스를 Checkout하여
+  컴파일 하고, 그 결과 바이너리들을 설치해볼 수 있습니다(v1.6.6.1은 브랜치는 아니고
+  태그입니다). 그리고 나서 다시 <code>git checkout master</code> 명령으로 다른
+  브랜치로 변경할 수도 있습니다. <em>detached HEAD</em>에서 커밋을 하면 경우가 좀 
+  달라지는데 <a href="#detached">아래</a>에서 다시 살펴볼 것입니다.</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Detached HEAD에서 커밋하기</h3>
+
+  <p><em>detached HEAD</em>에서의 커밋도 별반 다르지 않습니다. 다만 아무
+  브랜치도 업데이트되지 않는다는 것만 다를 뿐입니다. (익명의 브랜치라고
+  생각해볼 수 있습니다.)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p><em>detached HEAD</em>에서 다른 브랜치로 변경하게 되면(예를 들어
+  <em>master</em> 같은) <em>detached HEAD</em>의 커밋을 가리키는 어떤 이름도
+  갖지 못하게 되어 접근할 길을 잃고 맙니다. 아래 그림을 보면 브랜치를
+  변경 후 어떤 이름도 <em>2eecb</em>를 가리키고 있지 않습니다.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>하지만 이 커밋을 가리키도록 새 브랜치를 만들 수 있는데 <code>git checkout
+  -b <em>name</em></code> 명령을 사용할 수 있습니다.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>Reset 명령은 현재 브랜치가 가리키고 있는 커밋을 이동시킬 때 사용하며
+  Stage 영역과 작업 디렉토리의 내용을 갱신합니다. 또한 실제 작업 디렉토리
+  내용을 변경하지 않은 채로 이전 커밋에서 파일을 Stage 영역으로 복사할 때에도
+  사용합니다.</p>
+
+  <p>파일 이름 없이 커밋만 지정하는 경우 브랜치가 해당 커밋을 가리키도록
+  변경합니다. Stage 영역 또한 해당 커밋에 맞게 갱신됩니다. <code>--hard</code>
+  옵션이 주어지면 작업 디렉토리 또한 갱신됩니다. <code>--soft</code> 옵션이
+  주어지면 작업디렉토리 및 Stage 영역 둘 다 갱신하지 않습니다.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>커밋 이름이 지정되지 않으면 <em>HEAD</em>를 대신 사용합니다.
+  이 경우에는 브랜치가 가리키는 위치는 변경되지 않고 Stage 영역의 내용(또는 
+  <code>--hard</code> 옵션이 주어지면 작업 디렉토리 까지)이 가장 마지막 커밋의
+  내용으로 갱신됩니다.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>파일 이름을 지정하면 (또는 <code>-p</code> 옵션을 사용하면) 
+  <a href='#checkout'>Checkout</a> 명령과 비슷한 역할을 합니다. 다만 Stage
+  영역만 갱신된다는 점이 다릅니다. (어떤 시점의 커밋으로부터 파일을 갱신할
+  지 <em>HEAD</em> 대신 커밋 이름을 지정하여 선택할 수 있습니다.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>Merge 명령은 다른 커밋들을 하나로 합쳐서 새로운 커밋을 만듭니다. Merge
+  명령을 실행하기 전에 Stage 영역에 작업중인 파일이 없는지 꼭 확인해둡니다.
+  Merge하는 경우 중 가장 간단한 경우는 Merge할 대상이 현재 커밋의 직접적인
+  뿌리가 되는 경우 인데, 이 때는 합칠 내용이 없습니다. 다음은 현재 커밋이 
+  Merge할 대상의 직접적인 뿌리가 되는 경우인데, 이 때는 <em>fast-forward</em>
+  Merge가 실행되는데 간단히 가리키는 지점이 대상 커밋이 되고 대상 커밋의
+  내용을 Checkout 합니다.</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>이젠 진짜 Merge를 살펴볼 차례입니다. 다른 Merge 전략을 선택할 수도 있지만
+  기본적으로 Git은 재귀적인(Recursive) Merge 전략을 사용합니다. 이 전략은
+  현재 커밋(<em>ed489</em>), 대상이 되는 커밋(<em>33104</em>), 그리고 공통의
+  뿌리가 되는 커밋(<em>b325c</em>)을 가지고
+  <a href='http://en.wikipedia.org/wiki/Three-way_merge'>3-way Merge</a>를
+  수행합니다. Merge한 결과는 작업 디렉토리와 Stage 영역에 저장되며 부모가
+  여럿인 새 커밋(<em>33104</em>) 만듭니다.
+  </p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick(열매 고르기)</h3>
+
+  <p>Cherry-pick 명령은 커밋을 하나 꺼내서 현재 작업중인 브랜치 마지막 부분에
+  '복사'를 하면서 해당 커밋이 변경하는 부분을 적용하고 메시지나 저자 정보 등의 
+  커밋 정보를 함께 저장합니다.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>여러 브랜치를 하나로 모으고자 할 때 Rebase 명령을 
+  <a href='#merge'>Merge</a> 명령 대신 사용할 수 있습니다. Merge 명령은 두
+  부모를 가지는 하나의 새 커밋을 만들기 때문에 히스토리가 직선적이지 않습니다.
+  Rebase 명령을 사용하면 커밋들을 하나씩 순차적으로 적용해나가면서 히스토리를
+  직선으로 만들 수 있습니다. <a href='#cherry-pick'>Cherry-pick</a> 명령을
+  자동으로 한번에 수행하는 것이라고 보시면 됩니다.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>위의 Rebase 명령은 <em>topic</em> 브랜치에만 포함되어 있는 모든 
+  커밋들(<em>169a6</em>와 <em>2c33a</em>)을 <em>master</em> 브랜치에 추가합니다.
+  커밋들을 추가하고 나서 <em>master</em> 브랜치가 마지막 커밋을 가리키도록
+  이동시킵니다. Rebase하고 나서 더 이상 가리킬(Reference) 수 없는 커밋들은
+  쓰레기통으로 사라집니다.</p>
+
+  <p><code>--onto</code> 옵션을 사용하면 Rebase에 사용할 커밋을 얼마나 오래 전
+  까지의 커밋을 사용할 지 제한할 수 있습니다.
+  아래 명령은 <em>169a6</em> 커밋 이후의 모든 커밋들(여기에서는 
+  <em>2c33a</em> 커밋)을 <em>master</em> 브랜치에 적용시킵니다.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>추가로 <code>git rebase --interactive</code> 명령이 있는데 간단히 커밋을
+  적용하는 것 이외에도 더 복잡한 기능, 커밋에 대해서 Namely Dropping,
+  Reordering, Modifying, Squashing을 할 수 있습니다. 이해하기 쉽게 그릴 수 있는
+  그림이 없어 부득이 메뉴얼 문서 <a
+  href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a> 링크를 드립니다.</p>
+
+  <h2 id="technical-notes">기술적인 내용</h2>
+
+  <p>파일의 실제 내용은 사실 Index(<em>.git/index</em>)나 커밋 개체(Commit
+  Object)에 저장되는 것이 아니라, 개체 데이터베이스(Object Database,
+  <em>.git/objects</em>)에 SHA-1 해시로 구분하여 <em>blob</em>형태로 저장이
+  됩니다. Index는 파일이름의 목록과 파일 <em>blob</em>을 가리키는 Hash를
+  저장하고 있습니다. 커밋에는 추가로 <em>tree</em>라는 형식의 데이터가 있는데
+  마찬가지로 Hash로 구분하고 디렉토리 구조를 담고 있습니다. 각 디렉토리는 
+  포함된 파일 목록에 대한 <em>tree</em> 데이터를 담고 있습니다. 각 커밋은
+  가장 상위 디렉토리에 대한 <em>tree</em> 정보를 갖고 있어 커밋에 포함된
+  디렉토리 및 파일 정보를 접근할 수 있습니다.</p>
+
+  <p><em>detached HEAD</em>에서 커밋을 만들게 되면 뭔가 만든 커밋을 가리킬
+  것이 필요한데 HEAD에 대한 reflog를 사용할 수 있습니다. 하지만 이 정보는
+  시간이 지나면 버려지기 때문에 결국 아무것도 가리키는 것이 없는 커밋은
+  <code>git commit --amend</code> 명령이나 <code>git rebase</code> 명령으로
+  버려지는 커밋 처럼 버려지게 됩니다.</p>
+
+  <hr>
+  <p>Copyright &copy; 2010, <a href='mailto:lodatom@gmail.com'>Mark
+    Lodato</a>.  日本語 번역 &copy; 2010,
+  <a href='http://github.com/kazu-yamamoto'>Kazu Yamamoto</a>.
+  한국어 번역 &copy; 2011, <a href='mailto:sean@weaveus.com'>Sean
+    Lee</a>.
+  본 저작물은 <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    License</a> 라이센스를 따릅니다.</p>
+
+</body>
+</html>
