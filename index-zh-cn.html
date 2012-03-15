@@ -164,11 +164,8 @@
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
-  <p>If a commit is not given, it defaults to <em>HEAD</em>.  In this case,
-  the branch is not moved, but the stage (and optionally the working
-  directory, if <code>--hard</code> is given) are reset to the contents of the
-  last commit.</p>
-如果没有给出提交点的版本号，那么默认用<em>HEAD</em>。这样，分支指向不变，但是索引会回滚到最后一次提交，如果用<code>--hard</code>选项，工作目录也同样。
+  <p>如果没有给出提交点的版本号，那么默认用<em>HEAD</em>。这样，分支指向不变，但是索引会回滚到最后一次提交，如果用<code>--hard</code>选项，工作目录也同样。</p>
+
   <div class="center"><img src='reset.svg.png'></div>
 
   <p>如果给了文件名(或者 <code>-p</code>选项), 那么工作效果和带文件名的<a href='#checkout'>checkout</a>差不多，除了索引被更新。</p>
