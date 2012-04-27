@@ -31,7 +31,8 @@ HTML := \
     index-ko.html \
     index-ru.html \
     index-fr.html \
-    index-zh-cn.html
+    index-zh-cn.html \
+    translate-en.html
 
 PDF_OUT = $(FILES:=.pdf)
 PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
