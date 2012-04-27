@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>图解Git</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">图解Git</h1>
+
+  <div id="language-box">
+    <a>其他语言:</a>
+    <ul>
+      <li><a href='index-en.html'>English</a></li>
+      <li><a href='index-fr.html'>Français</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li class="selected">简体中文</li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">如果图片不能显示，试试<a href="?no-svg">无图版</a></p>
+
+  <p id="link-to-svg">不显示图片
+  <a href="index.html">(显示图片)</a></p>
+
+  <p>此页图解git中的最常用命令。如果你稍微理解git的工作原理，这篇文章能够让你理解的更透彻。
+  如果你想知道这个站点怎样产生，请前往<a href='http://github.com/MarkLodato/visual-git-guide'>GitHub
+    repository</a>。</p>
+
+
+
+  <h2 id="contents">正文</h2>
+  <ol>
+    <li><a href="#basic-usage">基本用法</a></li>
+    <li><a href="#conventions">约定</a></li>
+    <li><a href="#commands-in-detail">命令详解</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">Detached HEAD(匿名分支提交)</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">技术说明</a></li>
+  </ol>
+
+  <h2 id="basic-usage">基本用法</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>上面的四条命令在工作目录、暂存目录(也叫做索引)和仓库之间复制文件。</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> 把当前文件放入暂存区域。</li>
+
+    <li><code>git commit</code> 给暂存区域生成快照并提交。</li>
+
+    <li><code>git reset -- <em>files</em></code> 用来撤销最后一次<code>git add <em>files</em></code>，你也可以用<code>git reset</code>
+    撤销所有暂存区域文件。</li>
+
+    <li><code>git checkout -- <em>files</em></code> 把文件从暂存区域复制到工作目录，用来丢弃本地修改。</li>
+
+  </ul>
+
+  <p>你可以用 <code>git reset -p</code>, <code>git checkout -p</code>, or
+  <code>git add -p</code>进入交互模式。</p>
+
+  <p>也可以跳过暂存区域直接从仓库取出文件或者直接提交代码。</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> 相当于运行 <tt>git add</tt>
+    把所有当前目录下的文件加入暂存区域再运行。<tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>files</em></code> 进行一次包含最后一次提交加上工作目录中文件快照的提交。并且文件被添加到暂存区域。</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> 回滚到复制最后一次提交。</li>
+
+  </ul>
+
+  <h2 id="conventions">约定</h2>
+
+  <p>后文中以下面的形式使用图片。</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>绿色的5位字符表示提交的ID，分别指向父节点。分支用橘色显示，分别指向特定的提交。当前分支由附在其上的<em>HEAD</em>标识。
+这张图片里显示最后5次提交，<em>ed489</em>是最新提交。 <em>master</em>分支指向此次提交，另一个<em>maint</em>分支指向祖父提交节点。</p>
+
+  <h2 id="commands-in-detail">命令详解</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>有许多种方法查看两次提交之间的变动。下面是一些示例。</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>提交时，git用暂存区域的文件创建一个新的提交，并把此时的节点设为父节点。然后把当前分支指向新的提交节点。下图中，当前分支是<em>master</em>。
+在运行命令之前，<em>master</em>指向<em>ed489</em>，提交后，<em>master</em>指向新的节点<em>f0cec</em>并以<em>ed489</em>作为父节点。</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>即便当前分支是某次提交的祖父节点，git会同样操作。下图中，在<em>master</em>分支的祖父节点<em>maint</em>分支进行一次提交，生成了<em>1800b</em>。
+这样，<em>maint</em>分支就不再是<em>master</em>分支的祖父节点。此时，<a href='#merge'>合并</a> (或者 <a href='#rebase'>衍合</a>) 是必须的。</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>如果想更改一次提交，使用  <code>git commit --amend</code>。git会使用与当前提交相同的父节点进行一次新提交，旧的提交会被取消。</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>另一个例子是<a href="#detached"分离HEAD提交</a>,后文讲。</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>checkout命令通常用来从仓库中取出文件，或者在分支中切换。</p>
+
+  <p>checkout命令让git把文件复制到工作目录和暂存区域。比如<code>git checkout HEAD~ foo.c</code>把文件从<code>foo.c</code>提交节点<em>HEAD~</em>
+(当前提交节点)复制到工作目录并且生成索引。注意当前分支没有变化。</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>如果没有指定文件名，而是一个本地分支，那么将切换到那个分支去。同时把索引和工作目录切换到那个分支对应的状态。</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>如果既没有指定文件名，也没有指定分支名，而是一个标签、远程分支、SHA-1值或者是像<em>master~3</em>类似的东西，就得到一个匿名分支，称作<em>detached HEAD</em>。
+这样可以很方便的在历史版本之间互相切换。但是，这样的提交是完全不同的，详细的在<a href="#detached">下面</a>。</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">用分离HEAD提交(找不到好的译法)</h3>
+
+  <p><em>HEAD</em>是分离的时候, 提交可以正常进行, 但是没有更新已命名的分支. 。(可以看作是匿名分支。)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>如果此时切换到别的分支，那么所作的工作会全部丢失。注意这个命令之后就不存在<em>2eecb</em>了。</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>如果你想保存当前的状态，可以用这个命令创建一个新的分支:
+ <code>git checkout -b <em>name</em></code>。</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>reset命令把当前分支指向另一个位置，并且有选择的变动工作目录和索引。也用来在从历史仓库中复制文件到索引，而不动工作目录。</p>
+
+  <p>如果不给选项，那么当前分支指向到那个提交。如果用<code>--hard</code>选项，那么工作目录也更新，如果用<code>--soft</code>选项，那么都不变。</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>如果没有给出提交点的版本号，那么默认用<em>HEAD</em>。这样，分支指向不变，但是索引会回滚到最后一次提交，如果用<code>--hard</code>选项，工作目录也同样。</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>如果给了文件名(或者 <code>-p</code>选项), 那么工作效果和带文件名的<a href='#checkout'>checkout</a>差不多，除了索引被更新。</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>merge 命令把不同分支合并起来。合并前，索引必须和当前提交相同。如果另一个分支是当前提交的祖父节点，那么合并命令将什么也不做。
+  另一中情况是如果当前提交是另一个分支的祖父节点，就导致<em>fast-forward</em>合并。指向只是简单的移动，并生成一个新的提交。</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>否则就是一次真正的合并。默认把当前提交(<em>ed489</em> 如下所示)和另一个提交(<em>33104</em>)以及他们的共同祖父节点(<em>b325c</em>)进行一次<a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>三方合并</a>。结果是先保存当前目录和索引，然后和父节点<em>33104</em>一起做一次新提交。
+  </p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>cherry-pick命令"复制"一个提交节点并在当前复制做一次完全一样的新提交。</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>衍合是合并命令的另一种选择。合并把两个父分支合并进行一次提交，提交历史不是线性的。衍合在当前分支上重演另一个分支的历史，提交历史是线性的。
+  本质上，这是线性化的自动的 <a href='#cherry-pick'>cherry-pick</a></p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>上面的命令都在<em>topic</em>分支中进行，而不是<em>master</em>分支，在<em>master</em>分支上重演，并且把分支指向新的节点。注意旧提交没有被引用，将被回收。</p>
+
+  <p>要限制回滚范围，使用<code>--onto</code>选项。下面的命令在<em>master</em>分支上重演当前分支从<em>169a6</em>以来的最近几个提交，即<em>2c33a</em>。</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>同样有<code>git rebase --interactive</code>让你更方便的完成一些复杂操组，比如丢弃、重排、修改、合并提交。没有图片体现着下，细节看这里:<a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a></p>
+
+  <h2 id="technical-notes">技术说明</h2>
+
+  <p>文件内容并没有真正存储在索引(<em>.git/index</em>)或者提交对象中，而是以blob的形式分别存储在数据库中(<em>.git/objects</em>)，并用SHA-1值来校验。
+索引文件用识别码列出相关的blob文件以及别的数据。对于提交来说，以树(<em>tree</em>)的形式存储，同样用对于的哈希值识别。树对应着工作目录中的文件夹，树中包含的
+树或者blob对象对应着相应的子目录和文件。每次提交都存储下它的上一级树的识别码。</p>
+
+  <p>如果用detached HEAD提交，那么最后一次提交会被the reflog for HEAD引用。但是过一段时间就失效，最终被回收，与<code>git commit --amend</code>或者<code>git
+    rebase</code>很像。</p>
+
+  <hr>
+
+  <p>Copyright &copy; 2010,
+    <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
+  Chinese translation &copy; 2012,
+    <a href='mailto:ellrywych@gmail.com'>wych</a>.
+  </p>
+
+  <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a> 本著作系采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">创用CC 姓名标示-非商业性-相同方式分享3.0 美国授权条款</a>授权。</p>
+
+</body>
+</html>
