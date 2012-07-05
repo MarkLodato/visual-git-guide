@@ -237,92 +237,91 @@
 
   <div class="center"><img src='reset.svg.png'></div>
 
-  <p>If a filename (and/or <code>-p</code>) is given, then the command works
-  similarly to <a href='#checkout'>checkout</a> with a filename, except only
-  the stage (and not the working directory) is updated.  (You may also specify
-  the commit from which to take files, rather than <em>HEAD</em>.)</p>
-
+  <p>Se viene passato un nome di file (e/o <code>-p</code>) allora il comando
+  si comporta in modo simile a <a href='#checkout'>checkout</a> con un nome di file,
+  l'unica differenza è che solo lo stage viene aggiornato (e non la working directory).
+  (È anche possibile specificare il commit dal quale prendere i file al posto di 
+  <em>HEAD</em>.)</p>
+  
   <div class="center"><img src='reset-files.svg.png'></div>
 
   <h3 id="merge">Merge</h3>
 
-  <p>A merge creates a new commit that incorporates changes from other
-  commits.  Before merging, the stage must match the current commit.  The
-  trivial case is if the other commit is an ancestor of the current commit, in
-  which case nothing is done.  The next most simple is if the current commit
-  is an ancestor of the other commit.  This results in a <em>fast-forward</em>
-  merge.  The reference is simply moved, and then the new commit is checked
-  out.</p>
+  <p>Merge crea un nuovo commit che include modifiche provenienti da altri commit.
+  Prima di eseguire il merge lo stage deve corrispondere al commit corrente.
+  Il caso banale è quello in cui l'altro commit è un antenato del commit corrente,
+  non serve fare niente. Un altro caso semplice è quello in cui il commit
+  corrente è un antenato dell'altro commit. Avremo quindi un merge <em>fast-forward</em>.
+  La referenza viene semplicemente spostata e viene eseguito il checkout sul 
+  nuovo commit.</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
 
-  <p>Otherwise, a "real" merge must occur.  You can choose other strategies,
-  but the default is to perform a "recursive" merge, which basically takes the
-  current commit (<em>ed489</em> below), the other commit (<em>33104</em>),
-  and their common ancestor (<em>b325c</em>), and performs a <a
-    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way merge</a>.
-  The result is saved to the working directory and the stage, and then a
-  commit occurs, with an extra parent (<em>33104</em>) for the new commit.
+  <p>Negli altri casi avremo un merge "reale". Si possono scegliere altre
+  strategie ma quella di default è rappresentata dal merge "ricorsivo" che
+  semplicemente prende il commit corrente (<em>ed489</em> below), l'altro commit
+  (<em>33104</em>), il loro antenato comune (<em>b325c</em>) ed esegue un <a
+      href='http://en.wikipedia.org/wiki/Three-way_merge'>merge a tre vie</a>.
+  Il risultato viene memorizzato nella working directory e nello stage, seguirà 
+  un commit con un genitore extra (<em>33104</em>).
   </p>
 
   <div class="center"><img src='merge.svg.png'></div>
 
   <h3 id="cherry-pick">Cherry Pick</h3>
 
-  <p>The cherry-pick command "copies" a commit, creating a new commit on the
-  current branch with the same message and patch as another commit.</p>
+  <p>Il comando cherry-pick "copia" un commit creandone uno nuovo nel branch
+  corrente con lo stesso messaggio applicando le modifiche come se fosse
+  un commit diverso.</p>
 
   <div class="center"><img src='cherry-pick.svg.png'></div>
 
   <h3 id="rebase">Rebase</h3>
 
-  <p>A rebase is an alternative to a <a href='#merge'>merge</a> for combining
-  multiple branches.  Whereas a merge creates a single commit with two
-  parents, leaving a non-linear history, a rebase replays the commits from the
-  current branch onto another, leaving a linear history.  In essence, this is
-  an automated way of performing several <a
-    href='#cherry-pick'>cherry-pick</a>s in a row.</p>
+  <p>Rebase è un'alternativa a <a href='#merge'>merge</a> per combinare assieme
+  più branch. Mentre un merge crea un singolo commit con due genitori, 
+  preservando l'history non lineare, un rebase riporta i commit dal branch corrente
+  su un altro producendo un history lineare. In sostanza è un modo automatizzato
+  per eseguire diversi <a href='#cherry-pick'>cherry-pick</a>in sequenza.</p>
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>The above command takes all the commits that exist in <em>topic</em> but
-  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
-  them onto <em>master</em>, and then moves the branch head to the new tip.
-  Note that the old commits will be garbage collected if they are no longer
-  referenced.</p>
+  <p>Il comando precedente prende tutti i commit esistenti in <em>topic</em>
+  ma non in <em>master</em> (precisamente <em>169a6</em> e <em>2c33a</em>), li 
+  riporta sul <em>master</em> e poi sposta l'head del branch sulla nuova 
+  estremità.</p>
 
-  <p>To limit how far back to go, use the <code>--onto</code> option.  The
-  following command replays onto <em>master</em> the most recent commits on
-  the current branch since <em>169a6</em> (exclusive), namely
-  <em>2c33a</em>.</p>
+  <p>Per limitare quanto andare all'indietro utilizzare l'opzione <code>--onto</code>.
+  Il comando seguente riporta sul <em>master</em> i commit più recenti del branch corrente
+  da <em>169a6</em> (escluso), precisamente <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
-  <p>There is also <code>git rebase --interactive</code>, which allows one to
-  do more complicated things than simply replaying commits, namely dropping,
-  reordering, modifying, and squashing commits.  There is no obvious picture
-  to draw for this; see <a
-    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
-  for more details.</p>
+  <p>Esiste anche <code>git rebase --interactive</code>, che permette di fare
+  cose più complicate rispetto a riportare semplicemente commit, più precisamente
+  eliminare, riordinare, modificare i commit. Non esiste un caso evidente
+  per un'immagine per questo; vedere <a 
+      href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
+  per maggiori dettagli.</p>
 
   <h2 id="technical-notes">Technical Notes</h2>
 
-  <p>The contents of files are not actually stored in the index
-  (<em>.git/index</em>) or in commit objects.  Rather, each file is stored in
-  the object database (<em>.git/objects</em>) as a <em>blob</em>, identified
-  by its SHA-1 hash.  The index file lists the filenames along with the
-  identifier of the associated blob, as well as some other data.  For commits,
-  there is an additional data type, a <em>tree</em>, also identified by its
-  hash.  Trees correspond to directories in the working directory, and contain
-  a list of trees and blobs corresponding to each filename within that
-  directory.  Each commit stores the identifier of its top-level tree, which
-  in turn contains all of the blobs and other trees associated with that
-  commit.</p>
+  <p>I contenuti dei file non sono memorizzati nell'index (<em>.git/index</em>)
+  o negli oggetti dei commit. Ogni file è memorizzato nel database
+  degli oggetti (<em>.git/objects</em>) come <em>blob</em>, identificato dal
+  suo hash SHA-1. Il file index elenca i nomi dei file assieme all'identificatore
+  del blob associato oltre ad altri dati. Per i commit esiste un ulteriore
+  tipo di dato, <em>tree</em>, anch'esso identificato da un suo hash.
+  I tree corrispondono alle directory presenti nella working directory
+  e contengono una lista di tree e blob corrispondenti ad ogni nome di file
+  in quella directory. Ogni commit memorizza l'identificatore del suo
+  tree principale che a sua volta contiene tutti i blob e gli altri tree
+  associati a quel commit.</p>
 
-  <p>If you make a commit using a detached HEAD, the last commit really is
-  referenced by something: the reflog for HEAD.  However, this will expire
-  after a while, so the commit will eventually be garbage collected, similar
-  to commits discarded with <code>git commit --amend</code> or <code>git
+  <p>Se viene eseguito un commit utilizzando un'HEAD isolata l'ultimo commit
+  viene referenziato da qualcosa: dal reflog per HEAD. Tuttavia questo 
+  scompare in pochi istanti, quindi il commit verrà gestito dal garbage collector
+  come succede per i commit scartati con <code>git commit --amend</code> o <code>git
     rebase</code>.</p>
 
   <hr>
