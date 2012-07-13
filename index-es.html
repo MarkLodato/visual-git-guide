@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Una referencia visual de Git</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">Una referencia visual de Git</h1>
+
+  <div id="language-box">
+    <a>Otros Idiomas:</a>
+    <ul>
+      <li><a href='index-en.html'>English</a></li>
+      <li class="selected">Español</li>
+      <li><a href='index-fr.html'>Français</a></li>
+      <li><a href='index-it.html'>Italiano</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li><a href='index-zh-cn.html'>简体中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">Si las imágenes no funcionan, puedes intentar la <a
+    href="?no-svg">versión sin-SVG</a> de esta página.</p>
+
+  <p id="link-to-svg">Las imágenes SVG se han desactivado.
+  <a href="index.html">(volver a habilitar SVG)</a></p>
+
+  <p>Esta págnia da una referencia breve y visual para los comandos más comunes
+  en git.  Una vez que conozcas un poco sobre la forma de trabajo de git, este sitio puede fortalecer
+  tu entendimiento.  Si estás interesado en cómo se creó este sitio, mirá mi
+  <a href='http://github.com/MarkLodato/visual-git-guide'>repositorio de GitHub</a>.</p>
+
+  <h2 id="contents">Contenidos</h2>
+  <ol>
+    <li><a href="#basic-usage">Uso Básico</a></li>
+    <li><a href="#conventions">Convenciones</a></li>
+    <li><a href="#commands-in-detail">Comandos en Detalle</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">Commiteando con un HEAD Detachado</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">Notas Técnicas</a></li>
+  </ol>
+
+  <h2 id="basic-usage">Uso Básico</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>Los cuatro comandos de arriba copian archivos entre el directorio de trabajo, el
+  stage (también llamado index), y la historia (en la forma de commits).</p>
+
+  <ul>
+
+    <li><code>git add <em>archivos</em></code> copia <em>archivos</em> (en su
+    estado actual) al stage.</li>
+
+    <li><code>git commit</code> guarda una snapshot del stage como un commit.</li>
+
+    <li><code>git reset -- <em>archivos</em></code> quita <em>archivos</em> de stage; esto es,
+    que copia <em>archivos</em> del último commit al stage.  Usá este
+    comando para "deshacer" un <code>git add <em>archivos</em></code>.  También podés usar
+    <code>git reset</code> para quitar de stage todo lo que hayas agregado.</li>
+
+    <li><code>git checkout -- <em>archivos</em></code> copia <em>archivos</em> desde 
+    el stage al directorio de trabajo.  Usá esto para descartar los cambios locales.</li>
+
+  </ul>
+
+  <p>Podés usar <code>git reset -p</code>, <code>git checkout -p</code>, o
+  <code>git add -p</code> en lugar de (o en combinación con) especificar archivos
+  particulares para elegir interactivamente qué partes copiar.</p>
+
+  <p>También es posible, además, saltarse el stage y hacer check-out de los archivos directamente
+  desde los archivos de commit sin hacer primero el staging.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> es equivalente a utilizar el comando <tt>git add</tt> 
+    en todos los archivos que hubo en el último commit, y correr luego el comando
+    <tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>archivos</em></code> crea un nuevo commit incluyendo
+    los contenidos del último commit, además de un snapshot de <em>archivos</em> tomado 
+    del directorio de trabajo.  Adicionalmente, los <em>archivos</em> se copian 
+    al stage.</li>
+
+    <li><code>git checkout HEAD -- <em>archivos</em></code> copia <em>archivos</em> 
+    del último commit a stage y al directorio de trabajo (a ambos)</li>
+
+  </ul>
+
+  <h2 id="conventions">Convenciones</h2>
+
+  <p>En el resto del documento, usaremos graficos de la siguiente forma.</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>Los commits se muestran en verde como identificadores de 5 caracteres, y apuntan a sus
+  padres. Los branch se muestran en naranja, y apuntan a un commit en particular.
+  El branch actual se identifica por medio de una referencia especial
+  <em>HEAD</em>, que es "adjuntada" al branch.  En esta imagen, se muestran
+  los cinco últimos commits, con <em>ed489</em> siendo el más reciente.
+  <em>master</em> (el branch actual) apunta a este commit, mientras que
+  <em>maint</em> (otro branch) apunta a un antecesor del commit de <em>master</em>.</p>
+
+  <h2 id="commands-in-detail">Comandos en Detalle</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>Hay varias formas de ver las diferencias entre commits. Debajo están
+  algunos ejemplos comunes.  Cualquiera de esos comando pueden tomar opcionalmente
+  como argumento nombres de archivos que limiten las diferencias a los archivos nombrados.</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>Cuando commiteás, git crea un nuevo objeto de commit utilizando los archivos del
+  stage y establece el padre al commit actual.  Entonces apunta el presente branch a
+  este nuevo commit.  En la imagen debajo, el branch actual es <em>master</em>.
+  Antes de que se ejecutase el comando, <em>master</em> apuntaba a
+  <em>ed489</em>.  Luego, un nuevo commit, <em>f0cec</em>, se crea, con el
+  padre <em>ed489</em>, y luego <em>master</em> se mueve al nuevo commit.</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>Este mismo proceso sucede aún cuando el branch actual es un ancestro de
+  otro.  Debajo, un commit ocurre en el branch <em>maint</em>, el cual fue un
+  ancestro de <em>master</em>, resultando en <em>1800b</em>.  Luego,
+  <em>maint</em> no es más un ancestro de <em>master</em>.  Para reunir las dos
+  historias, será necesario un <a href='#merge'>merge</a> (o <a href='#rebase'>rebase</a>).</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>A veces pueden cometerse errores en un commit, pero son fáciles de corregir con
+  <code>git commit --amend</code>.  Cuando usás este comando, git crea un nuevo commit
+  con el mismo padre que el commit actual.  (El commit anterior será descartado
+  si nada más lo referencia.)</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>Un cuarto caso es commitear con un <a href="#detached">HEAD detachado</a>,
+  como explicaremos después.</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>El comando checkout se usa para copiar archivos de los commits (o desde stage)
+  al directorio de trabajo, y para opcionalmente intercambiar branches.</p>
+
+  <p>Cuando un nombre de archivo (y/o <code>-p</code>) se proporciona, git copia esos archivos
+  desde el commit dado hacia stage y el directorio de trabajo. Por ejemplo,
+  <code>git checkout HEAD~ foo.c</code> copia el archivo <code>foo.c</code>
+  desde el commit llamado <em>HEAD~</em> (el padre del commit actual) al
+  directorio de trabajo, y además lo pasa a stage.  (Si no se proporciona nombre de commit,
+  los archivos se copiarán desde stage.)  Notá quqe el branch actual no se cambia.</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>Cuando <em>not</em> se proporciona un nombre de archivo, pero la referencia es
+  un branch (local), <em>HEAD</em> se mueve a ese branch (esto es, nosotros "cambiamos" ese
+  branch), y entonces el stage y el directorio de trabajo se establecen para coincidir con
+  los contenidos de ese commit.  Cualquier archivo que existe en el nuevo commit
+  (<em>a47c3</em> debajo) se copia; culaquier archivo que exista en el anterior commit
+  (<em>ed489</em>) pero no en el que está borrado; y cualquier archivo que exista
+  será ignorado.</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>Cuando <em>not</em> se proporciona un nombre de archivo y la referencia <em>no</em> es
+  un branch (local) &mdash; digamos, es un tag, un branch remoto, un identificador SHA-1, o
+  algo como <em>master~3</em> &mdash; obtenemos un branch anónimo, llamado
+  un <em>HEAD detachado</em>.  Esto es útil para saltar a través de la historia.
+  Digamos que querés compilar la versión 1.6.6.1 de git.  Podés hacer <code>git checkout
+    v1.6.6.1</code> (que es un tag, no un branch), compilar, instalar, y luego
+  cambiar de nuevo a otro branch, digamos <code>git checkout master</code>.
+  Sin embargo, commitear trabajos levemente diferentes con un HEAD detachado; esto es
+  cubierto <a href="#detached">debajo</a>.</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Commiteando con un HEAD detachado</h3>
+
+  <p>Cuando el <em>HEAD</em> está detachado, commit trabaja como siempre, excepto
+  que en un branch sin nombre.  (Podés pensar en esto como un branch anónimo.)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>Una vez que hacés un check-out de algo más, digamos <em>master</em>, el commit
+  (supuestamente) no es referenciado más por nada, y se pierde. Notá que
+  luego de ese comando, no hay nada referenciando <em>2eecb</em>.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>Si, por otro lado, querés guardar este estado, podés crear un nuevo
+  branch con nombre usando <code>git checkout -b <em>nombre</em></code>.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>El comando reset mueve el branch actual a otra posición, y opcionalmente
+  actualiza el stage y el directorio de trabajo.  Además se usa para
+  copiar archivos desde los commits a stage sin tocar el directorio de trabajo.</p>
+
+  <p>Si un commit se hace sin especificar nombres de archivos, el branch actual
+  se mueve a ese commit, y luego el stage se actualiza para coincidir con ese commmit.
+  Si se proporciona el parámetro <code>--hard</code> el directorio de trabajo también se
+  actualiza. Si se proporciona el parámetro <code>--soft</code> ninguno se actualiza.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>Si no se proporciona un commit, por defecto se refiere a <em>HEAD</em>.  En este caso,
+  el branch no se mueve, pero se pasa a stage (y opcionalmente al directorio de trabajo si
+  se especifica el parámetro <code>--hard</code>) y reinicia a los contenidos del último commit.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>Si se proporciona un nombre de archivo (y/o <code>-p</code>), entonces el comando trabaja
+  en forma similar al <a href='#checkout'>checkout</a> con un nombre de archivo, excepto que solo
+  el stage (y no el directorio de trabajo) se actualice.  (Además deberías especificar
+  el commit del cual tomar los archivos, en lugar de <em>HEAD</em>.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>Un merge crea un nuevo commit que incorpora cambios de otros commit.
+  Antes de mezclar, el stage debe coincidir con el commit actual.  El caso
+  trivial es si el otro commit es un ancestro del commit actual, en cuyo
+  caso no se hace nada adicional.  El siguiente más simple es si el commit actual
+  es un ancestro del otro commit.  Esto resulta en una mezcla <em>fast-forward</em>.
+  La referencia simplemente se mueve, y luego al nuevo commit se le hace check out.</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>De otro modo, una mezcla "real" debe ocurrir.  Podés elegir otras estrategias,
+  pero por defecto se realiza una mezcla "recursive", la cual básicamente toma el commit
+  actual (<em>ed489</em> debajo), el otro commit (<em>33104</em>),
+  y su ancestro común (<em>b325c</em>), y realiza una <a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>mezcla de tres vías</a>.
+  El resultado se guarda al directorio de trabajoy el stage, y luego ocurre
+  un commit, con un padre adicional (<em>33104</em>) para el nuevo commit.
+  </p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>El comando cherry-pick "copia" un commit, creando un nuevo commit en el
+  branch actual con el mismo mensaje y patch que otro commit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>Un rebase es una alternativa al <a href='#merge'>merge</a> para combinar
+  múltiples branches.  Mientras que un merge crea un solo commit con dos
+  padres, dejando una historia no lineal, un rebase reproduce los commits del
+  branch actual en otro, dejando una historia lineal.  En esencia, esta es
+  una forma automatizada de realizar muchas <a
+    href='#cherry-pick'>cherry-pick</a> de una vez.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>El comando de arriba toma todos los commits que existen en <em>topic</em> pero
+  no en <em>master</em> (nombrados <em>169a6</em> y <em>2c33a</em>), los reproduce
+  dentro de <em>master</em>, y luego mueve el branch head al nuevo punto.
+  Notá que los commits viejos serán recogidos por el recolector de basura si no son
+  referenciados.</p>
+
+  <p>Para limitar qué tanto va hacia atrás, usá la opción <code>--onto</code>.  El
+  siguiente comando reproduce dentro de <em>master</em> el más reciente commit del
+  branch actual desde <em>169a6</em> (exclusivo), concretamente <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>Además existe <code>git rebase --interactive</code>, que permite hacer
+  cosas más complicadas que simplemente reproducir commits, descartar, reordenar,
+  modificar o juntar commits.  No hay una imágen obvia para graficar este concepto; ver <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
+  para más detalles.</p>
+
+  <h2 id="technical-notes">Notas Técnicas</h2>
+
+  <p>Los contenidos de los archivos no se almacenan en realidad en el índice
+  (<em>.git/index</em>) o en objetos commit.  En su lugar, cada archivo se almacena en
+  el objeto database (<em>.git/objects</em>) como un <em>blob</em>, identificado
+  por su hash SHA-1.  El archivo de índice lista los nombres de los archivos junto con el
+  identificador del blob asociado, así como otros datos.  Para los commits,
+  hay un tipo de dato adicional, un <em>tree</em>, también identificado por su hash.
+  Los trees se corresponden con directorios del directorio de trabajo, y contienen
+  una lista de trees y blobs que se corresponden a cada nombre de archivo dentro de ese
+  directorio.  Cada commit almacena el identificador de su tree de alto nivel, el cual
+  a su vez contiene todos los blobs y otros trees asociados con ese commit.</p>
+
+  <p>Si hacés un commit usando un HEAD detachado, el último commit es el que se
+  referencia por algo: el reflog para HEAD. Sin embargo, esto expirará
+  luego de un tiempo, por eso el commit eventualmente será recogido por el garbage
+  collector, de forma similar a los commits descartados con <code>git commit --amend</code>
+  o <code>git rebase</code>.</p>
+
+  <hr>
+
+  <p>Copyright &copy; 2010,
+    <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
+  Spanish translation &copy; 2012,
+    <a href='http://www.delucas.com.ar'>Lucas Videla</a>.
+  </p>
+
+  <p><a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.es"><img alt=""
+    src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>
+  Este trabajo está licenciado bajo una <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.es">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    License</a>.</p>
+
+  <p><a href='translate-en.html'>¿Querés traducirlo a otro idioma?</a></p>
+
+</body>
+</html>
