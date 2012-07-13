@@ -28,6 +28,7 @@ FILES := \
 HTML := \
     index-en.html \
     index-fr.html \
+    index-it.html \
     index-ja.html \
     index-ko.html \
     index-ru.html \
