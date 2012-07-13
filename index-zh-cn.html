@@ -123,14 +123,14 @@
 
   <div class="center"><img src='commit-amend.svg.png'></div>
 
-  <p>另一个例子是<a href="#detached"分离HEAD提交</a>,后文讲。</p>
+  <p>另一个例子是<a href="#detached">分离HEAD提交</a>,后文讲。</p>
 
   <h3 id="checkout">Checkout</h3>
 
   <p>checkout命令通常用来从仓库中取出文件，或者在分支中切换。</p>
 
   <p>checkout命令让git把文件复制到工作目录和暂存区域。比如<code>git checkout HEAD~ foo.c</code>把文件从<code>foo.c</code>提交节点<em>HEAD~</em>
-(当前提交节点)复制到工作目录并且生成索引。注意当前分支没有变化。</p>
+(当前提交节点的父节点)复制到工作目录并且生成索引。注意当前分支没有变化。</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
