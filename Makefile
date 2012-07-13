@@ -27,6 +27,7 @@ FILES := \
 
 HTML := \
     index-en.html \
+    index-es.html \
     index-fr.html \
     index-it.html \
     index-ja.html \
