@@ -28,6 +28,10 @@ SVGs and PNGs using
 [pdf2svg](http://www.cityinthesky.co.uk/pdf2svg.html) and
 [convert](http://www.imagemagick.org/script/convert.php), respectively.
 
+### Requirements for Building ###
+
+    sudo apt-get install texlive texlive-fonts-extra pdf2svg
+
 License
 -------
 
