@@ -28,9 +28,19 @@ SVGs and PNGs using
 [pdf2svg](http://www.cityinthesky.co.uk/pdf2svg.html) and
 [convert](http://www.imagemagick.org/script/convert.php), respectively.
 
-### Requirements for Building ###
+### Building from Source###
+
+First, the following must be installed:
 
     sudo apt-get install texlive texlive-fonts-extra pdf2svg
+
+Then, build the images:
+
+    make
+
+Finally, create the gh-pages branch:
+
+    make gh-pages
 
 License
 -------
