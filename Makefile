@@ -26,6 +26,7 @@ FILES := \
     reset-files
 
 HTML := \
+    index-de.html \
     index-en.html \
     index-es.html \
     index-fr.html \

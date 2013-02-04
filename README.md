@@ -53,6 +53,7 @@ French translation &copy; 2012, [Michel Lefranc](mailto:michel.lefranc@gmail.com
 Chinese translation &copy; 2012, [wych](mailto:ellrywych@gmail.com).
 Spanish translation &copy; 2012, [Lucas Videla](http://www.delucas.com.ar).
 Italian translation &copy; 2012, [Daniel Londero](mailto:daniel.londero@gmail.com).
+German translation &copy; 2013, [Martin Funk](mailto:mafulafunk@gmail.com).
 This work is licensed under a
 [Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States
 License](http://creativecommons.org/licenses/by-nc-sa/3.0/us/).
