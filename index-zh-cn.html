@@ -128,34 +128,31 @@
 
   <h3 id="checkout">Checkout</h3>
 
-  <p>checkout命令通常用来从仓库中取出文件，或者在分支中切换。</p>
+  <p>checkout命令用于从历史提交（或者暂存区域）中拷贝文件到工作目录，也可用于切换分支。</p>
 
-  <p>checkout命令让git把文件复制到工作目录和暂存区域。比如<code>git checkout HEAD~ foo.c</code>把文件从<code>foo.c</code>提交节点<em>HEAD~</em>
-(当前提交节点的父节点)复制到工作目录并且生成索引。注意当前分支没有变化。</p>
+  <p>当给定某个文件名（或者打开-p选项，或者文件名和-p选项同时打开）时，git会从指定的提交中拷贝文件到暂存区域和工作目录。比如，<code>git checkout HEAD~ foo.c</code>会将提交节点<em>HEAD~</em>(即当前提交节点的父节点)中的<code>foo.c</code>复制到工作目录并且加到暂存区域中。（如果命令中没有指定提交节点，则会从暂存区域中拷贝内容。）注意当前分支不会发生变化。</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
-  <p>如果没有指定文件名，而是一个本地分支，那么将切换到那个分支去。同时把索引和工作目录切换到那个分支对应的状态。</p>
+  <p>当不指定文件名，而是给出一个（本地）分支时，那么<em>HEAD</em>标识会移动到那个分支（也就是说，我们“切换”到那个分支了），然后暂存区域和工作目录中的内容会和<em>HEAD</em>对应的提交节点一致。新提交节点（下图中的a47c3）中的所有文件都会被复制（到暂存区域和工作目录中）；只存在于老的提交节点（ed489）中的文件会被删除；不属于上述两者的文件会被忽略，不受影响。</p>
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <p>如果既没有指定文件名，也没有指定分支名，而是一个标签、远程分支、SHA-1值或者是像<em>master~3</em>类似的东西，就得到一个匿名分支，称作<em>detached HEAD</em>。
-这样可以很方便的在历史版本之间互相切换。但是，这样的提交是完全不同的，详细的在<a href="#detached">下面</a>。</p>
+  <p>如果既没有指定文件名，也没有指定分支名，而是一个标签、远程分支、SHA-1值或者是像<em>master~3</em>类似的东西，就得到一个匿名分支，称作<em>detached HEAD</em>（被分离的<em>HEAD</em>标识）。这样可以很方便地在历史版本之间互相切换。比如说你想要编译1.6.6.1版本的git，你可以运行<code>git checkout v1.6.6.1</code>（这是一个标签，而非分支名），编译，安装，然后切换回另一个分支，比如说<code>git checkout master</code>。然而，当提交操作涉及到“分离的HEAD”时，其行为会略有不同，详情见在<a href="#detached">下面</a>。</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <h3 id="detached">用分离HEAD提交(找不到好的译法)</h3>
+  <h3 id="detached">HEAD标识处于分离状态时的提交操作</h3>
 
-  <p><em>HEAD</em>是分离的时候, 提交可以正常进行, 但是没有更新已命名的分支. 。(可以看作是匿名分支。)</p>
+  <p>当<em>HEAD</em>处于分离状态（不依附于任一分支）时，提交操作可以正常进行，但是不会更新任何已命名的分支。(你可以认为这是在更新一个匿名分支。)</p>
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>如果此时切换到别的分支，那么所作的工作会全部丢失。注意这个命令之后就不存在<em>2eecb</em>了。</p>
+  <p>一旦此后你切换到别的分支，比如说<em>master</em>，那么这个提交节点（可能）再也不会被引用到，然后就会被丢弃掉了。注意这个命令之后就不会有东西引用<em>2eecb</em>。</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
-  <p>如果你想保存当前的状态，可以用这个命令创建一个新的分支:
- <code>git checkout -b <em>name</em></code>。</p>
+  <p>但是，如果你想保存这个状态，可以用命令<code>git checkout -b <em>name</em></code>来创建一个新的分支。</p>
 
   <div class="center"><img src='checkout-b-detached.svg.png'></div>
 
