@@ -47,7 +47,7 @@ License
 
 Copyright &copy; 2010, [Mark Lodato](mailto:lodatom@gmail.com).  Japanese
 translation &copy; 2010, [Kazu Yamamoto](http://github.com/kazu-yamamoto).
-Korean translation &copy; 2011, <a href='mailto:sean@weaveus.com'>Sean
+Korean translation &copy; 2011, [Sean](mailto:sean@weaveus.com).
 Russian translation &copy; 2012, [Alex Sychev](mailto:alex@sychev.com).
 French translation &copy; 2012, [Michel Lefranc](mailto:michel.lefranc@gmail.com).
 Chinese translation &copy; 2012, [wych](mailto:ellrywych@gmail.com).
