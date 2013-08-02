@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Tham chiếu Git bằng hình ảnh</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">Tham chiếu Git bằng hình ảnh</h1>
+
+  <div id="language-box">
+    <a>Ngôn ngữ khác:</a>
+    <ul>
+      <li><a href='index-de.html'>Deutsch</a></li>
+      <li><a href='index-en.html'>English</a></li>
+      <li><a href='index-es.html'>Español</a></li>
+      <li><a href='index-fr.html'>Français</a></li>
+      <li><a href='index-it.html'>Italiano</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li class='selected'>Tiếng Việt</li>
+      <li><a href='index-zh-cn.html'>简体中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">Nếu các hình không hiển thị tốt, bạn có thể xem phiên bản
+    <a href="?no-svg">Không-SVG</a> của trang này.</p>
+
+  <p id="link-to-svg">Các ảnh SVG không được cho phép hiển thị.
+    <a href="index-vi.html">(Hiển thị SVG)</a></p>
+
+  <p>Trang này đề cập đến tham chiếu bằng hình ảnh ngắn gọn cho các lệnh thông
+  thường nhất được sử dụng trong git. Nếu bạn biết một chút về cách làm việc của
+  git thì trang này có thể sẽ củng cố thêm sự hiểu biết của bạn. Nếu bạn quan
+  tâm trang này được tạo ra như thế nào, mời xem
+  <a href='http://github.com/MarkLodato/visual-git-guide'> GitHub repository</a>
+  của tôi.</p>
+
+  <h2 id="contents">Nội dung</h2>
+  <ol>
+    <li><a href="#basic-usage">Cách dùng cơ bản</a></li>
+    <li><a href="#conventions">Quy ước</a></li>
+    <li><a href="#commands-in-detail">Các lệnh chi tiết</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">Commit khi HEAD bị tách rời (detached)</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">Ghi chú kỹ thuật</a></li>
+  </ol>
+
+  <h2 id="basic-usage">Cách dùng cơ bản</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>Bốn lệnh trên sao chép các tệp tin giữa thư mục làm việc (working directory),
+  vùng chuyển tiếp (stage) - hay còn gọi là chỉ mục (index) và lịch sử (history)
+  (dưới dạng các "commit").</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> sao chép <em>các tệp tin</em> (ở
+    trạng thái hiện tại) tới vùng chuyển tiếp.</li>
+
+    <li><code>git commit</code> lưu trữ bản ghi của vùng chuyển tiếp thành một
+    "commit".</li>
+
+    <li><code>git reset -- <em>files</em></code> bỏ các tệp tin vào khu chuyển
+    tiếp; cụ thể lệnh này sẽ sao chép <em>các tệp tin</em> từ "commit" mới nhất
+    tới khu chuyển tiếp. Sử dụng lệnh này để "huỷ bỏ" (undo) lệnh <code>git
+    add <em>files</em></code>. Bạn cũng có thể sử dụng lệnh <code>git
+    reset</code> để bỏ mọi thứ vào khu chuyển tiếp.</li>
+
+    <li><code>git checkout -- <em>files</em></code> sao chép <em>các tệp
+    tin</em> từ khu chuyển tiếp tới thư mục làm việc. Sử dụng lệnh này để bỏ hết
+    những thay đổi hiện tại ở thư mục làm việc.</li>
+
+  </ul>
+
+  <p>Bạn có thể sử dụng <code>git reset -p</code>, <code>git checkout -p</code>,
+  hoặc <code>git add -p</code> thay vì phải (hoặc phải làm thêm bước) chỉ rõ các
+  tệp tin cụ thể để lựa chọn thực hiện thao tác với số lượng tệp tin lớn.</p>
+
+  <p>Cũng có thể bỏ qua khu chuyển tiếp và "check out" các tệp tin trực tiếp
+  từ lịch sử hoặc "commit" các tệp tin mà không phải đưa vào vùng chuyển tiếp
+  trước.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> tương đương với việc chạy lệnh
+    <tt>git add</tt> trên tất cả các tệp tin tồn tại trong "commit" mới nhất,
+    sau đó chạy lệnh <tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>files</em></code> tạo một "commit" mới chứa nội dung
+    của "commit" mới nhất, cùng với bản ghi các <em>tệp tin</em> được lấy từ thư
+    mục làm việc. Ngoài ra, <em>các tệp tin</em> cũng được sao chép tới khu
+    chuyển tiếp.</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> sap chép
+    <em>các tệp tin</em> từ "commit" mới nhất tới cả hai khu chuyển tiếp và thư
+    mục làm việc.</li>
+
+  </ul>
+
+  <h2 id="conventions">Quy ước</h2>
+
+  <p>Trong toàn bộ tài liệu này chúng ta sẽ sử dụng các biểu đồ có dạng như sau.
+  </p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>Các commit được biểu thị bằng màu xanh có các id là 5 ký tự và chúng trỏ
+  tới commit cha. Các nhánh (branch) được biểu thị bằng màu cam và chúng trỏ tới
+  các commit cụ thể. Nhánh hiện tại được xác định bằng tham chiếu đặc biệt
+  <em>HEAD</em> được "gắn (attached)" vào nhánh đó. Trong hình này, có 5
+  "commit" mới nhất được hiển thị, trong đó <em>ed489</em> là commit mới nhất.
+  Nhánh <em>master</em> (nhánh hiện tại) trỏ tới commit này, trong khi đó nhánh
+  <em>maint</em> (một nhánh khác) trỏ tới "commit" tổ tiên (ancestor) của "commit"
+  trên nhánh <em>master</em></p>
+
+  <h2 id="commands-in-detail">Các lệnh chi tiết</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>Có rất nhiều cách để so sánh sự khác biệt giữa các "commit". Dưới đây là một
+  số ví dụ thông thường. Các lệnh này có thể tuỳ chọn truyền thêm các đối số là
+  tên tập tin để giới hạn sự khác biệt chỉ trên những tệp tên được chỉ ra.</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>Khi bạn "commit", git tạo một đối tượng "commit" mới sử dụng các tệp tin từ
+  khu chuyển tiếp và đặt "commit" hiện tại làm cha. Sau đó nó trỏ nhánh hiện tại
+  tới "commit" mới này. Trong hình dưới đây, nhánh hiện tại là <em>master</em>.
+  Trước khi lệnh được chạy, <em>master</em> trỏ tới <em>ed489</em>. Sau đó một
+  "commit" mới, <em>f0cec</em>, được tạo với cha là <em>ed489</em>, và cuối cùng
+  <em>master</em> được dịch chuyển đến "commit" mới.</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>Quá trình này cũng được thực hiện tương tự khi nhánh hiện tại là tổ tiên
+  của nhánh khác. Theo hình dưới đây, một "commit" xảy ra tại nhánh
+  <em>maint</em>, đây là nhánh tổ tiên của <em>master</em>, tạo thành
+  <em>1800b</em>. Sau đó, <em>maint</em> không còn là nhánh tổ tiên của
+  <em>master</em> nữa. Để hợp hai lịch sử này cần dùng lệnh
+  <a href='#merge'>merge</a> (hoặc <a href='#rebase'>rebase</a>).</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>Đôi khi một "commit" bị lỗi, nhưng có thể dễ dàng sửa lỗi với
+  <code>git commit --amend</code>. Khi bạn sử dụng lệnh này, git tạo ra một
+  "commit" mới và lấy "commit" hiện tại làm cha. ("Commit" cũ sẽ bị
+  loại bỏ nếu không có tham chiếu nào tới nó.)</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>Trường hợp thứ tư là "commit" khi HEAD bị <a href='#detached'>tách rời</a>
+  sẽ được giải thích sau.</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>Lệnh "checkout" được sử dụng để sao chép các tệp tin từ lịch sử (hay khu
+  chuyển tiếp) tới thư mục làm việc, và có thể tuỳ chọn chuyển nhánh.</p>
+
+  <p>Khi chỉ ra tên tệp tin (và/hoặc <code>-p</code>), git sao chép các tệp tin
+  này từ "commit" được chỉ định tới khu chuyển tiếp và thư mục làm việc. Ví dụ,
+  <code>git checkout HEAD~ foo.c</code> sẽ sao chép tệp tin <code>foo.c</code>
+  từ "commit" <em>HEAD~</em> (cha của "commit" hiện tại) tới thư mục làm việc,
+  và cũng đưa nó vào khu chuyển tiếp. (Nếu không chỉ ra tên của "commit", các
+  tệp tin được sao chép từ khu chuyển tiếp.) Chú ý rằng nhánh hiện tại sẽ không
+  có bất kỳ thay đổi gì.</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>Khi <em>không</em> chỉ ra tên tệp tin và tham chiếu là một nhánh nội
+  vùng (local), <em>HEAD</em> được dịch chuyển tới nhánh đó (hay, hiểu theo cách
+  khác là "chuyển sang" nhánh đó), và khi đó khu chuyển tiếp và thư mục làm việc
+  được thiết lập khớp nội dung của "commit" đó. Bất kì tệp tin nào tồn tại trong
+  "commit" mới (<em>a47c3</em> theo hình phía dưới) sẽ được sao chép; bất kì tệp
+  tin nào tồn tại trong "commit" cũ (<em>ed489</em>) nhưng không trong "commit"
+  mới sẽ bị xoá bỏ; và bất kì tệp tin nào không tồn tại trong cả hai sẽ được bỏ
+  qua.</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>Khi <em>không</em> chỉ ra tên tệp tin và tham chiếu <em>không</em> phải là
+  nhánh nội vùng &mdash; có thể là một thẻ (tag), một nhánh ở xa (remote),
+  một SHA-1 ID, hoặc có thể <em>master~3</em> &mdash; chúng ta sẽ được chuyển
+  qua nhánh vô danh (anonymous) và trường hợp này được gọi là <em>HEAD bị tách
+  rời</em>. Trường hợp này rất hữu ích khi bạn muốn xem lịch sử. Ví dụ như bạn
+  muốn biên dịch (compile) git phiên bản 1.6.6.1. Bạn có thể <code>git checkout
+  v1.6.6.1</code> (đây là thẻ, không phải nhánh), biên dịch, cài đặt (install),
+  và sau đó chuyển tới một nhánh khác, có thể là <code>git checkout master</code>.
+  Tuy nhiên, cách làm việc của "commit" hơi khác với HEAD bị tách rời; điều này
+  sẽ được nói tới <a href='#detached'>sau đây</a>.</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Commit khi HEAD bị tách rời</h3>
+
+  <p>Khi <em>HEAD</em> bị tách rời, "commit" hoạt động như bình thường, ngoại
+  trừ việc không có nhánh có tên cụ thể nào được cập nhật. (Bạn có thể coi đây
+  là một nhánh vô danh.)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>Một khi bạn "check out" cái gì khác, có thể <em>master</em>, "commit" đó
+  (giả sử) không được tham chiếu ở bất kì đâu thì sẽ bị xoá bỏ. Chú ý rằng sau
+  lệnh này, <em>2eecb</em> không được tham chiếu từ bất kì đâu.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>Mặt khác nếu bạn muốn lưu trữ trạng thái này, bạn có thể tạo một nhánh mới
+  có tên cụ thể sử dụng lệnh <code>git checkout -b <em>name</em></code>.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>Lệnh "reset" sẽ chuyển nhánh hiện tại tới một vị trí khác, và có thể tuỳ chọn
+  cập nhật khu chuyển tiếp và thư mục làm việc. Nó cũng được sử dụng để sao chép
+  các tệp tin từ lịch sử tới khu chuyển tiếp mà không ảnh hưởng gì tới thư mục
+  làm việc.</p>
+
+  <p>Nếu một "commit" được chỉ định mà không có tên các tệp tin, nhánh hiện tại
+  sẽ được chuyển tới "commit" đó, và sau đó khu chuyển tiếp được cập nhật để
+  khớp với "commit" này. Nếu <code>--hard</code> được cung cấp, thư mục làm việc
+  cũng được cập nhật. Nếu <code>--soft</code> được cung cấp, cả hai đều không
+  được cập nhật.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>Nếu một "commit" không được chỉ định, "commit" mặc định là <em>HEAD</em>.
+  Trong trường hợp này, nhánh không được chuyển dịch, nhưng khu chuyển tiếp (và
+  có thể thư mục làm việc nếu <code>--hard</code> được cung cấp) được thiết lập
+  lại với nội dung của "commit" mới nhất.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>Nếu tên tệp tin (và/hoặc <code>-p</code>) được cung cấp thì lệnh này hoạt
+  động tương tự <a href='#checkout'>checkout</a> với tên tệp tin, ngoại trừ việc
+  chỉ có khu chuyển tiếp (và không phải thư mục làm việc) được cập nhật. (Bạn
+  cũng có thể chỉ rõ lấy các tệp tin từ "commit" cụ thể nào thay vì
+  <em>HEAD</em>.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p> Lệnh "merge" tạo một "commit" mới sáp nhập những thay đổi từ các "commit"
+  khác. Trước khi tiến hành "merge", khu chuyển tiếp phải khớp với "commit" hiện
+  tại. Có một trường hợp đặc biệt khi các "commit" khác là tổ tiên của "commit"
+  hiện tại thì không xảy ra điều gì. Trường hợp khác đơn giản hơn là nếu
+  "commit" hiện tại là tổ tiên của "commit" khác, khi đó sẽ tạo ra <em>"fast-forward"</em>
+  "merge"và đơn giản chỉ dịch chuyển tham chiếu và "commit" mới được "check out".</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>Trong các trường hợp khác, "merge thực sự" phải xảy ra. Bạn có thể lựa
+  chọn các chiến lược khác nhau nhưng mặc định sẽ phải thực hiện "merge đệ quy",
+  về cơ bản sẽ lấy "commit" hiện tại (<em>ed489</em>), "commit" khác
+  (<em>33104</em>), và tổ tiên chung (<em>b325c</em>), và sau đó thực hiện
+  <a href='http://en.wikipedia.org/wiki/Three-way_merge'>"merge ba-hướng"</a>.
+  Kết quả được lưu trữ vào thư mục làm việc và khu chuyển tiếp, và sau đó thực
+  hiện thêm một "commit" nữa và "commit" mới này tham chiếu thêm một "commit"
+  cha (<em>33104</em>.)</p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p> Lệnh "cherry-pick" sẽ sao chép một "commit", tạo một "commit" mới trên
+  nhánh hiện tại với nội dung giống hệt và "patch" thành một "commit" khác.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>Lệnh "rebase" là một lựa chọn khác thay vì <a href='#merge'>"merge"</a> để
+  kết hợp nhiều nhánh khác nhau. Trong khi "merge" tạo một "commit" mới với hai
+  cha và tạo ra lịch sử phi tuyến tính (non-linear) thì "rebase" tái tạo lại các
+  "commit" từ nhánh hiện tại lên một nhánh khác và tạo ra lịch sử tuyến tính
+  ("linear"). Về bản chất, đây là phương pháp thực hiện tự động các lệnh <a
+  href='#cherry-pick'>cherry-pick</a> liên tiếp.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>Lệnh trên lấy tất cả các "commit" tồn tại trong <em>topic</em> nhưng không
+  có trong <em>master</em>, (các "commit" <em>169a6</em> và <em>2c33a</em>), tái
+  tạo lên <em>master</em>, và sau đó chuyển đầu nhánh tới đỉnh mới. Chú ý
+  rằng các "commit" cũ sẽ bị xoá bỏ nếu chúng không được tham chiếu nữa.</p>
+
+  <p>Để giới hạn quay trở lại bao xa, sử dụng thêm <code>--onto</code>. Lệnh sau
+  tái tạo lên <em>master</em> từ các "commit" mới nhất trên nhánh hiện tại tính
+  từ <em>169a6</em> (không bao gồm), là "commit" <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>Cũng có thêm lệnh <code>git rebase --interactive</code>, lệnh này cho phép
+  bạn thực hiện các thao tác phức tạp hơn thay vì đơn giản tái tạo lại các
+  "commit", ví dụ như loại bỏ, sắp xếp lại, sửa đổi, và gộp nhóm (squash) các
+  "commit". Rất khó để biểu diễn các thao tác này bằng hình ảnh; mời bạn xem <a
+  href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a> để biết thêm chi tiết.</p>
+
+  <h2 id="technical-notes">Chú ý kỹ thuật</h2>
+
+  <p>Nội dung của các tệp tin thật ra không được lưu trữ trong chỉ mục (<em>.git/index</em>)
+  hay trong các đối tượng "commit" mà mỗi tệp tin được lưu trữ trong cơ sở dữ
+  liệu đối tượng (<em>.git/objects</em>) thành một <em>blob</em>, và được định
+  danh bởi hàm băm SHA-1 của chính nó. Tệp tin chỉ mục liệt kê các tên tệp tin
+  cùng với các định danh của "blob" tương ứng cùng với một số dữ liệu khác. Đối
+  với các "commit", có thêm một kiểu dữ liệu nữa là <em>tree</em> cũng được định
+  danh bởi hàm băm của nó. Các "tree" tương ứng với các thư mục trong thư mục
+  làm việc và chứa danh sách các "tree" và "blob" tương ứng với mỗi tệp tin trong
+  thư mục đó. Mỗi "commit" lưu định danh của "tree" mức đầu, điều đó có nghĩa nó
+  chứa tất cả các "blob" và các "tree" khác liên quan tới "commit" đó.</p>
+
+  <p>Nếu bạn tạo một "commit" sử dụng HEAD bị tách rời, "commit" cuối thật ra
+  được tham chiếu bởi cái được gọi là: "reflog" cho HEAD. Tuy nhiên, nó sẽ không
+  có hiệu lực sau một khoảng thời gian nhất định, do đó cuối cùng "commit" sẽ bị
+  xoá bỏ, tương tự như các "commit" bị xoá bỏ với <code>git commit --amend</code>
+  hoặc <code>git rebase</code>.</p>
+
+  <hr>
+
+  <p>Bản quyền &copy; 2010,
+    <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
+  Bản dịch tiếng Việt &copy; 2013,
+    <a href="https://github.com/hoatle">Hoat Le</a>.
+  </p>
+
+  <p><a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt=""
+    src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>
+  Tài liệu được phát hành dưới giấy phép <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    License</a>.</p>
+
+  <p><a href='translate-en.html'>Want to translate into another
+    language?</a></p>
+
+</body>
+</html>
