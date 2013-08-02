@@ -1,3 +1,7 @@
+# Instructions for pushing:
+#     make gh-pages
+#     git push
+
 PDFLATEX = pdflatex -halt-on-error -file-line-error
 PDF2SVG = pdf2svg
 PDF2PNG = convert -density 88
