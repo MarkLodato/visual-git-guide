@@ -38,6 +38,7 @@ HTML := \
     index-ja.html \
     index-ko.html \
     index-ru.html \
+    index-sk.html \
     index-vi.html \
     index-zh-cn.html \
     translate-en.html

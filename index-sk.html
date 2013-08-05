@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="sk-SK">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Príručka Visual Git</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">Príručka Visual Git</h1>
+
+  <div id="language-box">
+    <a>Iné jazyky:</a>
+    <ul>
+      <li><a href='index-de.html'>Deutsch</a></li>
+      <li><a href='index-en.html'>English</a></li>
+      <li><a href='index-es.html'>Español</a></li>
+      <li><a href='index-fr.html'>Français</a></li>
+      <li><a href='index-it.html'>Italiano</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li class="selected">Slovenčina</li>
+      <li><a href='index-vi.html'>Tiếng Việt</a></li>
+      <li><a href='index-zh-cn.html'>简体中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">Ak sa obrázky nezobrazujú správne, môžete skúsiť verziu tejto stránky <a
+    href="?no-svg">bez obrázkov formátu SVG</a>.</p>
+
+  <p id="link-to-svg">SVG obrázky boli deaktivované.
+  <a href="index-sk.html">(Znovu aktivovať obrázky SVG)</a></p>
+
+  <p>Táto stránka predstavuje stručnú vizuálnu príručku najpoužívanejších príkazov programu Git.
+  Je určená k prehĺbeniu vášho pochopenia toho, ako Git funguje. Ak vás zaujíma to, ako bola táto stránka vytvorená,
+  je vám k dispozícii môj <a href='http://github.com/MarkLodato/visual-git-guide'>repozitár na GitHub-e</a>.</p>
+
+  <p><em>Poznámka k slovenskému prekladu:</em>
+  V texte je použitý výraz <em>revízia</em> na označenie konkrétnej verzie súborov uložených v histórii projektového archívu.
+  Výraz <em>komit</em> potom označuje aktivitu vloženia novej revízie do histórie projektového archívu.</p>
+
+  <h2 id="contents">Obsah</h2>
+  <ol>
+    <li><a href="#basic-usage">Základné použitie</a></li>
+    <li><a href="#conventions">Použité konvencie</a></li>
+    <li><a href="#commands-in-detail">Podrobne o príkazoch</a>
+      <ol>
+        <li><a href="#diff">Rozdielová analýza (diff)</a></li>
+        <li><a href="#commit">Komitovanie (commit)</a></li>
+        <li><a href="#checkout">Kopírovanie z archívu do pracovného adresára (checkout)</a></li>
+        <li><a href="#detached">Komitovanie s odpojenou hlavou (detached HEAD)</a></li>
+        <li><a href="#reset">Resetovanie (reset)</a></li>
+        <li><a href="#merge">Spájanie zmien (merge)</a></li>
+        <li><a href="#cherry-pick">Zbieranie čerešničiek (cherry-pick)</a></li>
+        <li><a href="#rebase">Spájanie vetiev (rebase)</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">Technické poznámky</a></li>
+  </ol>
+
+  <h2 id="basic-usage">Základné použitie</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>Vyššie uvedené štyri príkazy umožňujú kopírovanie súborov medzi pracovným adresárom (working directory), predsieňou (index, stage) a projektovým archívom (history).</p>
+
+  <ul>
+
+    <li><code>git add <em>súbory</em></code> kopíruje <em>súbory</em> (v ich aktuálnej podobe) do predsiene.</li>
+
+    <li><code>git commit</code> uloží aktuálny stav súborov v predsieni (indexe) do projektového archívu (histórie) vo forme revízie.</li>
+
+    <li><code>git reset -- <em>súbory</em></code> obnoví súbory v predieni; to znamená, že 
+    <em>súbory</em> sa skopírujú z najnovšej revízie do predsiene.  Použite tento príkaz na vrátenie zmien spôsobených príkazom
+    <code>git add <em>súbory</em></code>. Na obnovenie celého obsahu v predsieni je tiež možné použiť príkaz <code>git reset</code>.</li>
+
+    <li><code>git checkout -- <em>súbory</em></code> skopíruje <em>súbory</em> z predsiene do pracovného adresára.
+    Týmto príkazom sa zahodia všetky lokálne zmeny (v pracovnom adresári).</li>
+
+  </ul>
+
+  <p>Prepínač príkazového riadku <code>-p</code> v príkazoch <code>git reset -p</code>, <code>git checkout -p</code> alebo
+  <code>git add -p</code> namiesto definovania konkrétnych súborov (prípadne spolu s tým) umožní používateľovi interaktívny výber častí zmien, ktoré sa skopírujú.</p>
+
+  <p>Je tiež možné preskočiť predsieň a skopírovať súbory do pracovného adresára priamo z archívu alebo komitovať súbory bez predošlého vloženia do predsiene.</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code> je rovnocenné s použitím príkazu <tt>git add</tt> 
+    s uvedením všetkých názvov súborov, ktoré boli súčasťou posledného komitu a následným spustením príkazu
+    <tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>súbory</em></code> vytvorí novú revíziu obsahujúcu všetko z predchádzajúcej revízie
+    plus aktuálny stav <em>súborov</em> z pracovného adresára.  <em>Súbory</em> sa skopírujú navyše aj do predsiene.</li>
+
+    <li><code>git checkout HEAD -- <em>súbory</em></code> skopíruje <em>súbory</em> 
+    z najnovšej revízie do predsiene i do pracovného adresára.</li>
+
+  </ul>
+
+  <h2 id="conventions">Použité konvencie</h2>
+
+  <p>V ďalších vysvetleniach budú použité grafy s nasledujúcim formátom.</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>Revízie sú zobrazené zelenou farbou ako 5-ciferné identifikátory, pričom odkazujú na svojich rodičov.
+  Vetvy sú zobrazené oranžovou farbou, pričom odkazujú na konkrétne revízie.
+  Aktuálna vetva je identifikovaná špeciálnym odkazom
+  <em>HEAD</em> (hlava), ktorý je "pripojený" k tejto vetve.  Na tomto obrázku je vyobrazených posledných päť revízií, kde najnovšou je revízia identifikovaná ako <em>ed489</em>.
+  <em>master</em> (aktuálna vetva) odkazuje na túto revíziu, zatiaľ čo
+  <em>maint</em> (iná vetva) odkazuje na jedného z predkov revízie vo vetve <em>master</em>.</p>
+
+  <h2 id="commands-in-detail">Podrobne o príkazoch</h2>
+
+  <h3 id="diff">Rozdielová analýza (diff)</h3>
+
+  <p>Existujú rozličné spôsoby ako nazerať na rozdiely medzi revíziami. Nižšie uvádzame niektoré typické príklady.
+  Rozsah porovnávania pri ktoromkoľvek z týchto príkazov je možné prostredníctvom dodatočného parametra <em>súbory</em> obmedziť na tieto uvedené <em>súbory</em>.</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Komit (commit)</h3>
+
+  <p>Keď komitujete, Git vytvorí nový objekt komitu (t.j. novú revíziu) použijúc súbory z predsiene, ktorému nastaví odkaz na rodiča na aktuálnu revíziu.
+  Následne presmeruje odkaz aktuálnej vetvy na túto novú revíziu. Na obrázku nižšie je aktuálnou vetvou vetva
+  <em>master</em>.   Pred spustením príkazu odkazovala vetva <em>master</em> na
+  <em>ed489</em>.  Následne bola vytvorená nová revízia <em>f0cec</em> s rodičom <em>ed489</em>.
+  Napokon sa odkaz vetvy <em>master</em> presunul na túto novú revíziu.</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>Rovnaký priebeh má dokonca i prípad, kedy aktuálna vetva je predkom inej.
+  Nižšie je zobrazený komit na vetve <em>maint</em>, ktorá bola predkom vetvy <em>master</em>.
+  Výsledkom je vznik revízie <em>1800b</em>.  Dôsledkom tohto komitu už vetva <em>maint</em> nie je viac predkom vetvy <em>master</em>.
+  Na neskoršie spojenie zmien z takto vzniknutých dvoch línií histórie bude potrebné použiť príkaz <a href='#merge'>merge</a> (alebo <a href='#rebase'>rebase</a>).</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>Niekedy sa pritrafí, že komit obsahuje chybu, čo sa však dá ľahko napraviť pomocou príkazu
+  <code>git commit --amend</code>.  Pri použití tohto príkazu, Git vytvorí novú revíziu s rovnakým rodičom ako má tá aktuálna.
+  (Pôvodná aktuálna revízia bude zahodená, ak sa na ňu už nič viac neodkazuje.)</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>Štvrtým prípadom je komitovanie s <a href="#detached">odpojenou hlavou</a>, čo objasníme neskôr.</p>
+
+  <h3 id="checkout">Kopírovanie z archívu do pracovného adresára (checkout)</h3>
+
+  <p>Príkaz <code>git checkout</code> sa používa na kopírovanie súborov z archívu (alebo z predsiene) do pracovného adresára a na prípadnú zmenu vetiev.</p>
+
+  <p>Keď sa uvedie názov súboru (a/alebo prepínač <code>-p</code>), Git skopíruje definované súbory z danej revízie
+  do predsiene a pracovného adresára. Napríklad príkaz <code>git checkout HEAD~ foo.c</code> skopíruje súbor <code>foo.c</code>
+  z revízie nazvanej <em>HEAD~</em> (rodič aktuálnej revízie) do pracovného adresára a tiež do predsiene.
+  (Ak sa neuvedie názov žiadnej revízie, súbory sa skopírujú z predsiene.)
+  Všimnite si, že aktuálna vetva ostáva nezmenená.</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>Keď sa názov súboru <em>ne</em>uvedie, ale odkazom je (lokálna) vetva,
+  hlava (špeciálny odkaz <em>HEAD</em>) sa presunie do tejto vetvy (t.j. "prepneme sa" do tejto vetvy)
+  a potom sa obsah predsiene i pracovného adresára upraví podľa obsahu aktuálnej revízie v tejto vetve.
+  Všetky súbory, ktoré existujú v novšej revízii (<em>a47c3</em> na obrázku nižšie), budú skopírované; akýkoľvek súbor,
+  ktorý existuje v staršej revízii (<em>ed489</em>), avšak nie v novšej revízii, bude zmazaný;
+  a akýkoľvek súbor, ktorý nie je súčasťou ani jednej z revízií, bude ignorovaný.</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>Keď sa názov súboru <em>ne</em>uvedie a odkazom <em>nie</em> je
+  (lokálna) vetva &mdash; povedzme, je to tag, vzdialená vetva, SHA-1 identifikátor revízie alebo referenčný výraz napr. ako
+  <em>master~3</em> &mdash; dostaneme anonymnú vetvu nazývanú <em>odpojená hlava (detached HEAD)</em>.
+  Toto je užitočné pri prechádzaní cez históriu v archíve.
+  Povedzme, že chcete skompilovať Git, verziu 1.6.6.1.  Môžete spustiť príkaz <code>git checkout
+    v1.6.6.1</code> (v tomto prípade ide o tag, nie o vetvu), skompilovať, nainštalovať a napokon sa prepnúť späť do inej vetvy,
+  napríklad <code>git checkout master</code>.
+  Komitovanie s odpojenou hlavou však funguje trochu odlišne; toto pokrýva odstavec <a href="#detached">nižšie</a>.</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Komitovanie s odpojenou hlavou (detached HEAD)</h3>
+
+  <p>Pri odpojení <em>hlavy (HEAD)</em>, komitovanie funguje ako obvykle s tým rozdielom, že žiadna pomenovaná vetva sa nezaktualizuje.
+  (Môžete na to nazerať ako na anonymnú vetvu.)</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>Akonáhle skopírujete niektorú inú revíziu z archívu (prostredníctvom príkazu <code>git checkout</code>), napríklad z vetvy <em>master</em>, (je predpoklad, že) na pôvodnú revíziu
+  už nič iné neodkazuje a táto sa teda stratí. Všimnite si, že po vykonaní príkazu už nič viac neodkazuje na revíziu <em>2eecb</em>.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>Na druhej strane, ak chcete uložiť tento stav, môžete vytvoriť novú pomenovanú vetvu pomocou príkazu <code>git checkout -b <em>názov-vetvy</em></code>.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Resetovanie (reset)</h3>
+
+  <p>Resetovací príkaz <code>git reset</code> presúva aktuálnu vetvu na inú pozíciu a prípadne aktualizuje predsieň a pracovný adresár.
+  Používa sa tiež na kopírovanie súborov z archívu (z existujúcej revízie) do predsiene bezo zmeny obsahu pracovného adresára.</p>
+
+  <p>Ak sa uvedie len revízia bez názvov súborov, presunie sa aktuálna vetva na túto revíziu
+  a následne sa na túto revíziu zaktualizuje aj obsah predsiene. Prepínač
+  <code>--hard</code> spôsobí aktualizáciu aj pracovného adresára. Prepínač
+  <code>--soft</code> zachová predsieň i pracovný adresár bezo zmien.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>Neuvedenie revízie sa rovná použitiu špeciálneho odkazu <em>hlava (HEAD)</em>.
+  V tomto prípade sa vetva nepresúva, len obsah predsiene (príp.
+  s použitím prepínača <code>--hard</code>  aj pracovného adresára) sa skopíruje z poslednej revízie.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>Ak sa uvedie názov súboru (a/alebo prepínač <code>-p</code>),
+  potom príkaz pracuje podobne ako príkaz <a href='#checkout'>checkout</a> s názvom súboru
+  s tým, že sa zaktualizuje iba predsieň (pracovný adresár nie).
+  (Je tiež možné uviesť revíziu, z ktorej sa má zobrať obsah súborov, inú než <em>hlava (HEAD)</em>.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Spájanie zmien (merge)</h3>
+
+  <p>Príkaz vytvára novú revíziu, ktorá zahŕňa zmeny z iných revízií.
+  Pred vykonaním príkazu musí obsah predsiene zodpovedať aktuálnej revízii.
+  Triviálnym prípadom je ak spájaná revízia je predkom aktuálnej revízie - v tomto prípade sa neudeje nič.
+  Ďalším najjednoduchším prípadom je ak aktuálna revízia je predkom spájanej revízie.
+  Toto má za následok spojenie zmien <em>pretočením dopredu (tzv. fast-forward merge)</em>, kedy je
+  odkaz vetvy jednoducho presunutý s následným skopírovaním obsahu nového odkazu (t.j. spájanej revízie) do predsiene.</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>V iných prípadoch musí nastať "skutočné" spájanie.  Môžete si zvoliť iné stratégie, avšak obvykle sa vykonáva "rekurzívne" spájanie,
+  kedy sa v princípe vezme aktuálna revízia (<em>ed489</em> na obrázku nižšie), spájaná revízia (<em>33104</em>)
+  a ich najnovší spoločný predok (<em>b325c</em>) a vykoná sa <a
+    href='http://en.wikipedia.org/wiki/Three-way_merge'>trojcestné spájanie</a>.
+  Výsledok sa uloží do pracovného adresára i do predsiene. Následne nastane komit, pri ktorom vzniká nová revízia s pridaným dodatočným rodičom (<em>33104</em>).</p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Zbieranie čerešničiek (cherry-pick)</h3>
+
+  <p>Príkaz <code>git cherry-pick</code> "zreplikuje" komit z inej vetvy do aktuálnej vetvy. V aktuálnej vetve pritom vznikne nová revízia s rovnakým popisom i obsahom ako má referencovaný komit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Spájanie vetiev (rebase)</h3>
+
+  <p>Spájanie vetiev je alternatívou k <a href='#merge'>spájaniu zmien</a> pre prípad zlučovania viacerých vetiev.
+  Zatiaľ čo spájanie zmien (merge) vytvorí jednoduchú revíziu s dvomi rodičmi tvoriac nelineárnu históriu v archíve,
+  spájanie vetiev (rebase) zreplikuje všetky komity z aktuálnej vetvy do inej vytvoriac lineárnu históriu v archíve.
+  Vo svojej podstate sa v prípade spájania vetiev jedná o automatizovaný spôsob vykonania viacerých príkazov <a
+    href='#cherry-pick'>cherry-pick</a> v rade za sebou.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>Vyššie uvedený príkaz vezme všetky také revízie, ktoré existujú vo vetve <em>topic</em>, nie však vo vetve
+  <em>master</em> (menovite <em>169a6</em> a <em>2c33a</em>), zreplikuje ich do vetvy <em>master</em>
+  a následne presunie hlavu vetvy na nový vrchol.
+  Ak na staré revízie po vykonaní príkazu nič viac neodkazuje, budú tieto odstránené pomocou nástroja na odstraňovanie neplatných položiek
+  (garbage collected).</p>
+
+  <p>Pre obmedzenie toho ako ďaleko do histórie sa vracať, použite prepínač <code>--onto</code>.
+  Nasledujúci príkaz zreplikuje do vetvy <em>master</em> najnovšie komity z aktuálnej vetvy počnúc revíziou nasledujúcou po revízii <em>169a6</em>,
+  konkrétne revíziu <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>Existuje tiež interaktívny režim príkazu <code>git rebase --interactive</code>, ktorý umožňuje
+  robiť zložitejšie veci než len jednoduché zreplikovanie komitov, konkrétne zrušenie, preusporiadanie, úpravu či zlučovanie komitov.
+  Pre toto nie je k dispozícii žiaden zrejmý obrázok; v prípade záujmu o podrobnosti si preštudujte <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>.</p>
+
+  <h2 id="technical-notes">Technické poznámky</h2>
+
+  <p>Obsah súborov sa neuchováva priamo v predsieni
+  (<em>.git/index</em>) alebo v objektoch komitov.  Každý súbor sa nachádza v databáze objektov (<em>.git/objects</em>) vo formáte <em>blob</em> (binary large object),
+  identifikovaný svojim SHA-1 hash-om.  Indexový súbor (obsah predsiene) obsahuje zoznam názvov súborov spolu s identifikátorom pridruženého binárneho objektu blob a tiež ďalšie dáta.
+  Pre revízie existuje dodatočný dátový typ <em>strom</em>, ktorý je rovnako identifikovaný svojim
+  hash-om.
+  Stromy zodpovedajú adresárom v pracovnom adresári a obsahujú zoznam stromov a blob-ov prislúchajúcich ku každému názvu súboru v tom adresári.
+  Každá revízia má uložený identifikátor jeho stromu najvyššej úrovne, ktorý následne obsahuje všetky svoje blob-y a ostatné stromy naviazané na túto revíziu.</p>
+
+  <p>Ak vytvoríte revíziu pomocou odpojenej hlavy, na túto poslednú revíziu skutočne niečo odkazuje:
+  tzv. reflog hlavy. Po nejakom čase však tento vyprší, takže túto revíziu napokon odstráni nástroj
+  na odstraňovanie neplatných položiek, podobne ako pri revíziách po vykonaní príkazu <code>git commit --amend</code> alebo <code>git
+    rebase</code>.</p>
+
+  <hr>
+
+  <p>Copyright &copy; 2010,
+    <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
+  Slovenský preklad &copy; 2013,
+    <a href='https://github.com/llucenic'>Ľudovít Lučenič</a>.
+  </p>
+
+  <p><a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt=""
+    src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>
+  Toto dielo je licencované <a rel="license"
+    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    Commons Attribution-Noncommercial-Share Alike 3.0 United States
+    </a> licenciou.</p>
+
+  <p><a href='translate-en.html'>Want to translate into another
+    language?</a></p>
+
+</body>
+</html>
