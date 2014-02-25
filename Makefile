@@ -37,6 +37,7 @@ HTML := \
     index-it.html \
     index-ja.html \
     index-ko.html \
+	index-pt.html \
     index-ru.html \
     index-sk.html \
     index-vi.html \
