@@ -181,8 +181,8 @@
 
   <p>Quando um nome de arquivo (e/ou <code>-p</code>) é fornecido, o git
   copia esse arquivo do commit para o stage e o diretório de trabalho.
-  Por examplo, <code>git checkout HEAD~ foo.c</code> copia o arquivo
-  <code>foo.c</code> do commit chamado <em>HEAD</em> (os pais do commit
+  Por exemplo, <code>git checkout HEAD~ foo.c</code> copia o arquivo
+  <code>foo.c</code> do commit chamado <em>HEAD~</em> (os pais do commit
   atual) para o diretório de trabalho, e também para o stage. (Se nenhum
   commit é fornecido, os arquivos são copiados do stage.) Note que não há
   mudança no ramo.</p>
@@ -207,7 +207,7 @@
     detachado</em>.  Isso é útil para se mover ao longo da história. Por
   exemplo, suponha que você queira compilar a versão 1.6.6.1 do git.  Você
   poder executar <code>git checkout v1.6.6.1</code> (que é uma etiqueta,
-  não um ramo), compilar, instalar, e então passar de voltar para outro
+  não um ramo), compilar, instalar, e então passar de volta para outro
   ramo, por exemplo executado <code>git checkout master</code>. Todavia,
   efetuar um commit funciona um pouco diferente em um HEAD detachado; isso
   é discutido <a href="#detached">abaixo</a>.</p>
@@ -283,7 +283,7 @@
   basicamente considera o commit atual (<em>ed489</em> abaixo), o outro
   commit (<em>33104</em>), e o ancestral comum a ambos (<em>b325c</em>), e
   efetua um <a href='http://en.wikipedia.org/wiki/Three-way_merge'>merge
-  three-way</a>. O resultado é salvado no diretório de trabalho e no
+  three-way</a>. O resultado é salvo no diretório de trabalho e no
   stage, e então um commit é executado, com um ancestral adicional
   (<em>33104</em>) para o novo commit. </p>
 
@@ -341,7 +341,7 @@
   contém uma lista das árvores e blobs correspondentes a cada nome de
   arquivo naquele diretório. Cada commit armazena o identificador da sua
   árvore, que por sua vez contém todos os blobs e outras árvores
-  associadas com aquele commit. </p>
+  associadas àquele commit. </p>
 
   <p>Se você realiza um commit usando um HEAD detachado, o último commit é
   na verdade referenciado por algo: o reflog para o HEAD. Todavia, esse
