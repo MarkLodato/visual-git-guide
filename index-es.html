@@ -33,7 +33,7 @@
   <p id="link-to-svg">Las imágenes SVG se han desactivado.
   <a href="index.html">(volver a habilitar SVG)</a></p>
 
-  <p>Esta págnia da una referencia breve y visual para los comandos más comunes
+  <p>Esta página da una referencia breve y visual para los comandos más comunes
   en git.  Una vez que conozcas un poco sobre la forma de trabajo de git, este sitio puede fortalecer
   tu entendimiento.  Si estás interesado en cómo se creó este sitio, mirá mi
   <a href='http://github.com/MarkLodato/visual-git-guide'>repositorio de GitHub</a>.</p>
@@ -108,7 +108,7 @@
 
   <h2 id="conventions">Convenciones</h2>
 
-  <p>En el resto del documento, usaremos graficos de la siguiente forma.</p>
+  <p>En el resto del documento, usaremos gráficos de la siguiente forma.</p>
 
   <div class="center"><img src='conventions.svg.png'></div>
 
@@ -125,7 +125,7 @@
   <h3 id="diff">Diff</h3>
 
   <p>Hay varias formas de ver las diferencias entre commits. Debajo están
-  algunos ejemplos comunes.  Cualquiera de esos comando pueden tomar opcionalmente
+  algunos ejemplos comunes.  Cualquiera de esos comandos pueden tomar opcionalmente
   como argumento nombres de archivos que limiten las diferencias a los archivos nombrados.</p>
 
   <div class="center"><img src='diff.svg.png'></div>
@@ -169,7 +169,7 @@
   <code>git checkout HEAD~ foo.c</code> copia el archivo <code>foo.c</code>
   desde el commit llamado <em>HEAD~</em> (el padre del commit actual) al
   directorio de trabajo, y además lo pasa a stage.  (Si no se proporciona nombre de commit,
-  los archivos se copiarán desde stage.)  Notá quqe el branch actual no se cambia.</p>
+  los archivos se copiarán desde stage.)  Notá que el branch actual no se cambia.</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
@@ -177,7 +177,7 @@
   un branch (local), <em>HEAD</em> se mueve a ese branch (esto es, nosotros "cambiamos" ese
   branch), y entonces el stage y el directorio de trabajo se establecen para coincidir con
   los contenidos de ese commit.  Cualquier archivo que existe en el nuevo commit
-  (<em>a47c3</em> debajo) se copia; culaquier archivo que exista en el anterior commit
+  (<em>a47c3</em> debajo) se copia; cualquier archivo que exista en el anterior commit
   (<em>ed489</em>) pero no en el que está borrado; y cualquier archivo que exista
   será ignorado.</p>
 
@@ -255,7 +255,7 @@
   actual (<em>ed489</em> debajo), el otro commit (<em>33104</em>),
   y su ancestro común (<em>b325c</em>), y realiza una <a
     href='http://en.wikipedia.org/wiki/Three-way_merge'>mezcla de tres vías</a>.
-  El resultado se guarda al directorio de trabajoy el stage, y luego ocurre
+  El resultado se guarda al directorio de trabajo y al stage, y luego ocurre
   un commit, con un padre adicional (<em>33104</em>) para el nuevo commit.
   </p>
 
@@ -293,7 +293,7 @@
 
   <p>Además existe <code>git rebase --interactive</code>, que permite hacer
   cosas más complicadas que simplemente reproducir commits, descartar, reordenar,
-  modificar o juntar commits.  No hay una imágen obvia para graficar este concepto; ver <a
+  modificar o juntar commits.  No hay una imagen obvia para graficar este concepto; ver <a
     href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
   para más detalles.</p>
 
