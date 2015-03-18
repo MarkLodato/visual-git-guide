@@ -101,14 +101,14 @@
     <img src='basic-usage.svg.png'></div>
 
   <p>
-    Die vier oben in der Grafik erwähnten Kommandos kopieren Files zwischen dem Arbeitsverzeichnis, dem Index (stage) und dem Projektarchiv (history).
+    Die vier oben in der Grafik erwähnten Kommandos kopieren Dateien zwischen dem Arbeitsverzeichnis, dem Index (stage) und dem Projektarchiv (history).
   </p>
 
   <ul>
 
     <li>
       <code>git add <em>files</em></code>
-      kopiert die <em>Files</em>
+      kopiert die <em>Dateien</em>
       aus dem Arbeitsverzeichnis, in ihrem aktuellen Zustand, in den Index.
     </li>
 
@@ -119,8 +119,8 @@
 
     <li>
       <code>git reset -- <em>files</em></code>
-      macht Änderungen an Files im Index rückgängig; soll heißen es werden die
-      <em>Files</em>
+      macht Änderungen an Dateien im Index rückgängig; soll heißen es werden die
+      <em>Dateien</em>
       des aktuellsten Commits in den Index kopiert.  Hiermit werden die Änderungen von
       <code>git add <em>files</em></code>
       im Index rückgängig gemacht.  Mit
@@ -131,7 +131,7 @@
     <li>
       <code>git checkout -- <em>files</em></code>
       kopiert
-      <em>Files</em>
+      <em>Dateien</em>
       aus dem Index in das Arbeitsverzeichnis. Damit kannst du die Änderungen im Arbeitsverzeichnis verwerfen.
     </li>
   </ul>
@@ -169,22 +169,22 @@
       <code>git commit -a </code>
       ist gleichbedeutend mit
       <tt>git add</tt>
-      auf allen seit dem letzten Commit existierenden Files und einem nachfolgenden
+      auf allen seit dem letzten Commit existierenden Dateien und einem nachfolgenden
       <tt>git commit</tt>
       .
     </li>
 
     <li>
       <code>git commit <em>files</em></code>
-      erzeugt einen neuen Commit mit dem Inhalt aller aufgeführten Files aus dem Arbeitsverzeichnis.  Zusätzlich werden die
-      <em>Files</em>
+      erzeugt einen neuen Commit mit dem Inhalt aller aufgeführten Dateien aus dem Arbeitsverzeichnis.  Zusätzlich werden die
+      <em>Dateien</em>
       in den Index kopiert.
     </li>
 
     <li>
       <code>git checkout HEAD -- <em>files</em></code>
       kopiert die
-      <em>Files</em>
+      <em>Dateien</em>
       vom letzten Commit sowohl in den Index als auch in das Arbeitsverzeichnis.
     </li>
 
@@ -223,8 +223,8 @@
   <p>
     Es gibt verschiedene Möglichkeiten die Unterschiede zwischen Commits zu betrachten.
     Nachfolgend ein paar Beispiele. 
-    An jedes dieser Kommandos können ein oder mehrere Filenamen als Argument angehängt werden,
-    dies beschränkt die Darstellung der Unterschiede auf genannten Files.
+    An jedes dieser Kommandos können ein oder mehrere Dateinamen als Argument angehängt werden,
+    dies beschränkt die Darstellung der Unterschiede auf genannte Dateien.
   </p>
   <div class="center">
     <img src='diff.svg.png'></div>
@@ -232,7 +232,7 @@
   <h3 id="commit">Commit</h3>
 
   <p>
-    Wenn du commitest, du dich also festlegst, erzeugt git ein neues Commit Objekt mit den Files des Indexes und es setzt den aktuellen Commit als Vorläufer ein. 
+    Wenn du commitest, du dich also festlegst, erzeugt git ein neues Commit Objekt mit den Dateien des Indexes und es setzt den aktuellen Commit als Vorläufer ein. 
     Ebenso verschiebt es den Zeiger des aktuellen Branches auf den neuen Commit.
   In dem folgenden Bild ist der aktuelle Branch
     <em>master</em>
@@ -305,20 +305,20 @@
   <p>
     Mit dem
     <code>checkout</code>
-    Befehl werden Files aus dem Projektarchiv oder dem Index in das Arbeitsverzeichnis kopiert. Des weiteren kann man damit den Branch wechseln.
+    Befehl werden Dateien aus dem Projektarchiv oder dem Index in das Arbeitsverzeichnis kopiert. Des weiteren kann man damit den Branch wechseln.
   </p>
 
   <p>
-    Wird ein Filename (und/oder
+    Wird ein Dateiname (und/oder
     <code>-p</code>
-    ) angegeben, so kopiert git diese Files aus dem gegebenen Commit in den Index oder das Arbeitsverzeichnis . Zum Beispiel kopiert
+    ) angegeben, so kopiert git diese Dateien aus dem gegebenen Commit in den Index oder das Arbeitsverzeichnis . Zum Beispiel kopiert
     <code>git checkout HEAD~ foo.c</code>
-    das File
+    die Datei
     <code>foo.c</code>
     aus dem dem Commit, mit dem Namen
     <em>HEAD~</em>
     (der Vorgänger des aktuellen Commits) sowohl in das Arbeitsverzeichnis als auch in den Index.
-  (Wird kein Commit-Name angegeben, so werden die Files aus dem Index kopiert.)
+  (Wird kein Commit-Name angegeben, so werden die Dateien aus dem Index kopiert.)
   Beachte: Der aktuelle Branch ändert sich nicht.
   </p>
 
@@ -326,13 +326,13 @@
     <img src='checkout-files.svg.png'></div>
 
   <p>
-    Wenn beim Checkout kein Filename sondern der Name eines (lokalen) Branches angegeben wird, so wird die Referenz
+    Wenn beim Checkout kein Dateiname sondern der Name eines (lokalen) Branches angegeben wird, so wird die Referenz
     <em>HEAD</em>
     auf diesen Branch verschoben.
-    Du wechselst "switch to" den Branch, daraufhin werden die Files im Index und im Arbeitsverzeichnis denen aus dem Commit angepasst.
-  Jedes File das im neuen Commit (
+    Du wechselst "switch to" den Branch, daraufhin werden die Dateien im Index und im Arbeitsverzeichnis denen aus dem Commit angepasst.
+  Jede Datei die im neuen Commit (
     <em>a47c3</em>
-    s.u.) existiert wird kopiert. Jedes das im alten Commit (
+    s.u.) existiert wird kopiert. Jede die im alten Commit (
     <em>ed489</em>
     ) existiert, aber nicht im neuen, wird im Index und Arbeitsverzeichnis gelöscht. Alle weitern werden nicht angefasst.
   </p>
@@ -341,7 +341,7 @@
     <img src='checkout-branch.svg.png'></div>
 
   <p>
-    Wenn beim Checkout kein Filename angegeben wird und die angeführte Referenz
+    Wenn beim Checkout kein Dateiname angegeben wird und die angeführte Referenz
     <em>kein</em>
     (lokaler) Branch ist &mdash; also z.B. ein Tag (tag), ein Remote-Branch, eine SHA-1 ID oder etwas wie
     <em>master~3</em>
@@ -405,11 +405,11 @@
     Der
     <code>reset</code>
     Befehl verschiebt den aktuellen Branch an eine andere Position. Optional aktualisiert er den Index und das Arbeitsverzeichnis.
-    Er wird auch dazu benutzt Files aus dem Projektarchiv in den Index zu kopieren ohne das Arbeitsverzeichnis anzufassen.
+    Er wird auch dazu benutzt Dateien aus dem Projektarchiv in den Index zu kopieren ohne das Arbeitsverzeichnis anzufassen.
   </p>
 
   <p>
-    Wird ein Commit ohne Filename angegeben, so wird der aktuelle Branch auf diesen Commit verschoben und der Index wird mit dem Inhalt aus diesem Commit aktualisiert.
+    Wird ein Commit ohne Dateinamen angegeben, so wird der aktuelle Branch auf diesen Commit verschoben und der Index wird mit dem Inhalt aus diesem Commit aktualisiert.
     Wird die Option
     <code>--hard</code>
     angegeben, so wird auch das Arbeitsverzeichnis aktualisiert. Wird stattdessen
@@ -433,14 +433,14 @@
     <img src='reset.svg.png'></div>
 
   <p>
-    Wird ein Filename (und/oder die Option
+    Wird ein Dateiname (und/oder die Option
     <code>-p</code>
     ) angegeben, so funktioniert das Kommando ähnlich wie ein
     <a href='#checkout'>checkout</a>
-    mit einem Filename, ausser, dass ausschließlich der Index (und nicht das Arbeitsverzeichnis) aktualisiert wird.
+    mit einem Dateinamen, ausser, dass ausschließlich der Index (und nicht das Arbeitsverzeichnis) aktualisiert wird.
   (Du kannst auch anstatt von
     <em>HEAD</em>
-    den Commit angeben dessen Files genommen werden sollen.)
+    den Commit angeben dessen Dateien genommen werden sollen.)
   </p>
 
   <div class="center">
@@ -568,19 +568,19 @@
   <h2 id="technical-notes">Technische Notizen</h2>
 
   <p>
-    Der Inhalt der Files wird nicht wirklich im Index (
+    Der Inhalt der Dateien wird nicht wirklich im Index (
     <em>.git/index</em>
     ) oder in den Commit Objekten gespeichert.
-  Stattdessen wird jedes File, identifiziert durch seinen SHA-1 Hash, in der Objekt Datenbank (
+  Stattdessen wird jede Datei, identifiziert durch seinen SHA-1 Hash, in der Objekt Datenbank (
     <em>.git/objects</em>
     ) als
     <em>blob</em>
     gespeichert.
-Der Index führt die Filenamen neben den Bezeichnern des assozierten Blobs, sowie weiterer Informationen, auf.
+Der Index führt die Dateinamen neben den Bezeichnern des assozierten Blobs, sowie weiterer Informationen, auf.
 Für Commits existiert ein weiterer Datentyp, der
     <em>tree</em>
     . Dieser ist auch durch seinen Hash identifiziert.
-Trees entsprchen den Verzeichnissen im Arbeitsverzeichnis und enthalten, entsprechend zu jedem Filenamen und Verzeichnisnamen, eine Liste von Blobs und Trees.
+Trees entsprechen den Verzeichnissen im Arbeitsverzeichnis und enthalten, entsprechend zu jedem Dateinamen und Verzeichnisnamen, eine Liste von Blobs und Trees.
 Jeder Commit speichert den Bezeichner seines "top-level" Tree Elementes.
 Dieser wiederum enthält alle Blobs und weitere Blobs die zu diesem Commit gehören.
   </p>
