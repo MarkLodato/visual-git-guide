@@ -7,7 +7,7 @@
   <script type="text/javascript" src='visual-git-guide.js'></script>
 </head>
 <body onload="replace_all_PNGs();">
-  <h1 id="top">Uma Referência Visual de Git</h1>
+  <h1 id="top">Uma Referência Visual do Git</h1>
 
   <div id="language-box">
     <a>Outros Idiomas:</a>
@@ -35,7 +35,7 @@
 
   <p>Esta página fornece uma breve referência visual para os comandos mais
   comuns do git. Uma vez que você saiba um pouco sobre como o git
-  funciona, esta página pode solidificar o seu entendimento. Se você está
+  funciona, esta página pode consolidar o seu entendimento. Se você está
   interessado em saber como está página foi criada, veja o meu <a
   href='http://github.com/MarkLodato/visual-git-guide'>repositório no
   GitHub</a>.</p>
@@ -64,25 +64,25 @@
   <div class="center"><img src='basic-usage.svg.png'></div>
 
   <p>Os quatro comandos acima copiam arquivos entre o diretório de
-  trabalho, o stage (também chamado de índice), e a história (na forma de
-  commits).</p>
+  trabalho, o <em>stage</em> (também chamado de índice), e a história (na forma de
+  <em>commits</em>).</p>
 
   <ul>
 
     <li><code>git add <em>arquivos</em></code> copia <em>arquivos</em> (em
-    seus estados atuais) para o stage.</li>
+    seus estados atuais) para o <em>stage</em>.</li>
 
-    <li><code>git commit</code> salva uma cópia do stage como um
-    commit.</li>
+    <li><code>git commit</code> salva uma cópia do <em>stage</em> como um
+    <em>commit</em>.</li>
 
     <li><code>git reset -- <em>arquivos</em></code> remove arquivos do
-    stage; isto é, copia <em>arquivos</em> do último commit para o stage.
+    <em>stage</em>; isto é, copia <em>arquivos</em> do último <em>commit</em> para o <em>stage</em>.
     Use esse comando para "desfazer" um <code>git add
     <em>arquivos</em></code>. Você também pode executar <code>git
-    reset</code> para remover todos os arquivos do stage.</li>
+    reset</code> para remover todos os arquivos do <em>stage</em>.</li>
 
     <li><code>git checkout -- <em>arquivos</em></code> copia
-    <em>arquivos</em> do stage para o diretório de trabalho.  Use isso
+    <em>arquivos</em> do <em>stage</em> para o diretório de trabalho.  Use isso
     para descartar alterações locais.</li>
 
   </ul>
@@ -92,25 +92,25 @@
   arquivos para selecionar interativamente partes de arquivos para
   copiar.</p>
 
-  <p>É também possível passar por cima do stage e copiar (check out)
-  arquivos diretamente da história ou de commits sem copiar o aquivo para
-  o stage.</p>
+  <p>É também possível passar por cima do <em>stage</em> e copiar (check out)
+  arquivos diretamente da história ou de <em>commits</em> sem copiar o aquivo para
+  o <em>stage</em>.</p>
 
   <div class="center"><img src='basic-usage-2.svg.png'></div>
 
   <ul>
 
     <li><code>git commit -a </code> é equivalente a executar <tt>git
-    add</tt> em todos os arquivos que existiam no último commit, e
+    add</tt> em todos os arquivos que existiam no último <em>commit</em>, e
     então executar <tt>git commit</tt>.</li>
 
-    <li><code>git commit <em>arquivos</em></code> cria um novo commit com
-    o conteúdo do último commit, mais uma cópia de <em>arquivos</em> no
+    <li><code>git commit <em>arquivos</em></code> cria um novo <em>commit</em> com
+    o conteúdo do último <em>commit</em>, mais uma cópia de <em>arquivos</em> no
     diretório de trabalho. Além disso, os <em>arquivos</em> são copiados
-    para o stage.</li>
+    para o <em>stage</em>.</li>
 
     <li><code>git checkout HEAD -- <em>arquivos</em></code> copia os
-    <em>arquivos</em> do último commit para ambos o stage e o diretório de
+    <em>arquivos</em> do último <em>commit</em> para ambos o <em>stage</em> e o diretório de
     trabalho.</li>
 
   </ul>
@@ -122,20 +122,20 @@
 
   <div class="center"><img src='conventions.svg.png'></div>
 
-  <p>Commits são mostrados em verde com uma identidade de 5 caracteres, e
+  <p><em>commits</em> são mostrados em verde com uma identidade de 5 caracteres, e
   eles apontam para os seus pais (parents). Os ramos (branches) são
-  mostrados em laranja, e eles apontam para commits específicos. O ramo
+  mostrados em laranja, e eles apontam para <em>commits</em> específicos. O ramo
   atual é identificado pela referência especial <em>HEAD</em>, que está
-  atachada àquele ramo. Nessa imagem, os últimos cinco commits são
+  atachada àquele ramo. Nessa imagem, os últimos cinco <em>commits</em> são
   mostrados, sendo <em>ed489</em> o mais recente. <em>master</em> (o ramo
-  atual) aponta para esse commit, enquanto <em>maint</em> (outro ramo)
-  aponta para um ancestral do commit do <em>master</em>.
+  atual) aponta para esse <em>commit</em>, enquanto <em>maint</em> (outro ramo)
+  aponta para um ancestral do <em>commit</em> do <em>master</em>.
 
   <h2 id="commands-in-detail">Comandos em Detalhe</h2>
 
   <h3 id="diff">Diff</h3>
 
-  <p>Existem várias formas de ver as diferenças entre commits. Abaixo
+  <p>Existem várias formas de ver as diferenças entre <em>commits</em>. Abaixo
   estão alguns exemplos comuns. Qualquer desses comandos pode
   opcionalmente receber nomes de arquivos como argumentos que restringem as
   diferenças a esses arquivos.</p>
@@ -144,18 +144,18 @@
 
   <h3 id="commit">Commit</h3>
 
-  <p>Quando você comete, o git cria um novo commit usando os arquivos do
-  stage e define os pais como o commit atual. Então ele aponta o ramo
-  atual para esse novo commit. Na figura abaixo, o ramo atual é o
+  <p>Quando você comete, o git cria um novo <em>commit</em> usando os arquivos do
+  <em>stage</em> e define os pais como o <em>commit</em> atual. Então ele aponta o ramo
+  atual para esse novo <em>commit</em>. Na figura abaixo, o ramo atual é o
   <em>master</em>. Antes do comando ser executado, <em>master</em>
-  apontava para <em>ed489</em>. Após, um novo commit, <em>f0cec</em>, foi
+  apontava para <em>ed489</em>. Após, um novo <em>commit</em>, <em>f0cec</em>, foi
   criado, com ancestral <em>ed489</em>, e então <em>master</em> foi movido
-  para o novo commit.</p>
+  para o novo <em>commit</em>.</p>
 
   <div class="center"><img src='commit-master.svg.png'></div>
 
   <p>Esse mesmo processo ocorre também quando o ramo atual é um
-  ancestral de outro ramo. Abaixo, um commit ocorre no ramo
+  ancestral de outro ramo. Abaixo, um <em>commit</em> ocorre no ramo
   <em>maint</em>, o qual era um ancestral de <em>master</em>, resultando
   em <em>1800b</em>. Após, <em>maint</em> não é mais um ancestral de
   <em>master</em>. Para juntar as duas histórias, um <a
@@ -164,9 +164,9 @@
 
   <div class="center"><img src='commit-maint.svg.png'></div>
 
-  <p>As vezes um engano ocorre em um commit, mas isso é fácil de corrigir
+  <p>As vezes um engano ocorre em um <em>commit</em>, mas isso é fácil de corrigir
   com <code>git commit --amend</code>. Quando você usa esse comando, o git
-  cria um novo commit com os mesmos pais do commit atual. (O commit antigo
+  cria um novo <em>commit</em> com os mesmos pais do <em>commit</em> atual. (O <em>commit</em> antigo
   será descartado se nada fizer referência a ele.)</p>
 
   <div class="center"><img src='commit-amend.svg.png'></div>
@@ -177,25 +177,25 @@
   <h3 id="checkout">Checkout</h3>
 
   <p>O comando checkout é usado para copiar arquivos da história (ou
-  stage) para o diretório de trabalho, e opcionalmente mudar de ramo.</p>
+  <em>stage</em>) para o diretório de trabalho, e opcionalmente mudar de ramo.</p>
 
   <p>Quando um nome de arquivo (e/ou <code>-p</code>) é fornecido, o git
-  copia esse arquivo do commit para o stage e o diretório de trabalho.
+  copia esse arquivo do <em>commit</em> para o <em>stage</em> e o diretório de trabalho.
   Por exemplo, <code>git checkout HEAD~ foo.c</code> copia o arquivo
-  <code>foo.c</code> do commit chamado <em>HEAD~</em> (os pais do commit
-  atual) para o diretório de trabalho, e também para o stage. (Se nenhum
-  commit é fornecido, os arquivos são copiados do stage.) Note que não há
+  <code>foo.c</code> do <em>commit</em> chamado <em>HEAD~</em> (os pais do <em>commit</em>
+  atual) para o diretório de trabalho, e também para o <em>stage</em>. (Se nenhum
+  <em>commit</em> é fornecido, os arquivos são copiados do <em>stage</em>.) Note que não há
   mudança no ramo.</p>
 
   <div class="center"><img src='checkout-files.svg.png'></div>
 
   <p>Quando um nome de arquivo <em>não</em> é fornecido mas a referência é
   um ramo (local), <em>HEAD</em> é movido para aquele ramo (isto é, nós
-  passamos para aquele ramo), e então o stage e o diretório de trabalho
-  são modificados para coincidir com o conteúdo daquele commit. Qualquer
-  arquivo que existe no novo commit (<em>a47c3</em> abaixo) é copiado;
-  qualquer arquivo que existe no antigo commit (<em>ed489</em>) mas não no
-  novo commit é excluído; e qualquer arquivo que não existe em ambos é
+  passamos para aquele ramo), e então o <em>stage</em> e o diretório de trabalho
+  são modificados para coincidir com o conteúdo daquele <em>commit</em>. Qualquer
+  arquivo que existe no novo <em>commit</em> (<em>a47c3</em> abaixo) é copiado;
+  qualquer arquivo que existe no antigo <em>commit</em> (<em>ed489</em>) mas não no
+  novo <em>commit</em> é excluído; e qualquer arquivo que não existe em ambos é
   ignorado.</p>
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
@@ -209,7 +209,7 @@
   poder executar <code>git checkout v1.6.6.1</code> (que é uma etiqueta,
   não um ramo), compilar, instalar, e então passar de volta para outro
   ramo, por exemplo executado <code>git checkout master</code>. Todavia,
-  efetuar um commit funciona um pouco diferente em um HEAD detachado; isso
+  efetuar um <em>commit</em> funciona um pouco diferente em um HEAD detachado; isso
   é discutido <a href="#detached">abaixo</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
@@ -223,7 +223,7 @@
   <div class="center"><img src='commit-detached.svg.png'></div>
 
   <p>Uma vez que você faz um checkout de algo, por exemplo
-  <em>master</em>, o commit (presumivelmente) não recebe outra referência,
+  <em>master</em>, o <em>commit</em> (presumivelmente) não recebe outra referência,
   e acaba excluído. Note que após o comando, não há nada fazendo
   referência para <em>2eecb</em>.</p>
 
@@ -238,92 +238,92 @@
   <h3 id="reset">Reset</h3>
 
   <p>O comando reset move o ramo atual para uma nova posição, e
-  opcionalmente atualiza o stage e o diretório de trabalho. Ele também é
-  usado para copiar arquivos da história para o stage sem alterar o
+  opcionalmente atualiza o <em>stage</em> e o diretório de trabalho. Ele também é
+  usado para copiar arquivos da história para o <em>stage</em> sem alterar o
   diretório de trabalho.</p>
 
-  <p>Se um commit é executado sem um nome de arquivo, o ramo atual é
-  movido para aquele commit, e então o stage é atualizado para coincidir
-  com esse commit. Se <code>--hard</code> é fornecido, o diretório de
+  <p>Se um <em>commit</em> é executado sem um nome de arquivo, o ramo atual é
+  movido para aquele <em>commit</em>, e então o <em>stage</em> é atualizado para coincidir
+  com esse <em>commit</em>. Se <code>--hard</code> é fornecido, o diretório de
   trabalho também é atualizado.  Se <code>--soft</code> é fornecido,
   nenhum é atualizado.</p>
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
-  <p>Se um commit não é fornecido, será usado o <em>HEAD</em>.  Nesse
-  caso, o ramo não é alterado, mas o stage (e opcionalmente o diretório de
+  <p>Se um <em>commit</em> não é fornecido, será usado o <em>HEAD</em>.  Nesse
+  caso, o ramo não é alterado, mas o <em>stage</em> (e opcionalmente o diretório de
   trabalho, se <code>--hard</code> é fornecido) são atualizados com o
-  conteúdo do último commit.</p>
+  conteúdo do último <em>commit</em>.</p>
 
   <div class="center"><img src='reset.svg.png'></div>
 
   <p>Se um nome de arquivo (e/ou <code>-p</code>) é fornecido, então o
   comando funciona similarmente ao comando <a
     href='#checkout'>checkout</a> com um nome de arquivo, exceto que
-  apenas o stage (e não o diretório de trabalho) é atualizado. (Você pode
-  também especificar o commit a partir do qual copiar os arquivos, em vez
+  apenas o <em>stage</em> (e não o diretório de trabalho) é atualizado. (Você pode
+  também especificar o <em>commit</em> a partir do qual copiar os arquivos, em vez
   de <em>HEAD</em>.)</p>
 
   <div class="center"><img src='reset-files.svg.png'></div>
 
   <h3 id="merge">Merge</h3>
 
-  <p>Um merge cria um novo commit que incorpora mudanças de outros
-  commits. Antes de executar um merge, o stage deve estar igual ao último
-  commit. O caso trivial é quando o outro commit é um ancestral do commit
+  <p>Um merge cria um novo <em>commit</em> que incorpora mudanças de outros
+  <em>commits</em>. Antes de executar um merge, o <em>stage</em> deve estar igual ao último
+  <em>commit</em>. O caso trivial é quando o outro <em>commit</em> é um ancestral do <em>commit</em>
   atual; em tal caso nada ocorre. O próximo caso mais simples é quando o
-  commit atual é um ancestral do outro commit. Isso resulta em um merge
+  <em>commit</em> atual é um ancestral do outro <em>commit</em>. Isso resulta em um merge
   <em>fast-forward</em>. A referência é simplesmente movida, e então é
-  efetuado um checkout do novo commit.</p>
+  efetuado um checkout do novo <em>commit</em>.</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
 
   <p>Caso contrário, um merge "real" deve ocorrer. Você pode selecionar
   outras estratégias, mas o padrão é efetuar um merge "recursivo", o qual
-  basicamente considera o commit atual (<em>ed489</em> abaixo), o outro
-  commit (<em>33104</em>), e o ancestral comum a ambos (<em>b325c</em>), e
+  basicamente considera o <em>commit</em> atual (<em>ed489</em> abaixo), o outro
+  <em>commit</em> (<em>33104</em>), e o ancestral comum a ambos (<em>b325c</em>), e
   efetua um <a href='http://en.wikipedia.org/wiki/Three-way_merge'>merge
   three-way</a>. O resultado é salvo no diretório de trabalho e no
-  stage, e então um commit é executado, com um ancestral adicional
-  (<em>33104</em>) para o novo commit. </p>
+  <em>stage</em>, e então um <em>commit</em> é executado, com um ancestral adicional
+  (<em>33104</em>) para o novo <em>commit</em>. </p>
 
   <div class="center"><img src='merge.svg.png'></div>
 
   <h3 id="cherry-pick">Cherry Pick</h3>
 
-  <p>O comando cherry-pick "copia" um commit, criando um novo commit no ramo
-  atual com a mesma mensagem e modificações de outro commit.</p>
+  <p>O comando cherry-pick "copia" um <em>commit</em>, criando um novo <em>commit</em> no ramo
+  atual com a mesma mensagem e modificações de outro <em>commit</em>.</p>
 
   <div class="center"><img src='cherry-pick.svg.png'></div>
 
   <h3 id="rebase">Rebase</h3>
 
   <p>Um rebase é uma alternativa a um <a href='#merge'>merge</a> para
-  combinar vários ramos. Enquanto um merge cria um único commit com dois
-  pais, gerando uma história não-linear, um rebase efetua os commits do
+  combinar vários ramos. Enquanto um merge cria um único <em>commit</em> com dois
+  pais, gerando uma história não-linear, um rebase efetua os <em>commits</em> do
   ramo atual em outro ramo, gerando uma história linear. Em essência, isso
   é uma forma automática de executar vários <a
     href='#cherry-pick'>cherry-pick</a>s em sequência.</p>
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>O comando acima considera todos os commits que existem em
+  <p>O comando acima considera todos os <em>commits</em> que existem em
   <em>topic</em> mas não em <em>master</em> (a saber <em>169a6</em> e
-  <em>2c33a</em>), executa esses commits em <em>master</em>, e então move
-  o HEAD para o novo commit. Note que os commits antigos serão descartados
+  <em>2c33a</em>), executa esses <em>commits</em> em <em>master</em>, e então move
+  o HEAD para o novo <em>commit</em>. Note que os <em>commits</em> antigos serão descartados
   se nada mais fizer referência a eles.</p>
 
   <p>Para limitar quanto se quer ir para trás, use a opção
   <code>--onto</code>. O seguinte comando executa em <em>master</em> os
-  commits mais recentes do ramo atual desde <em>169a6</em>
+  <em>commits</em> mais recentes do ramo atual desde <em>169a6</em>
   (exclusivamente), a saber <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
   <p>Existe também o comando <code>git rebase --interactive</code>, o qual
   permite fazer coisas mais complicadas do que simplesmente executar
-  novamente commits, a saber, remover, reordenar, modificar, e "amassar"
-  commits (squashing). Não existe uma figura clara para representar isso;
+  novamente <em>commits</em>, a saber, remover, reordenar, modificar, e "amassar"
+  <em>commits</em> (squashing). Não existe uma figura clara para representar isso;
   veja <a 
     href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
   para mais detalhes.</p>
@@ -331,22 +331,22 @@
   <h2 id="technical-notes">Observações técnicas</h2>
 
   <p>O conteúdo dos arquivos não é na verdade armazenado no index
-  (<em>.git/index</em>) ou em objetos commit.  Em vez disso, cada arquivo
+  (<em>.git/index</em>) ou em objetos <em>commit</em>.  Em vez disso, cada arquivo
   é armazenado no objeto base-de-dados (<em>.git/objects</em>) como um
   <em>blob</em>, identificado pelo seu código hash SHA-1. O arquivo index
   lista os nomes de arquivos juntamente com o identificador do blob
-  associado, bem como alguns outros dados. Para commits, existe um tipo de
+  associado, bem como alguns outros dados. Para <em>commits</em>, existe um tipo de
   dado adicional, uma <em>árvore</em>, também identificado pelo seu código
   hash. Árvores correspondem aos diretórios no diretório de trabalho, e
   contém uma lista das árvores e blobs correspondentes a cada nome de
-  arquivo naquele diretório. Cada commit armazena o identificador da sua
+  arquivo naquele diretório. Cada <em>commit</em> armazena o identificador da sua
   árvore, que por sua vez contém todos os blobs e outras árvores
-  associadas àquele commit. </p>
+  associadas àquele <em>commit</em>. </p>
 
-  <p>Se você realiza um commit usando um HEAD detachado, o último commit é
+  <p>Se você realiza um <em>commit</em> usando um HEAD detachado, o último <em>commit</em> é
   na verdade referenciado por algo: o reflog para o HEAD. Todavia, esse
-  possui data de validade, logo em algum momento posterior o commit
-  será finalmente excluído, de forma similar aos commits excluídos com
+  possui data de validade, logo em algum momento posterior o <em>commit</em>
+  será finalmente excluído, de forma similar aos <em>commits</em> excluídos com
   <code>git commit --amend</code> ou <code>git rebase</code>.</p>
 
   <hr>
