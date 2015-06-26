@@ -59,4 +59,4 @@ Slovak translation &copy; 2013 [Ľudovít Lučenič](https://github.com/llucenic
 Portuguese translation &copy; 2014 [Gustavo de Oliveira](mailto:goliveira5d@gmail.com)
 This work is licensed under a
 [Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States
-License](http://creativecommons.org/licenses/by-nc-sa/3.0/us/).
+License](https://creativecommons.org/licenses/by-nc-sa/3.0/us/).
