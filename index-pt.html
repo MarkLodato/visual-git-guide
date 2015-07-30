@@ -37,7 +37,7 @@
   <p>Esta página fornece uma breve referência visual para os comandos mais
   comuns do git. Uma vez que você saiba um pouco sobre como o git
   funciona, esta página pode consolidar o seu entendimento. Se você está
-  interessado em saber como está página foi criada, veja o meu <a
+  interessado em saber como esta página foi criada, veja o meu <a
   href='http://github.com/MarkLodato/visual-git-guide'>repositório no
   GitHub</a>.</p>
 
@@ -50,7 +50,7 @@
         <li><a href="#diff">Diff</a></li>
         <li><a href="#commit">Commit</a></li>
         <li><a href="#checkout">Checkout</a></li>
-        <li><a href="#detached">Cometendo com um HEAD detachado</a></li>
+        <li><a href="#detached">Comitando com um HEAD detachado</a></li>
         <li><a href="#reset">Reset</a></li>
         <li><a href="#merge">Merge</a></li>
         <li><a href="#cherry-pick">Cherry Pick</a></li>
@@ -65,7 +65,7 @@
   <div class="center"><img src='basic-usage.svg.png'></div>
 
   <p>Os quatro comandos acima copiam arquivos entre o diretório de
-  trabalho, o <em>stage</em> (também chamado de índice), e a história (na forma de
+  trabalho, o <em>stage</em> (também chamado de índice), e o histórico (na forma de
   <em>commits</em>).</p>
 
   <ul>
@@ -93,8 +93,8 @@
   arquivos para selecionar interativamente partes de arquivos para
   copiar.</p>
 
-  <p>É também possível passar por cima do <em>stage</em> e copiar (check out)
-  arquivos diretamente da história ou de <em>commits</em> sem copiar o aquivo para
+  <p>Também é possível passar por cima do <em>stage</em> e copiar (checkout)
+  arquivos diretamente do histórico ou de <em>commits</em> sem copiar o aquivo para
   o <em>stage</em>.</p>
 
   <div class="center"><img src='basic-usage-2.svg.png'></div>
@@ -118,8 +118,8 @@
 
   <h2 id="conventions">Convenções</h2>
 
-  <p>No restante deste documento, nós vamos usar grafos da seguinte
-  forma.</p>
+  <p>No restante deste documento, nós vamos usar gráficos no seguinte
+  formato.</p>
 
   <div class="center"><img src='conventions.svg.png'></div>
 
@@ -127,7 +127,7 @@
   eles apontam para os seus pais (parents). Os ramos (branches) são
   mostrados em laranja, e eles apontam para <em>commits</em> específicos. O ramo
   atual é identificado pela referência especial <em>HEAD</em>, que está
-  atachada àquele ramo. Nessa imagem, os últimos cinco <em>commits</em> são
+  unida àquele ramo. Nessa imagem, os últimos cinco <em>commits</em> são
   mostrados, sendo <em>ed489</em> o mais recente. <em>master</em> (o ramo
   atual) aponta para esse <em>commit</em>, enquanto <em>maint</em> (outro ramo)
   aponta para um ancestral do <em>commit</em> do <em>master</em>.
@@ -145,7 +145,7 @@
 
   <h3 id="commit">Commit</h3>
 
-  <p>Quando você comete, o git cria um novo <em>commit</em> usando os arquivos do
+  <p>Quando você comita, o git cria um novo <em>commit</em> usando os arquivos do
   <em>stage</em> e define os pais como o <em>commit</em> atual. Então ele aponta o ramo
   atual para esse novo <em>commit</em>. Na figura abaixo, o ramo atual é o
   <em>master</em>. Antes do comando ser executado, <em>master</em>
@@ -172,16 +172,16 @@
 
   <div class="center"><img src='commit-amend.svg.png'></div>
 
-  <p>Um quarto caso é cometer com o <a href="#detached">HEAD
+  <p>Um quarto caso é comitar com o <a href="#detached">HEAD
     detachado</a>, como explicado mais tarde.</p>
 
   <h3 id="checkout">Checkout</h3>
 
-  <p>O comando checkout é usado para copiar arquivos da história (ou
-  <em>stage</em>) para o diretório de trabalho, e opcionalmente mudar de ramo.</p>
+  <p>O comando checkout é usado para copiar arquivos do histórico, ou
+  <em>stage</em>, para o diretório de trabalho, e opcionalmente mudar de ramo.</p>
 
   <p>Quando um nome de arquivo (e/ou <code>-p</code>) é fornecido, o git
-  copia esse arquivo do <em>commit</em> para o <em>stage</em> e o diretório de trabalho.
+  copia esse arquivo do <em>commit</em> para o <em>stage</em> e para o diretório de trabalho.
   Por exemplo, <code>git checkout HEAD~ foo.c</code> copia o arquivo
   <code>foo.c</code> do <em>commit</em> chamado <em>HEAD~</em> (os pais do <em>commit</em>
   atual) para o diretório de trabalho, e também para o <em>stage</em>. (Se nenhum
@@ -205,7 +205,7 @@
   <em>não</em> é um ramo (local) &mdash; por exemplo, é uma etiqueta
   (tag), um ramo remoto, uma identidade SHA-1, ou algo como
   <em>master~3</em> &mdash; nós obtemos um ramo anônimo, chamado <em>HEAD
-    detachado</em>.  Isso é útil para se mover ao longo da história. Por
+    detachado</em>.  Isso é útil para se mover ao longo do histórico. Por
   exemplo, suponha que você queira compilar a versão 1.6.6.1 do git.  Você
   poder executar <code>git checkout v1.6.6.1</code> (que é uma etiqueta,
   não um ramo), compilar, instalar, e então passar de volta para outro
@@ -215,15 +215,15 @@
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <h3 id="detached">Cometendo com um HEAD detachado</h3>
+  <h3 id="detached">Comitando com um HEAD detachado</h3>
 
-  <p>Quando o <em>HEAD</em> está detachado, cometer funciona da maneira
+  <p>Quando o <em>HEAD</em> está detachado, comitar funciona da maneira
   usual, exceto que nenhum ramo com nome é modificado. (Você pode pensar
-  nisso como um ramo detachado.)</p>
+  nisso como um ramo anônimo.)</p>
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Uma vez que você faz um checkout de algo, por exemplo
+  <p>Uma vez que você fizer um checkout de alguma coisa, por exemplo
   <em>master</em>, o <em>commit</em> (presumivelmente) não recebe outra referência,
   e acaba excluído. Note que após o comando, não há nada fazendo
   referência para <em>2eecb</em>.</p>
@@ -240,20 +240,20 @@
 
   <p>O comando reset move o ramo atual para uma nova posição, e
   opcionalmente atualiza o <em>stage</em> e o diretório de trabalho. Ele também é
-  usado para copiar arquivos da história para o <em>stage</em> sem alterar o
+  usado para copiar arquivos do histórico para o <em>stage</em> sem alterar o
   diretório de trabalho.</p>
 
-  <p>Se um <em>commit</em> é executado sem um nome de arquivo, o ramo atual é
+  <p>Se um <em>commit</em> é realizado sem um nome de arquivo, o ramo atual é
   movido para aquele <em>commit</em>, e então o <em>stage</em> é atualizado para coincidir
   com esse <em>commit</em>. Se <code>--hard</code> é fornecido, o diretório de
   trabalho também é atualizado.  Se <code>--soft</code> é fornecido,
-  nenhum é atualizado.</p>
+  nem o <em>stage</em> nem o diretório de trabalho são atualizados.</p>
 
   <div class="center"><img src='reset-commit.svg.png'></div>
 
   <p>Se um <em>commit</em> não é fornecido, será usado o <em>HEAD</em>.  Nesse
-  caso, o ramo não é alterado, mas o <em>stage</em> (e opcionalmente o diretório de
-  trabalho, se <code>--hard</code> é fornecido) são atualizados com o
+  caso, o ramo não é alterado, mas o <em>stage</em>, e opcionalmente o diretório de
+  trabalho se <code>--hard</code> é fornecido, são atualizados com o
   conteúdo do último <em>commit</em>.</p>
 
   <div class="center"><img src='reset.svg.png'></div>
@@ -301,8 +301,8 @@
 
   <p>Um rebase é uma alternativa a um <a href='#merge'>merge</a> para
   combinar vários ramos. Enquanto um merge cria um único <em>commit</em> com dois
-  pais, gerando uma história não-linear, um rebase efetua os <em>commits</em> do
-  ramo atual em outro ramo, gerando uma história linear. Em essência, isso
+  pais, gerando um histórico não-linear, um rebase efetua os <em>commits</em> do
+  ramo atual em outro ramo, gerando um histórico linear. Em essência, isso
   é uma forma automática de executar vários <a
     href='#cherry-pick'>cherry-pick</a>s em sequência.</p>
 
@@ -333,7 +333,7 @@
 
   <p>O conteúdo dos arquivos não é na verdade armazenado no index
   (<em>.git/index</em>) ou em objetos <em>commit</em>.  Em vez disso, cada arquivo
-  é armazenado no objeto base-de-dados (<em>.git/objects</em>) como um
+  é armazenado na base-de-dados de objetos (<em>.git/objects</em>) como um
   <em>blob</em>, identificado pelo seu código hash SHA-1. O arquivo index
   lista os nomes de arquivos juntamente com o identificador do blob
   associado, bem como alguns outros dados. Para <em>commits</em>, existe um tipo de
