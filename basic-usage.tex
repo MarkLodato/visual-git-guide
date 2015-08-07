@@ -15,10 +15,10 @@
             edge node[cmd] {git commit}
         (head.south east)
         (index.south west)
-            edge node[cmd] {git checkout -- \emph{files}}
+            edge node[cmd] {git reset --soft HEAD~1}
         (work.north west)
         (head.south west)
-            edge node[cmd] {git reset -- \emph{files}}
+            edge node[cmd] {git checkout -- \emph{files}}
         (index.north west)
         ;
 \end{tikzpicture}
