@@ -208,23 +208,9 @@
 
   <h2 id="technical-notes">Uwagi techniczne</h2>
 
-  <p>The contents of files are not actually stored in the index
-  (<em>.git/index</em>) or in commit objects.  Rather, each file is stored in
-  the object database (<em>.git/objects</em>) as a <em>blob</em>, identified
-  by its SHA-1 hash.  The index file lists the filenames along with the
-  identifier of the associated blob, as well as some other data.  For commits,
-  there is an additional data type, a <em>tree</em>, also identified by its
-  hash.  Trees correspond to directories in the working directory, and contain
-  a list of trees and blobs corresponding to each filename within that
-  directory.  Each commit stores the identifier of its top-level tree, which
-  in turn contains all of the blobs and other trees associated with that
-  commit.</p>
+  <p>Zawartość plików nie jest tak naprawdę trzymana w pliku index (<em>.git/index</em>) lub w obiektach będących commitami. Tak naprawdę każdy plik trzymany jest w bazie obiektów (object database) (<em>.git/objects</em>) jako obiekt zwany <em>blob</em>, który można zidentyfikować za pomocą hasha SHA-1. Plik index zawiera listę plików wraz z ich identyfikatorami przypisanymi do obiektów blob, a oprócz tego zawiera również inne dane. Na potrzeby commitów stworzony został inny typ danych, znany jako drzewa (<em>tree</em>), który również można zidentyfikować z wykorzystaniem hashy. Drzewa (trees) powiązane są z katalogami w katalogu roboczym (working directory) i zawierają listę drzew oraz obiektóœ typu blob, które połączone są z nazwami plików w danym katalogu. Każdy commit posiada identyfikator swojego "top-level tree", który z kolei zawiera wszystkie obiekty typu blob oraz inne drzewa (trees) powiązane z danym commitem.</p>
 
-  <p>If you make a commit using a detached HEAD, the last commit really is
-  referenced by something: the reflog for HEAD.  However, this will expire
-  after a while, so the commit will eventually be garbage collected, similar
-  to commits discarded with <code>git commit --amend</code> or <code>git
-    rebase</code>.</p>
+  <p>Podczas wykonywania commita z odłączonym HEAD (detached HEAD), ostatni commit tak naprawdę posiada coś, co na niego wskazuje: reflog HEADa (historia wykonywanych zmian na headach). Mimo wszystko wskazanie to wygasa po krótkiej chwili, w związku z tym commit może zostać zutylizowany, podobnie do commitów porzuconych przez komendy <code>git commit --amend</code> oraz <code>git rebase</code>.</p>
 
   <hr>
 
