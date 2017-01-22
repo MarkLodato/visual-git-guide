@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Git: Wizualna ściąga</title>
+  <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
+  <script type="text/javascript" src='visual-git-guide.js'></script>
+</head>
+<body onload="replace_all_PNGs();">
+  <h1 id="top">Git: Wizualna ściąga</h1>
+
+  <div id="language-box">
+    <a>Inne języki:</a>
+    <ul>
+      <li><a href='index-de.html'>Deutsch</a></li>
+      <li><a href='index-en.html'>English</a></li>
+      <li><a href='index-es.html'>Español</a></li>
+      <li><a href='index-fr.html'>Français</a></li>
+      <li><a href='index-it.html'>Italiano</a></li>
+      <li><a href='index-ja.html'>日本語</a></li>
+      <li><a href='index-ko.html'>한국어</a></li>
+      <li class="selected">Polski</li>
+      <li><a href='index-pt.html'>Português</a></li>
+      <li><a href='index-ru.html'>Русский</a></li>
+      <li><a href='index-sk.html'>Slovenčina</a></li>
+      <li><a href='index-vi.html'>Tiếng Việt</a></li>
+      <li><a href='index-zh-cn.html'>简体中文</a></li>
+      <li><a href='index-zh-tw.html'>正體中文</a></li>
+    </ul>
+  </div>
+
+  <p id="link-to-png">Jeśli obrazy nie wyświetlają się poprawnie, można skorzystać z wersji <a href="?no-svg">Non-SVG</a>.</p>
+
+  <p id="link-to-svg">SVG zostało dezaktywowane.
+  <a href="index.html">(Aktywuj SVG ponownie)</a></p>
+
+  <p>Niniejsza strona zawiera skondensowane informacje o najpopularniejszych komendach wykorzystywanych w systemie kontroli wersji GIT, w formie wizualnej oraz tekstowej. Jeśli posiadasz podstawową wiedzę na temat działania GITa, strona ta pozwoli Ci na pełne zrozumienie i utrwalenie poznanych dotąd informacji. Szczegóły dotyczące tego, jak powstała niniejsza witryna, znajdziesz w moim <a href='http://github.com/MarkLodato/visual-git-guide'>repozytorium GitHub</a>.</p>
+
+  <p id="link-to-d3">Polecam również: <a
+      href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a></p>
+
+  <h2 id="contents">Spis treści</h2>
+  <ol>
+    <li><a href="#basic-usage">Podstawy</a></li>
+    <li><a href="#conventions">Konwencja</a></li>
+    <li><a href="#commands-in-detail">Poszczególne komendy</a>
+      <ol>
+        <li><a href="#diff">Diff</a></li>
+        <li><a href="#commit">Commit</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#detached">Committing z odłączonym (detached) HEAD</a></li>
+        <li><a href="#reset">Reset</a></li>
+        <li><a href="#merge">Merge</a></li>
+        <li><a href="#cherry-pick">Cherry Pick</a></li>
+        <li><a href="#rebase">Rebase</a></li>
+      </ol>
+    </li>
+    <li><a href="#technical-notes">Uwagi techniczne</a></li>
+  </ol>
+
+  <h2 id="basic-usage">Podstawy</h2>
+
+  <div class="center"><img src='basic-usage.svg.png'></div>
+
+  <p>Cztery komendy przedstawione poniżej służą do kopiowania plików pomiędzy katalogiem roboczym (working directory), przechowalnią (Index lub Stage) oraz katalogiem Git (History) zawierającym commity.</p>
+
+  <ul>
+
+    <li><code>git add <em>files</em></code> kopiuje <em>pliki</em> (w ich aktualnym stanie) do przechowalni (stage).</li>
+
+    <li><code>git commit</code> zapisuje migawkę (snapshot) przechowalni (stage) jako nowy commit.</li>
+
+    <li><code>git reset -- <em>files</em></code> usuwa pliki z przechowalni (stage); oznacza to, że komenda ta kopiuje <em>pliki</em> z ostatniego commita do przechowalni (stage), nadpisując jej stan. Używa się jej między innymi do "cofania" komendy <code>git add <em>files</em></code>.  Komendy <code>git reset</code> można użyć również do całkowitego usunięcia wszystkich zmian.</li>
+
+    <li><code>git checkout -- <em>files</em></code> kopiuje <em>pliki</em> z przechowalki (stage) do katalogu roboczego (working directory). Komendy tej używa się do cofnięcia wszelkich zmian lokalnych.</li>
+
+  </ul>
+
+  <p>Można również użyć <code>git reset -p</code>, <code>git checkout -p</code>, lub
+  <code>git add -p</code> zamiast (lub oprócz) wyszczególniania konkretnych elementów. Wówczas można wybrać je w sposób interaktywny.</p>
+
+  <p>Możliwe jest również bezpośrednie przeskoczenie do historii commitów i sprawdzenie plików bezpośrednio, bez konieczności wcześniejszego przeniesienia ich do przechowalni (stage).</p>
+
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
+
+  <ul>
+
+    <li><code>git commit -a </code>automatycznie dodaje zmiany ze wszystkich znanych plików (dotyczy to zarówno <tt>git add</tt> jak i <tt>git rm</tt> dla plików usuniętych z katalogu roboczego (working directory)), a następnie wykonuje komendę <tt>git commit</tt>.</li>
+
+    <li><code>git commit <em>files</em></code> tworzy nowy commit, który zawiera całą zawartość ostatniego commita oraz migawkę (snapshot) wybranych <em>plików</em>. Oczywiście <em>pliki</em> kopiowane są również do przechowalni (stage).</li>
+
+    <li><code>git checkout HEAD -- <em>files</em></code> kopiuje <em>pliki</em> z ostatniego commita zarówno do przechowalni (stage) jak i katalogu roboczego (working directory).</li>
+
+  </ul>
+
+  <h2 id="conventions">Konwencja</h2>
+
+  <p>W dalszej części tego dokumentu będą używane grafiki w następującej formie.</p>
+
+  <div class="center"><img src='conventions.svg.png'></div>
+
+  <p>Commity pokazane są w zielonych polach jako pięcioznakowe identyfikatory, które wskazują na swoich rodziców (wcześniejsze commity). Gałęzie (branche) pokazane są w pomarańczowych polach i wskazują na aktualne commity. Aktualne gałęzie (branche) można zidentyfikować dzięki specjalnemu oznaczeniu <em>HEAD</em>, które w rzeczywistości jest "przyczepione" do gałęzi (brancha), w której się aktualnie znajdujemy. Na pokazanej grafice widzimy pięć ostatnich commitów, spośród których <em>ed489</em> jest najbardziej aktualnym.
+  <em>master</em> (aktualna gałąź - branch) wskazuje na ten commit, podczas gdy <em>maint</em> (inna gałąź - branch) wskazuje na przodka gałęzi (branch) <em>master</em> i jej commit.</p>
+
+  <h2 id="commands-in-detail">Poszczególne komendy</h2>
+
+  <h3 id="diff">Diff</h3>
+
+  <p>Istnieje wiele sposobów na przejrzenie różnic pomiędzy poszczególnymi commitami. Poniżej przedstawionych jest kilka przykładów często używanych kombinacji. Każda z tych komend może przyjmować dodatkowe argumenty, które potrafią limitować pokazywane różnice jedynie do wskazanych plików.</p>
+
+  <div class="center"><img src='diff.svg.png'></div>
+
+  <h3 id="commit">Commit</h3>
+
+  <p>Kiedy zatwierdzasz (commitujesz) zmiany, Git tworzy nowy obiekt używając plików znajdujących się w przechowalni (stage), jednocześnie wskazując jako swojego rodzica ostatni istniejący commit. Następnie aktualna gałąź (branch) zaczyna wskazywać na właśnie tworzony commit. Na grafice umieszczonej poniżej aktualna gałąź (branch) to <em>master</em>. Zanim komenda została wykonana, gałąź (branch) <em>master</em> wskazywała na commit <em>ed489</em>. Po jej wykonaniu nowy commit oznaczony jako <em>f0cec</em> został utworzony z rodzicem w postaci <em>ed489</em>, a następnie gałąź (branch) <em>master</em> została przeniesiona na nowy commit.</p>
+
+  <div class="center"><img src='commit-master.svg.png'></div>
+
+  <p>Ten sam proces następuje również w przypadku gałęzi (brancha) będącego przrodkiem innej gałęzi. Poniżej widzimy commit wykonany w gałęzi <em>maint</em>, która jest przodkiej gałęzi <em>master</em>. Nowy commit oznaczony jest jako <em>1800b</em>. Po tej operacji gałąź (branch) <em>maint</em> nie jest już przodkiem gałęzi <em>master</em>. Aby połączyć obie gałęzie będzie konieczne wykonanie <a href='#merge'>merge</a> (lub <a href='#rebase'>rebase</a>).</p>
+
+  <div class="center"><img src='commit-maint.svg.png'></div>
+
+  <p>Czasem może zdarzyć się tak, że w commicie pojawi się błąd (na przykład zostanie zawarty inny komentarz niż był planowany). Wówczas można użyć komenty <code>git commit --amend</code>. Wówczas git utworzy nowy commit z tym samym rodzicem, co niedawno utworzony commit. Dzięki temu błędny commit zostanie zastąpiony nowym i nie będzie częścią całego łańcucha. Commit z błędem zostanie zwyczajnie usunięty, pod warunkiem, że żaden inny element nie jest z nim powiązany.</p>
+
+  <div class="center"><img src='commit-amend.svg.png'></div>
+
+  <p>Ostatnim przypadkiem jest commit z <a href="#detached">detached
+    HEAD</a>, który zostanie wyjaśniony w dalszej części.</p>
+
+  <h3 id="checkout">Checkout</h3>
+
+  <p>Komenda checkout używana jest do kopiowania plików z katalogu Git (history) lub z przechowalni (stage) do katalogu roboczego (working directory). Oprócz tego wykorzystuje się ją również do zmiany gałęzi (branch).</p>
+
+  <p>Kiedy podany zostanie argument w postaci nazwy pliku (lub przełącznika <code>-p</code>) git skopiuje podane pliki z podanego w komendzie commita do przechowalni (stage) oraz do katalogu roboczego (working directory). Przykładowo, komenda  <code>git checkout HEAD~ foo.c</code> skopiuje plik <code>foo.c</code> z commitu oznaczonego jako <em>HEAD~</em> (rodzic aktualnego commita) do katalogu roboczego (working directory) oraz do przechowalni (stage). Należy pamiętać, że operacja ta nie zmienia aktualnej gałęzi (branch). Jeśli nazwa commita nie zostanie podana, pliki zostaną skopiowane z przechowalni (stage) do katalogu roboczego (working directory).</p>
+
+  <div class="center"><img src='checkout-files.svg.png'></div>
+
+  <p>Kiedy <em>nie</em> zostanie podana nazwa pliku tylko nazwa gałęzi (branch) w lokalnym repozytorium, <em>HEAD</em> zostanie przeniesione do podanej gałęzi (branch) - oznacza to "przełączenie się" do danej gałęzi (branch). Przechowalnia (stage) oraz katalog roboczy (working directory) zawierają wówczas elementy commita z aktualnej gałęzi (branch). Każdy z plików wchodzących w skład nowego commita (<em>a47c3</em> poniżej) zostanie skopiowany; każdy plik wchodzący w skład starego commita (<em>ed489</em>) i jednocześnie nie istniejący w nowym, zostanie usunięty; każdy z plików wchodzących w skład innych commitów zostanie zignorowany.</p>
+
+  <div class="center"><img src='checkout-branch.svg.png'></div>
+
+  <p>Kiedy ani nazwa pliku ani nazwa gałęzi (branch) z lokalnego repozytorium <em>nie</em> zostanie podana &mdash; zamiast tego może zostać podanty tag, gałąź zdalnego repozytorium, SHA-1 ID lub coś w rodzaju <em>master~3</em> &mdash; otrzymamy anonimową gałąź (branch) zwaną <em>detached HEAD</em>. Jest ona przydatna do skakania po całej historii commitów. Powiedzmy, że chcemy skompilować wersję 1.6.6.1 gita. Możemy wykonać komendę <code>git checkout v1.6.6.1</code> (jest to tag, nie nazwa gałęzi (branch)), skompilować, zainstalować gita, a następnie wrócić do głównej gałęzi master, wydając komendę <code>git checkout master</code>. Mimo tej prostoty i podobieństw do zwykłej wersji tej komendy, commitowanie z wykorzystaniem detached HEAD działa trochę inaczej niż zazwyczaj; zostało to opisane <a href="#detached">poniżej</a>.</p>
+
+  <div class="center"><img src='checkout-detached.svg.png'></div>
+
+  <h3 id="detached">Committing z odłączonym (detached) HEAD</h3>
+
+  <p>Kiedy <em>HEAD</em> zostanie odłączone, commity działają tak samo jak zazwyczaj, z tą różnicą, że żadna istniejąca i nazwana gałąź (branch) nie zostanie zaktualizowana. Można powiedzieć, że commit pojawi się w anonimowej gałęzi (branch).</p>
+
+  <div class="center"><img src='commit-detached.svg.png'></div>
+
+  <p>W momencie, w którym HEAD zostanie przeniesiony w dowolne inne miejsce, takie jak na przykład gałąź (branch) <em>master</em>, nic już nie wskazuje na dany commit, w związku z czym commit przepada. W poniższym przykładzie widać, że po wydaniu komendy nie ma żadnego dowiązania do commita <em>2eecb</em>.</p>
+
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
+
+  <p>Jeśli istnieje potrzeba zapamiętania danego stanu, należy utworzyć nową lokalną gałąź (branch), wykorzystując do tego komendę <code>git checkout -b <em>nazwa</em></code>.</p>
+
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset</h3>
+
+  <p>Komenda reset przenosi aktualną gałąź (branch) do wskazanej pozycji oraz opcjonalnie aktualizuje przechowalnię (stage) oraz katalog roboczy (working directory). Jest również używana do kopiowania plików z katalogu git (history) do przechowalni (stage) bez naruszania katalogu roboczego (working directory).</p>
+
+  <p>Jeśli zostanie podany commit, ale nie zostaną podane nazwy plików, aktualna gałąź (branch) zostanie przeniesiona do podanego commita, a przechowalnia (stage) zaktualizowana o jego zawartość. Jeśli zostanie dodany przełącznik <code>--hard</code>, zaktualizowany zostanie również katalog roboczy (working directory). Przełącznik <code>--soft</code> służy do przeniesienia gałęzi (branch) do wskazanego miejsca, jednak bez aktualizacji przechowalni (stage) oraz katalogu roboczego (working directory).</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>Jeśli commit nie zostanie podany, domyślnie gałąź (branch) wskazuje na <em>HEAD</em>.  W takim przypadku nie nastąpi zmiana gałęzi (branch) - przechowalnia (stage) zostanie zresetowana do zawartości ostatniego commita (jeśli zostanie użyty przełącznik <code>--hard</code> resetowi ulegnie również katalog roboczy (working directory)).</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>Jeśli zostanie podana nazwa pliku (lub wykorzystany zostanie przełącznik <code>-p</code>), komenda zadziała podobnie do <a href='#checkout'>checkout</a> z podaną nazwą pliku, z tą różnicą, że zaktualizowana zostanie jedynie przechowalnia (stage), a nie katalog roboczy (working directory). Oczywiście zamiast używania <em>HEAD</em> można również sprecyzować commit, z którego zostaną skopiowane pliki</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge</h3>
+
+  <p>Scalanie (merge) tworzy nowy commit, który łączy w sobie zmiany zawarte w innych commitach. Przed wykonaniem scalania (merging), przechowalnia (stage) musi zawierać aktualny commit, do którego będzie następowało scalanie. Najprostszym przypadkiem jest taki, w którym inny commit jest przodkiem commitu, do którego chcemy scalać. Następnym prostym przypadkiem jest taki, w którym aktualny commit jest przodkiem innego commita, który chcemy scalić z aktualnym. Oba przypadki kończą się scalaniem (merge) poprzez <em>fast-forward</em> - wskaźnik zostaje przeniesiony w prosty sposób na nowy commit.</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>W każdym innym przypadku potrzebne jest "rzeczywiste" scalanie (merge). Można wybrać wiele strategii, ale domyślną jest wykorzystanie "rekursywnego" scalania (merge), która polega na wzięciu aktualnego commita, (<em>ed489</em> poniżej), ostatniego commita gałęzi (branch), którą chcemy scalić z aktualną (<em>33104</em>) oraz wspólnego przodka obu tych commitów (<em>b325c</em>). Te trzy commity wykorzystywane są przez <a href='https://pl.wikipedia.org/wiki/Scalanie_(system_kontroli_wersji)#Scalanie_tr.C3.B3jstronne'>scalanie trójstronne (three-way merge)</a>. Rezultat scalania zapisywany jest zarówno do katalogu roboczego (working directory), jak i przechowalni (stage), a także pojawia się nowy commit, którego rodzicem jest <em>33104</em>. </p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick</h3>
+
+  <p>Komenda cherry-pick "kopiuje" wskazany commit i tworzy nowy commit w aktualnej gałęzi (branch), który zawiera identyczne zmiany jak wskazany commit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase</h3>
+
+  <p>Rebase jest alternatywą dla scalania (<a href='#merge'>merge</a>) w przypadku konieczności łączenia zmian z kilku gałęzi (branch). Scalanie (merge) nie zachowuje liniowej historii, tylko tworzy pojedynczy commit z dwoma rodzicami. Rebase natomiast powtarza commity z aktualnej gałęzi (branch) i odtwarza je w innej gałęzi, zachowując przy tym liniową historię. Tak naprawdę jest to sposób na wykonanie kilka razy komendy <a href='#cherry-pick'>cherry-pick</a> w sposób zautomatyzowany.</p>
+
+  <div class="center"><img src='rebase.svg.png'></div>
+
+  <p>Powyższa komenda bierze wszystkie commity należące do gałęzi (branch) <em>topic</em>, ale które nie istnieją w <em>master</em> (widoczne jako <em>169a6</em> oraz <em>2c33a</em>), następnie kopiuje je do gałęzi (branch) <em>master</em> i na końcu przenosi wskaźnik gałęzi (branch head) do nowego miejsca. Ważną informacją jest fakt, że wszystkie commity, które nie posiadają żadnego wskaźnika zostaną zutylizowane.</p>
+
+  <p>Aby ograniczyć historię commitów branych do rebase, należy użyć przełącznika <code>--onto</code>. Przedstawiona komenda przekopiuje do gałęzi (branch) <em>master</em> ostatnie commity z aktualnej gałęzi (branch) zaczynając od <em>169a6</em> (ale wykluczając ten commit), w tym przypadku będzie to commit oznaczony jako <em>2c33a</em>.</p>
+
+  <div class="center"><img src='rebase-onto.svg.png'></div>
+
+  <p>Istnieje również komenda z przełącznikiem <code>git rebase --interactive</code>, która pozwala na wykonywania bardziej skomplikowanych operacji niż tylko samo powtarzanie commitów. Niestety nie istnieje żadna oczywista grafika, która w sposób jasny pomogłaby wyjaśnić jej działanie; więcej szczegółów można znaleźć pod tym linkiem:  <a
+    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a></p>
+
+  <h2 id="technical-notes">Uwagi techniczne</h2>
+
+  <p>Zawartość plików nie jest tak naprawdę trzymana w pliku index (<em>.git/index</em>) lub w obiektach będących commitami. Tak naprawdę każdy plik trzymany jest w bazie obiektów (object database) (<em>.git/objects</em>) jako obiekt zwany <em>blob</em>, który można zidentyfikować za pomocą hasha SHA-1. Plik index zawiera listę plików wraz z ich identyfikatorami przypisanymi do obiektów blob, a oprócz tego zawiera również inne dane. Na potrzeby commitów stworzony został inny typ danych, znany jako drzewa (<em>tree</em>), który również można zidentyfikować z wykorzystaniem hashy. Drzewa (trees) powiązane są z katalogami w katalogu roboczym (working directory) i zawierają listę drzew oraz obiektów typu blob, które połączone są z nazwami plików w danym katalogu. Każdy commit posiada identyfikator swojego "top-level tree", który z kolei zawiera wszystkie obiekty typu blob oraz inne drzewa (trees) powiązane z danym commitem.</p>
+
+  <p>Podczas wykonywania commita z odłączonym HEAD (detached HEAD), ostatni commit tak naprawdę posiada coś, co na niego wskazuje: reflog HEADa (historia wykonywanych zmian na headach). Mimo wszystko wskazanie to wygasa po krótkiej chwili, a w związku z tym commit może zostać zutylizowany, podobnie jak commity porzuconye przez komendy <code>git commit --amend</code> oraz <code>git rebase</code>.</p>
+
+  <hr>
+
+  <p>Copyright &copy; 2010,
+    <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
+  Polish translation &copy; 2017,
+    <a href='mailto:wypychemil@gmail.com'>Emil Wypych</a>
+  </p>
+
+  <p><a rel="license"
+    href="https://creativecommons.org/licenses/by-nc-sa/3.0/pl/"><img alt=""
+    src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>Praca ta jest licencjonowana na warunkach <a rel="license"
+    href="https://creativecommons.org/licenses/by-nc-sa/3.0/pl/">Licencji Uznanie autorstwa-Użycie niekomercyjne-Na tych samych warunkach 3.0 Polska</a>.</p>
+
+  <p><a href='translate-en.html'>Want to translate into another
+    language?</a></p>
+
+</body>
+</html>
