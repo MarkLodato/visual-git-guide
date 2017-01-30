@@ -36,3 +36,6 @@ ol ol {
         display: none;
     }
 }
+pre {
+  margin-left: 2em;
+}
