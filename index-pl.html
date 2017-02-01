@@ -57,6 +57,7 @@
       </ol>
     </li>
     <li><a href="#technical-notes">Uwagi techniczne</a></li>
+    <li><a href="#appendix-stage">Przegląd: Jak działają komendy - praktyczne przykłady</a></li>
   </ol>
 
   <h2 id="basic-usage">Podstawy</h2>
@@ -210,6 +211,131 @@
   <p>Zawartość plików nie jest tak naprawdę trzymana w pliku index (<em>.git/index</em>) lub w obiektach będących commitami. Tak naprawdę każdy plik trzymany jest w bazie obiektów (object database) (<em>.git/objects</em>) jako obiekt zwany <em>blob</em>, który można zidentyfikować za pomocą hasha SHA-1. Plik index zawiera listę plików wraz z ich identyfikatorami przypisanymi do obiektów blob, a oprócz tego zawiera również inne dane. Na potrzeby commitów stworzony został inny typ danych, znany jako drzewa (<em>tree</em>), który również można zidentyfikować z wykorzystaniem hashy. Drzewa (trees) powiązane są z katalogami w katalogu roboczym (working directory) i zawierają listę drzew oraz obiektów typu blob, które połączone są z nazwami plików w danym katalogu. Każdy commit posiada identyfikator swojego "top-level tree", który z kolei zawiera wszystkie obiekty typu blob oraz inne drzewa (trees) powiązane z danym commitem.</p>
 
   <p>Podczas wykonywania commita z odłączonym HEAD (detached HEAD), ostatni commit tak naprawdę posiada coś, co na niego wskazuje: reflog HEADa (historia wykonywanych zmian na headach). Mimo wszystko wskazanie to wygasa po krótkiej chwili, a w związku z tym commit może zostać zutylizowany, podobnie jak commity porzuconye przez komendy <code>git commit --amend</code> oraz <code>git rebase</code>.</p>
+
+  <h2 id="appendix-stage">Przegląd: Jak działają komendy - praktyczne przykłady</h2>
+
+  <p>Poniższe przykłady pokażą w jaki sposób następują zmiany w repozytorium podczas używania komend commit, checkout oraz reset. Podobnie działa polecany już <a href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a>, który symuluje je w sposób wizualny. Mam nadzieję, że poniższe przykłady okażą się pomocne.</p>
+
+  <p>Zacznijmy od stworzenia testowego repozytorium:</p>
+
+  <pre><code>$ <strong>git init foo</strong>
+$ <strong>cd foo</strong>
+$ <strong>echo 1 &gt; myfile</strong>
+$ <strong>git add myfile</strong>
+$ <strong>git commit -m "version 1"</strong>
+</code></pre>
+
+  <p>Następnie zdefiniujmy funkcje, które pomogą nam w przeglądzie zmian:</p>
+
+  <pre><code>show_status() {
+  echo "HEAD:     $(git cat-file -p HEAD:myfile)"
+  echo "Stage:    $(git cat-file -p :myfile)"
+  echo "Worktree: $(cat myfile)"
+}
+
+initial_setup() {
+  echo 3 &gt; myfile
+  git add myfile
+  echo 4 &gt; myfile
+  show_status
+}
+</code></pre>
+
+  <p>Na początku wszystkie elementy mają wersję 1.</p>
+
+  <pre><code>$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 1
+</code></pre>
+
+  <p>Poniżej możemy obserwować zmiany poszczególnych wersji podczas tworzenia commitu, począwszy od dodania plików do przechowalni (stage).</p>
+
+  <pre><code>$ <strong>echo 2 &gt; myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 2
+$ <strong>git add myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    2
+Worktree: 2
+$ <strong>git commit -m "version 2"</strong>
+[master 4156116] version 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p>Sprawmy teraz, aby każdy z elementów repozytorium posiadał inną wersję.</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+</code></pre>
+
+  <p>Spójrzmy, jak działa każda z komend. Zobaczysz, że działanie pokrywa się z diagramami umieszczonymi powyżej.</p>
+
+  <p><code>git reset -- myfile</code> kopiuje z HEAD do przechowalni (stage):</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git reset -- myfile</strong>
+Unstaged changes after reset:
+M   myfile
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 4
+</code></pre>
+
+  <p><code>git checkout -- myfile</code> kopiuje z przechowalni (stage) do katalogu roboczego (worktree):</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    3
+Worktree: 3
+</code></pre>
+
+  <p><code>git checkout HEAD -- myfile</code> kopiuje z HEAD zarówno do przechowalni (stage) jak i katalogu roboczego (worktree):</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout HEAD -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p><code>git commit myfile</code> kopiuje z katalogu roboczego (worktree) do przechowalni (stage) oraz repozytorium (HEAD):</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git commit myfile -m "version 4"</strong>
+[master 679ff51] version 4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     4
+Stage:    4
+Worktree: 4
+</code></pre>
 
   <hr>
 
