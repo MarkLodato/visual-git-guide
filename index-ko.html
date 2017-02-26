@@ -38,10 +38,13 @@
   <p>이 문서는 Git에서 주로 사용하는 명령들에 대해 여러 그래프와 함께
   요약하여 설명하고 있습니다. 이 문서를 통해 Git이 어떻게 돌아가는지
   한번 살짝 살펴보고 나면 Git을 이해하는데 있어 밝은 등대가 되어줄 것입니다.
-  이 문서가 어떻게 만들어졌는지 관심있는 분은 
+  이 문서가 어떻게 만들어졌는지 관심있는 분은
   <a href='http://github.com/MarkLodato/visual-git-guide'>GitHub 저장소</a>로
   찾아와서 살펴보시기 바랍니다.</p>
 
+  <p id="link-to-d3">다음의 사이트도 추천합니다: <a
+      href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a></p>
   <h2 id="contents">목차</h2>
   <ol>
     <li><a href="#basic-usage">기초 사용법</a></li>
@@ -59,6 +62,7 @@
       </ol>
     </li>
     <li><a href="#technical-notes">기술적인 내용</a></li>
+    <li><a href="#appendix-stage">실습: 명령어들의 결과 보기</a></li>
   </ol>
 
   <h2 id="basic-usage">기초 사용법</h2>
@@ -333,6 +337,135 @@
   시간이 지나면 버려지기 때문에 결국 아무것도 가리키는 것이 없는 커밋은
   <code>git commit --amend</code> 명령이나 <code>git rebase</code> 명령으로
   버려지는 커밋 처럼 버려지게 됩니다.</p>
+
+  <h2 id="appendix-stage">실습: 명령어들의 결과 확인</h2>
+
+  <p><a href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a>를 통해 git 명령어의 결과를 시각적으로 시뮬레이션하는 것처럼, 다음의
+    실습을 통해 저장소를 변경해 봄으로써 즉시 명령어의 결과를 확인해 볼 수 있습니다. 유용하게
+    사용되기를 바랍니다.</p>
+
+  <p>먼저 임의의 저장소를 생성합니다:</p>
+
+  <pre><code>$ <strong>git init foo</strong>
+$ <strong>cd foo</strong>
+$ <strong>echo 1 &gt; myfile</strong>
+$ <strong>git add myfile</strong>
+$ <strong>git commit -m "version 1"</strong>
+</code></pre>
+
+  <p>이제 편리하게 상태를 확인하기 위해 다음의 함수를 정의합니다:</p>
+
+  <pre><code>show_status() {
+  echo "HEAD:     $(git cat-file -p HEAD:myfile)"
+  echo "Stage:    $(git cat-file -p :myfile)"
+  echo "Worktree: $(cat myfile)"
+}
+
+initial_setup() {
+  echo 3 &gt; myfile
+  git add myfile
+  echo 4 &gt; myfile
+  show_status
+}
+</code></pre>
+
+  <p>처음에는 모든 것들의 version 1 상태입니다.</p>
+
+  <pre><code>$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 1
+</code></pre>
+
+  <p>add와 commit을 하면 상태가 변경됨을 확인 할 수 있습니다.</p>
+
+  <pre><code>$ <strong>echo 2 &gt; myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 2
+$ <strong>git add myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    2
+Worktree: 2
+$ <strong>git commit -m "version 2"</strong>
+[master 4156116] version 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p>이제 실습을 위해 초기 상태를 만듭니다. 3가지가 모두 다른 상태입니다.</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+</code></pre>
+
+  <p>이제 각 명령어가 어떤 역할을 하는지 확인합니다. 위에 설명된 다이어그램과 일치하는 것을 볼 수
+     있습니다. </p>
+
+  <p><code>git reset -- myfile</code>은 HEAD에서 stage로 복사합니다:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git reset -- myfile</strong>
+Unstaged changes after reset:
+M   myfile
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 4
+</code></pre>
+
+  <p><code>git checkout -- myfile</code>은 stage에서 worktree로 복사합니다:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    3
+Worktree: 3
+</code></pre>
+
+  <p><code>git checkout HEAD -- myfile</code>은 HEAD에서 stage와 worketree 모두로
+    복사합니다:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout HEAD -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p><code>git commit myfile</code>은 worktree에서 stage와 HEAD 모두로 복사합니다:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git commit myfile -m "version 4"</strong>
+[master 679ff51] version 4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     4
+Stage:    4
+Worktree: 4
+</code></pre>
 
   <hr>
 
