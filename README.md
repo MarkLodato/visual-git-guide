@@ -53,7 +53,7 @@ French translation &copy; 2012, [Michel Lefranc](mailto:michel.lefranc@gmail.com
 Chinese translation &copy; 2012, [wych](mailto:ellrywych@gmail.com).
 Spanish translation &copy; 2012, [Lucas Videla](http://www.delucas.com.ar).
 Italian translation &copy; 2012, [Daniel Londero](mailto:daniel.londero@gmail.com).
-German translation &copy; 2013, [Martin Funk](mailto:mafulafunk@gmail.com).
+German translation &copy; 2013, [Martin Funk](mailto:mafulafunk@gmail.com), &copy; 2017, [Mirko Westermeier](mailto:mirko@westermeier.de).
 Vietnamese translation &copy; 2013, [Hoat Le](https://github.com/hoatle).
 Slovak translation &copy; 2013, [Ľudovít Lučenič](https://github.com/llucenic).
 Portuguese translation &copy; 2014, [Gustavo de Oliveira](mailto:goliveira5d@gmail.com).
