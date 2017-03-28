@@ -2,12 +2,12 @@
 <html lang="de-DE">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Ein grafischer Spickzettel für Git</title>
+  <title>Eine Git-Referenz in Bildern</title>
   <link rel='stylesheet' type='text/css' href='visual-git-guide.css'>
   <script type="text/javascript" src='visual-git-guide.js'></script>
 </head>
 <body onload="replace_all_PNGs();">
-  <h1 id="top">Ein grafischer Spickzettel für Git</h1>
+  <h1 id="top">Eine Git-Referenz in Bildern</h1>
 
   <div id="language-box">
     <a>Weitere Sprachen:</a>
@@ -29,89 +29,57 @@
     </ul>
   </div>
 
-  <p id="link-to-png">
-    Sollten die
-    <a href="http://de.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
-    Vektorgrafiken nicht angezeigt werden, kann die
-    <a
-    href="?no-svg">SVG freie</a>
-    Variante gewählt werden.
-  </p>
+  <p id="link-to-png">Sollten die Grafiken nicht funktionieren, kannst du die
+    <a href="?no-svg">SVG-freie</a> Version dieser Seite auswählen.</p>
 
-  <p id="link-to-svg">
-    SVG Vektorgrafiken sind deaktiviert.
-    <a href="index.html">(SVG aktivieren)</a>
-  </p>
+  <p id="link-to-svg">Die Grafiken sind derzeit nicht im SVG-Format.
+    <a href="index-de.html">(zur SVG-Version)</a></p>
 
-  <p>
-    Diese Seite ist eine Sammlung elementarer git Befehle. Grundwissen sollte sich hier vertiefen lassen. Wie diese Seite erstellt wurde wird im
-    <a href='http://github.com/MarkLodato/visual-git-guide'>
-      GitHub
-    repository
-    </a>
-    erklärt.
-  </p>
+  <p>Diese Seite ist eine kurze grafische Referenz der am häufigsten verwendeten
+    Git-Kommandos. Wenn du schon einige Git-Grundlagen kennst, kannst du mit
+    dieser Seite dein Verständnis vertiefen. Wenn du an der Erstellung dieser
+    Seite interessiert bist, sieh dir mein
+    <a href='http://github.com/MarkLodato/visual-git-guide'>GitHub-Repository</a>
+    dazu an.</p>
+
+  <p id="link-to-d3">Ebenfalls empfohlen: <a
+    href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+    Concepts with D3</a> (englisch).</p>
 
   <h2 id="contents">Inhalt</h2>
   <ol>
-    <li>
-      <a href="#basic-usage">Grundlegende Benutzung</a>
-    </li>
-    <li>
-      <a href="#conventions">Konventionen</a>
-    </li>
-    <li>
-      <a href="#commands-in-detail">Kommandos im Detail</a>
+    <li><a href="#basic-usage">Grundlagen</a></li>
+    <li><a href="#conventions">Konventionen</a></li>
+    <li><a href="#commands-in-detail">Kommandos im Detail</a>
       <ol>
-        <li>
-          <a href="#diff">Diff</a>
-        </li>
-        <li>
-          <a href="#commit">Commit</a>
-        </li>
-        <li>
-          <a href="#checkout">Checkout</a>
-        </li>
-        <li>
-          <a href="#detached">Commit mit losgelöstem (detached) HEAD</a>
-        </li>
-        <li>
-          <a href="#reset">Reset</a>
-        </li>
-        <li>
-          <a href="#merge">Merge</a>
-        </li>
-        <li>
-          <a href="#cherry-pick">Cherry Pick</a>
-        </li>
-        <li>
-          <a href="#rebase">Rebase</a>
-        </li>
+        <li><a href="#diff">Diff (Unterschied)</a></li>
+        <li><a href="#commit">Commit (Übergeben)</a></li>
+        <li><a href="#checkout">Checkout (Aus dem Projektarchiv laden)</a></li>
+        <li><a href="#detached">Commit mit detached (losgelöstem) HEAD</a></li>
+        <li><a href="#reset">Reset (Zurücksetzen)</a></li>
+        <li><a href="#merge">Merge (Mischen)</a></li>
+        <li><a href="#cherry-pick">Cherry Pick (Kirschen bzw. Rosinen rauspicken)</a></li>
+        <li><a href="#rebase">Rebase (Basis wechseln)</a></li>
       </ol>
     </li>
-    <li>
-      <a href="#technical-notes">Technische Notizen</a>
-    </li>
-    <li>
-      <a href="#glossary">Glossar</a>
-    </li>
+    <li><a href="#technical-notes">Technisches</a></li>
+    <li><a href="#appendix-stage">Schnelldurchgang: der Effekt von Kommandos</a></li>
+    <li><a href="#glossary">Glossar</a></li>
   </ol>
 
-  <h2 id="basic-usage">Grundlegende Benutzung</h2>
+  <h2 id="basic-usage">Grundlagen</h2>
 
-  <div class="center">
-    <img src='basic-usage.svg.png'></div>
+  <div class="center"><img src='basic-usage.svg.png'></div>
 
-  <p>
-    Die vier oben in der Grafik erwähnten Kommandos kopieren Dateien zwischen dem Arbeitsverzeichnis, dem Index (stage) und dem Projektarchiv (history).
-  </p>
+  <p>Die vier oben in der Grafik erwähnten Kommandos kopieren Dateien zwischen
+  dem Arbeitsverzeichnis, dem Index (stage) und dem Projektarchiv (history).</p>
 
   <ul>
 
     <li>
-      <code>git add <em>files</em></code>
-      kopiert die <em>Dateien</em>
-      aus dem Arbeitsverzeichnis, in ihrem aktuellen Zustand, in den Index.
+      <code>git add <em>Dateien</em></code>
+      kopiert die <em>Dateien</em> aus dem Arbeitsverzeichnis in ihrem
+      aktuellen Zustand in den Index.
     </li>
 
     <li>
@@ -120,549 +88,443 @@
     </li>
 
     <li>
-      <code>git reset -- <em>files</em></code>
-      macht Änderungen an Dateien im Index rückgängig; soll heißen es werden die
-      <em>Dateien</em>
-      des aktuellsten Commits in den Index kopiert.  Hiermit werden die Änderungen von
-      <code>git add <em>files</em></code>
-      im Index rückgängig gemacht.  Mit
-      <code>git reset</code>
-      kannst du alle Änderungen im Index rückgängig machen.
+      <code>git reset -- <em>Dateien</em></code>
+      entfernt geänderte <em>Dateien</em> aus dem Index; dazu werden die Dateien
+      des letzten Commits in den Index kopiert. Damit kannst du ein <code>git
+      add <em>Dateien</em></code> rückgängig machen. Mit <code>git reset</code>
+      kannst du alle geänderten Dateien aus dem Index entfernen.
     </li>
 
     <li>
-      <code>git checkout -- <em>files</em></code>
-      kopiert
-      <em>Dateien</em>
-      aus dem Index in das Arbeitsverzeichnis. Damit kannst du die Änderungen im Arbeitsverzeichnis verwerfen.
+      <code>git checkout -- <em>Dateien</em></code>
+      kopiert <em>Dateien</em> aus dem Index in das Arbeitsverzeichnis. Damit
+      kannst du die Änderungen im Arbeitsverzeichnis verwerfen.
     </li>
   </ul>
 
-  <p>
-    Mit der Option
-    <code>-p</code>
-    wie in
-    <code>git reset -p</code>
-    ,
-    <code>git checkout -p</code>
-    , oder
-    <code>git add -p</code>
-    kann man interaktiv entscheiden welche Teile bzw. Brocken (hunks) der Änderung kopiert werden sollen.
-  </p>
+  <p>Du kannst mit <code>git reset -p</code>, <code>git checkout -p</code> oder
+  <code>git add -p</code> interaktiv entscheiden, welche Blöcke (hunks) von
+  Änderungen (in allen oder den angegebenen Dateien) verwendet werden
+  sollen.</p>
 
-  <p>
-    Es ist auch möglich
-    <code>reset</code>
-    und
-    <code>checkout</code>
-    sowie
-    <code>add</code>
-    und
-    <code>commit</code>
-    jeweils zu einem Befehl zusammenzuziehen, ohne vorher explizit in den Index zu kopieren.
-  </p>
+  <p>Es ist auch möglich, den Index zu überspringen und Dateien direkt aus dem
+  Archiv (history) auszuchecken oder Änderungen im Arbeitsverzeichnis direkt
+  zu committen:</p>
 
-  <div class="center">
-    <img src='basic-usage-2.svg.png'></div>
+  <div class="center"><img src='basic-usage-2.svg.png'></div>
 
   <ul>
 
     <li>
       <code>git commit -a </code>
-      ist gleichbedeutend mit
-      <tt>git add</tt>
-      auf allen seit dem letzten Commit existierenden Dateien und einem nachfolgenden
-      <tt>git commit</tt>
-      .
+      ist gleichbedeutend mit <code>git add</code> auf allen im letzten Commit
+      bekannten Dateien, gefolgt von einem <code>git commit</code>.
     </li>
 
     <li>
-      <code>git commit <em>files</em></code>
-      erzeugt einen neuen Commit mit dem Inhalt aller aufgeführten Dateien aus dem Arbeitsverzeichnis.  Zusätzlich werden die
-      <em>Dateien</em>
-      in den Index kopiert.
+      <code>git commit <em>Dateien</em></code>
+      erzeugt einen neuen Commit mit dem Inhalt aller aufgeführten
+      <em>Dateien</em> aus dem Arbeitsverzeichnis. Zusätzlich werden die
+      Dateien in den Index kopiert.
     </li>
 
     <li>
-      <code>git checkout HEAD -- <em>files</em></code>
-      kopiert die
-      <em>Dateien</em>
-      vom letzten Commit sowohl in den Index als auch in das Arbeitsverzeichnis.
+      <code>git checkout HEAD -- <em>Dateien</em></code>
+      kopiert die <em>Dateien</em> vom letzten Commit sowohl in den Index als
+      auch in das Arbeitsverzeichnis.
     </li>
 
   </ul>
 
   <h2 id="conventions">Konventionen</h2>
 
-  <p>
-    Im weiteren werden zur Darstellung Graphen der folgenden Art verwandt.
-  </p>
+  <p>Im weiteren Verlauf werden zur Darstellung Graphen der folgenden Art
+  verwendet.</p>
 
-  <div class="center">
-    <img src='conventions.svg.png'></div>
+  <div class="center"><img src='conventions.svg.png'></div>
 
-  <p>
-    Commits werden in Grün mit ihrem 5-Buchstaben IDs dargestellt, sie verweisen auf ihre Eltern (parent) Commits.
-  Branches werden in Orange dargestellt, sie zeigen auf einen einzelnen Commit, der Spitze des Branches.
-  Der aktuelle Branch wird mit der besonderen Referenz
-    <em>HEAD</em>
-    gekennzeichnet, diese ist dem Branch angeheftet und wandert mit zugefügten Commits mit.
-  In diesem Bild werden die fünf aktuellsten Commits gezeigt, wobei
-    <em>ed489</em>
-    der jüngste ist.
-    <em>master</em>
-    (current branch) zeigt auf genau diesen Commit, wohingegen
-    <em>maint</em>
-    (another branch) auf einen der Vorfahren von
-    <em>master</em>
-    verweist.
-  </p>
+  <p>Commits werden in grün mit ihren Fünf-Zeichen-IDs dargestellt, sie
+  verweisen auf ihre Eltern-Commits (parents). Branches werden in orange
+  dargestellt, sie zeigen auf einen bestimmten Commit. Der aktuelle Branch wird
+  mit der speziellen Referenz <em>HEAD</em> identifiziert. In diesem Bild sieht
+  man die fünf letzten Commits, wobei <em>ed489</em> der jüngste ist.
+  <em>master</em> ("current branch", der aktuelle Branch) zeigt auf genau diesen
+  Commit, wohingegen <em>maint</em> ("another branch", ein anderer Branch) auf
+  einen der Vorfahren von <em>master</em> verweist.</p>
 
   <h2 id="commands-in-detail">Kommandos im Detail</h2>
 
-  <h3 id="diff">Diff</h3>
+  <p>(Zu allen Kommandos sind zum besseren Verständnis deutsche Übersetzungen
+  angegeben. Da es sich dabei jedoch um Kommandos handelt, die nur im
+  englischsprachigen Original zur Verfügung stehen, werden auch in den
+  Erklärungen weitestgehend die Originalbegriffe verwendet.)</p>
 
-  <p>
-    Es gibt verschiedene Möglichkeiten die Unterschiede zwischen Commits zu betrachten.
-    Nachfolgend ein paar Beispiele. 
-    An jedes dieser Kommandos können ein oder mehrere Dateinamen als Argument angehängt werden,
-    dies beschränkt die Darstellung der Unterschiede auf genannte Dateien.
-  </p>
-  <div class="center">
-    <img src='diff.svg.png'></div>
+  <h3 id="diff">Diff (Unterschied)</h3>
 
-  <h3 id="commit">Commit</h3>
+  <p>Es gibt verschiedene Möglichkeiten, die Unterschiede zwischen Commits
+  anzuzeigen. Nachfolgend ein paar Beispiele. An jedes dieser Kommandos können
+  ein oder mehrere Dateinamen als Argument angehängt werden, um die Darstellung
+  auf diese Dateien einzuschränken.</p>
 
-  <p>
-    Wenn du commitest, du dich also festlegst, erzeugt git ein neues Commit Objekt mit den Dateien des Indexes und es setzt den aktuellen Commit als Vorläufer ein. 
-    Ebenso verschiebt es den Zeiger des aktuellen Branches auf den neuen Commit.
-  In dem folgenden Bild ist der aktuelle Branch
-    <em>master</em>
-    .
-  Vor der Ausführung des Kommandos zeigte
-    <em>master</em>
-    auf den Commit
-    <em>ed489</em>
-    .
-  Danach wurde ein neuer Commit
-    <em>f0cec</em>
-    mit dem Vorläufer
-    <em>ed489</em>
-    erstellt
-  Ausserdem wurde die Branch Referenz
-    <em>master</em>
-    auf den neuen Commit verschoben.
-  </p>
+  <div class="center"><img src='diff.svg.png'></div>
 
-  <div class="center">
-    <img src='commit-master.svg.png'></div>
+  <h3 id="commit">Commit (Übergeben)</h3>
 
-  <p>
-    Es macht dabei keinen Unterschied, ob der aktuelle Branch auf einen Commit verweist, der an der Spitze oder mitten in einem Branch hängt.
-  Im nachfolgenden Bild werden Änderungen an dem
-    <em>maint</em>
-    Branch, der auf einen Vorläufer Commit des Branches
-    <em>master</em>
-    verweist, commited.
-  Im Ergebnis entsteht der Commit
-    <em>1800b</em>
-    .
-  Danach ist der Branch
-    <em>maint</em>
-    nich mehr länger Vorläufer des Branches
-    <em>master</em>
-    .
-  Um diese wieder zusammen zu führen ist ein
-    <a href='#merge'>merge</a>
-    (oder
-    <a href='#rebase'>rebase</a>
-    ) notwendig.
-  </p>
+  <p>Mit dem <code>commit</code>-Kommando erzeugt git ein neues Commit-Objekt
+  mit den Dateien aus dem Index. Als Vorgänger wird der aktuelle Commit
+  verwendet. Zusätzlich wird der aktuelle Branch auf den neuen Commit
+  verschoben. Im folgenden Bild ist der aktuelle Branch <em>master</em>. Vor der
+  Ausführung des Kommandos zeigte <em>master</em> auf <em>ed489</em>. Durch das
+  Kommando wird ein neuer Commit <em>f0cec</em> mit dem Vorläufer <em>ed489</em>
+  erstellt und der Branch <em>master</em> auf den neuen Commit verschoben.</p>
 
-  <div class="center">
-    <img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-master.svg.png'></div>
 
-  <p>
-    Hast du in einem Commit einen Fehler im entdeckt, so lässt sich dieser Commit einfach im Nachhinein mit
-    <code>git commit --amend</code>
-    korrigieren.
-  Mit diesem Befehl erstellt git einen neuen Commit der den selben Vorläufer hat wie der aktuelle Commit.
-  (Wird der ursprüngliche Commit von nichts anderem referenziert, so wird er für die Garbage Collection freigegben und irgendwann verworfen.)
-  </p>
+  <p>Das gleiche geschieht auch, wenn der aktuelle Branch ein Vorgänger eines
+  anderen ist. Im nachfolgenden Bild wird ein Commit auf dem Branch
+  <em>maint</em> ausgeführt, der ein Vorgänger von <em>master</em> ist, was
+  einen Commit <em>1800b</em> erzeugt. Danach ist <em>maint</em> kein Vorgänger
+  von <em>master</em> mehr. Um die beiden Branches wieder zusammenzuführen, ist
+  ein <a href="#merge">merge</a> oder <a href="#rebase">rebase</a> nötig.</p>
 
-  <div class="center">
-    <img src='commit-amend.svg.png'></div>
+  <div class="center"><img src='commit-maint.svg.png'></div>
 
-  <p>
-    Ein vierter Fall ist, wie weiter unten erläutert, das Committen mit einem
-    <a href="#detached">
-      detached
-    HEAD
-    </a>
-    .
-  </p>
+  <p>Einen Fehler in einem Commit kannst Du mit <code>git commit --amend</code>
+  korrigieren. Mit diesem Befehl erstellt git einen neuen Commit mit dem selben
+  Vorgänger. Der ursprüngliche Commit wird irgendwann verworfen wenn nichts
+  mehr auf ihn verweist.</p>
 
-  <h3 id="checkout">Checkout</h3>
+  <div class="center"><img src='commit-amend.svg.png'></div>
 
-  <p>
-    Mit dem
-    <code>checkout</code>
-    Befehl werden Dateien aus dem Projektarchiv oder dem Index in das Arbeitsverzeichnis kopiert. Des weiteren kann man damit den Branch wechseln.
-  </p>
+  <p>Ein vierter Fall, ein Commit mit <a href="#detached">detached HEAD</a>,
+  wird weiter unten ausführlich erklärt.</p>
 
-  <p>
-    Wird ein Dateiname (und/oder
-    <code>-p</code>
-    ) angegeben, so kopiert git diese Dateien aus dem gegebenen Commit in den Index oder das Arbeitsverzeichnis . Zum Beispiel kopiert
-    <code>git checkout HEAD~ foo.c</code>
-    die Datei
-    <code>foo.c</code>
-    aus dem dem Commit, mit dem Namen
-    <em>HEAD~</em>
-    (der Vorgänger des aktuellen Commits) sowohl in das Arbeitsverzeichnis als auch in den Index.
-  (Wird kein Commit-Name angegeben, so werden die Dateien aus dem Index kopiert.)
-  Beachte: Der aktuelle Branch ändert sich nicht.
-  </p>
+  <h3 id="checkout">Checkout (Aus dem Projektarchiv laden)</h3>
 
-  <div class="center">
-    <img src='checkout-files.svg.png'></div>
+  <p>Mit dem <code>checkout</code>-Kommando werden Dateien aus dem Projektarchiv
+  oder dem Index in das Arbeitsverzeichnis kopiert. Optional wird damit auch der
+  Branch gewechselt.</p>
 
-  <p>
-    Wenn beim Checkout kein Dateiname sondern der Name eines (lokalen) Branches angegeben wird, so wird die Referenz
-    <em>HEAD</em>
-    auf diesen Branch verschoben.
-    Du wechselst "switch to" den Branch, daraufhin werden die Dateien im Index und im Arbeitsverzeichnis denen aus dem Commit angepasst.
-  Jede Datei die im neuen Commit (
-    <em>a47c3</em>
-    s.u.) existiert wird kopiert. Jede die im alten Commit (
-    <em>ed489</em>
-    ) existiert, aber nicht im neuen, wird im Index und Arbeitsverzeichnis gelöscht. Alle weitern werden nicht angefasst.
-  </p>
+  <p>Wird ein Dateiname (und/oder <code>-p</code>) angegeben, so kopiert git
+  diese Dateien aus dem gegebenen Commit in den Index und das
+  Arbeitsverzeichnis. Zum Beispiel kopiert <code>git checkout HEAD~ foo.c</code>
+  die Datei <code>foo.c</code> aus dem Commit mit dem Namen <em>HEAD~</em> (der
+  Vorgänger des aktuellen Commits) sowohl in das Arbeitsverzeichnis als auch in
+  den Index. Wird kein Commit-Name angegeben, so werden die Dateien aus dem
+  Index kopiert. Beachte: Der aktuelle Branch ändert sich nicht.</p>
 
-  <div class="center">
-    <img src='checkout-branch.svg.png'></div>
+  <div class="center"><img src='checkout-files.svg.png'></div>
 
-  <p>
-    Wenn beim Checkout kein Dateiname angegeben wird und die angeführte Referenz
-    <em>kein</em>
-    (lokaler) Branch ist &mdash; also z.B. ein Tag (tag), ein Remote-Branch, eine SHA-1 ID oder etwas wie
-    <em>master~3</em>
-    &mdash; erhalten wir einen anonymen Branch, genannt
-    <em>detached HEAD</em>
-    .
-  Git kann schlicht dem Checkout keinen Branch-Namen zuordnen.
-  Mit solch einem Checkout lässt es sich einfach in der Versionsgeschichte herumspringen.
-  Sagen wir mal, du willst die Version  1.6.6.1 von git compilieren.
-  Dann kannst du einfach mit dem Befehl
-    <code>git checkout
-  v1.6.6.1</code>
-    (welches ein Tag und kein Branch ist) den Quellcode auschecken. Dieser lässt sich compilieren und installieren.
-  Danach kann man einfach zu einem weiteren Branch springen, z.B.
-    <code>git checkout master</code>
-    .
-  Ein Commit in einem detached HEAD verhält sich jedoch leicht anders
-    <a href="#detached">(s.u.)</a>
-    .
-  </p>
+  <p>Wenn beim Checkout kein Dateiname sondern der Name eines (lokalen) Branches
+  angegeben wird, so wird die Referenz <em>HEAD</em> auf diesen Branch
+  verschoben, du "wechselst" also zu dem angegebenen Branch. Daraufhin werden
+  die Dateien im Index und im Arbeitsverzeichnis denen aus dem Commit angepasst.
+  Jede Datei, die im neuen Commit (<em>a47c3</em> s.u.) existiert, wird kopiert;
+  Jede Datei, die im alten Commit (<em>ed489</em>) existiert, aber nicht im
+  neuen, wird gelöscht. Alle weiteren Dateien werden ignoriert.</p>
 
-  <div class="center">
-    <img src='checkout-detached.svg.png'></div>
+  <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <h3 id="detached">Commit mit losgelöstem (detached) HEAD</h3>
+  <p>Wenn <em>kein</em> Dateiname angegeben wird und die angegebene Referenz
+  <em>kein</em> (lokaler) Branch ist (also z.B. ein Tag, ein Remote-Branch, eine
+  SHA-1-ID oder etwas wie <em>master~3</em>), erhalten wir einen anonymen
+  Branch, genannt <em>detached HEAD</em>. Das bietet sich besonders an, um in
+  der Versionsgeschichte herumzuspringen. Sagen wir mal, du willst die Version
+  1.6.6.1 von git kompilieren. Dann kannst du einfach mit dem Befehl <code>git
+  checkout v1.6.6.1</code> (welches ein Tag und kein Branch ist) den Quellcode
+  von diesem Zeitpunkt auschecken und damit arbeiten. Später kannst Du zu einem
+  anderen Branch zurückspringen, z. B. mit <code>git checkout master</code>. Ein
+  Commit mit einem <em>detached HEAD</em> verhält sich jedoch etwas anders als
+  wir es gewohnt sind. Dieser Fall wird <a href="#detached">unten</a>
+  behandelt.</p>
 
-  <p>
-    Ist die Referenz
-    <em>HEAD</em>
-    detached (losgelöst), so funktionieren Commits beinahe wie gehabt, es wird nur kein benannter Branch aktualisiert.
-  (Dies kannst du dir als anonymen Branch vorstellen.)
-  </p>
+  <div class="center"><img src='checkout-detached.svg.png'></div>
 
-  <div class="center">
-    <img src='commit-detached.svg.png'></div>
+  <h3 id="detached">Commit mit <em>detached</em> (losgelöstem) <em>HEAD</em>
+  </h3>
 
-  <p>
-    Sobald du etwas anderes auscheckst, sagen wir den Branch
-    <em>master</em>
-    , so wird der Commit (vermutlich) von keinen Zeiger mehr referenziert, der Commit ist verloren.
-  Beachte, nach diesem Befehl referenziert nichts mehr den Commit
-    <em>2eecb</em>
-    .
-  </p>
+  <p>Ist die Referenz <em>HEAD</em> <em>detached</em> (losgelöst), so
+  funktionieren Commits beinahe wie gehabt, es wird nur kein benannter Branch
+  aktualisiert. Dies kannst du dir als anonymen Branch vorstellen.</p>
 
-  <div class="center">
-    <img src='checkout-after-detached.svg.png'></div>
+  <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>
-    Wenn du stattdessen diesen Zustand speichern möchtest, kannst du einen neuen Branch mit
-    <code>git checkout -b <em>name</em></code>
-    erstellen.
-  </p>
+  <p>Sobald du etwas anderes auscheckst, etwa den Branch <em>master</em>, wird
+  der Commit (vermutlich) von nichts mehr referenziert und geht verloren. In der
+  Grafik gibt es nach dem <code>git checkout master</code> nichts mehr, das auf
+  den Commit <em>2eecb</em> zeigt.</p>
 
-  <div class="center">
-    <img src='checkout-b-detached.svg.png'></div>
+  <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
-  <h3 id="reset">Reset</h3>
+  <p>Wenn du aber diesen Zustand speichern möchtest, kannst du einen neuen
+  benannten Branch mit <code>git checkout -b <em>name</em></code> erstellen.</p>
 
-  <p>
-    Der
-    <code>reset</code>
-    Befehl verschiebt den aktuellen Branch an eine andere Position. Optional aktualisiert er den Index und das Arbeitsverzeichnis.
-    Er wird auch dazu benutzt Dateien aus dem Projektarchiv in den Index zu kopieren ohne das Arbeitsverzeichnis anzufassen.
+  <div class="center"><img src='checkout-b-detached.svg.png'></div>
+
+  <h3 id="reset">Reset (Zurücksetzen)</h3>
+
+  <p>Das <code>reset</code>-Kommando verschiebt den aktuellen Branch an eine
+  andere Position. Optional aktualisiert es den Index und das
+  Arbeitsverzeichnis. Er wird auch dazu benutzt, Dateien aus dem Projektarchiv
+  in den Index zu kopieren ohne das Arbeitsverzeichnis zu verändern.</p>
+
+  <p>Wird ein Commit ohne Dateinamen angegeben, so wird der aktuelle Branch auf
+  diesen Commit gesetzt und der Index mit dessen Inhalt überschrieben. Wird
+  <code>--hard</code> benutzt, so wird auch das Arbeitsverzeichnis aktualisiert.
+  Mit <code>--soft</code> wird weder der Index noch das Arbeitsverzeichnis
+  verändert.</p>
+
+  <div class="center"><img src='reset-commit.svg.png'></div>
+
+  <p>Wird kein Commit angegeben, so arbeitet <code>reset</code> mit
+  <em>HEAD</em>. In diesem Falle wird der Branch nicht verschoben. Stattdessen
+  wird der Index (und das Arbeitsverzeichnis mit <code>--hard</code>) mit dem
+  Inhalt des letzten Commits überschrieben.</p>
+
+  <div class="center"><img src='reset.svg.png'></div>
+
+  <p>Wird ein Dateiname (und/oder die Option <code>-p</code>) angegeben, so
+  funktioniert das Kommando ähnlich wie ein <a href='#checkout'>checkout</a>
+  mit einem Dateinamen, außer dass ausschließlich der Index (und nicht das
+  Arbeitsverzeichnis) aktualisiert wird. (Du kannst auch anstatt von
+  <em>HEAD</em> den Commit angeben, dessen Dateien verwendet werden sollen.)</p>
+
+  <div class="center"><img src='reset-files.svg.png'></div>
+
+  <h3 id="merge">Merge (Mischen)</h3>
+
+  <p>Mit <code>merge</code> wird ein neuer Commit erstellt, der Änderungen
+  anderer Commits mit dem aktuellen zusammenführt. Vor dem <code>merge</code>
+  muss der Index dem aktuellen Commit entsprechen. Im einfachsten Fall ist der
+  andere Commit ein Vorgänger des aktuellen, dann muss gar nichts getan werden.
+  Im nächsteinfacheren Fall ist der aktuelle Commit ein Vorgänger des anderen
+  Commits. Dann erzeugt das Kommando einen sogenannten
+  <em>fast-forward</em>-Merge ("vorspulen"): Die aktuelle Referenz wird einfach
+  auf den anderen Commit verschoben, danach wird dieser "ausgecheckt" (wie in
+  <code>checkout</code>).</p>
+
+  <div class="center"><img src='merge-ff.svg.png'></div>
+
+  <p>In den anderen Fällen muss ein "richtiger" Merge durchgeführt werden.
+  Standardmäßig wird ein "rekursiver" Merge durchgeführt (du kannst aber auch
+  andere Strategien angeben). Dieser nimmt den aktuellen Commit (unten
+  <em>ed489</em>), den anderen Commit (<em>33104</em>) und ihren gemeinsamen
+  Vorgänger (<em>b325c</em>) und führt einen
+  <a href='http://en.wikipedia.org/wiki/Three-way_merge'>Drei-Wege-Merge</a>
+  (Seite auf Englisch) durch. Das Ergebnis wird im Arbeitsverzeichnis und dem
+  Index gespeichert. Dann wird ein Commit erzeugt, der zwei Eltern
+  (<em>33104</em> und <em>ed489</em>) hat.</p>
+
+  <div class="center"><img src='merge.svg.png'></div>
+
+  <h3 id="cherry-pick">Cherry Pick (Kirschen bzw. Rosinen rauspicken)</h3>
+
+  <p>Das <code>cherry-pick</code>-Kommando "kopiert" einen Commit. Es erzeugt
+  einen neuen Commit auf dem aktuellen Branch mit der selben Bezeichnung und
+  der selben Änderung wie im angegebenen Commit.</p>
+
+  <div class="center"><img src='cherry-pick.svg.png'></div>
+
+  <h3 id="rebase">Rebase (Basis wechseln)</h3>
+
+  <p>Ein Rebase ist eine Alternative zu einem <a href='#merge'>Merge</a> um
+  mehrere Branches zusammenzuführen. Während ein Merge einen einzelnen neuen
+  Commit mit zwei Eltern erzeugt und einen nicht-linearen Commit-Verlauf
+  hinterlässt, spielt ein Rebase die Commits des aktuellen Branches auf das Ende
+  des anderen Branch auf, wodurch der Commit-Verlauf linearisiert wird. Im
+  Prinzip ist das ein automatisierter Weg, mehrere
+  <a href='#cherry-pick'>cherry-pick</a>-Kommandos hintereinander auszuführen.
   </p>
 
-  <p>
-    Wird ein Commit ohne Dateinamen angegeben, so wird der aktuelle Branch auf diesen Commit verschoben und der Index wird mit dem Inhalt aus diesem Commit aktualisiert.
-    Wird die Option
-    <code>--hard</code>
-    angegeben, so wird auch das Arbeitsverzeichnis aktualisiert. Wird stattdessen
-    <code>--soft</code>
-    angegeben, so wird weder noch aktualisiert.
-  </p>
+  <div class="center"><img src='rebase.svg.png'></div>
 
-  <div class="center">
-    <img src='reset-commit.svg.png'></div>
+  <p>Der obige Befehl nimmt alle Commits, die im Branch <em>topic</em>, aber
+  nicht im Branch <em>master</em> existieren (<em>169a6</em> und
+  <em>2c33a</em>), spielt diese auf den Branch <em>master</em> auf und verschiebt
+  dann den Branch sowie den <em>HEAD</em> auf den zuletzt angehängten Commit.
+  Beachte, dass danach nichts mehr auf die alten Commits verweist und diese
+  gegebenenfalls von der Garbage Collection gelöscht werden.</p>
 
-  <p>
-    Wird kein Commit angegeben, so wird angenommen, dass der Commit gemeint ist, auf den
-    <em>HEAD</em>
-    zeigt.
-  In diesem Falle wird der Branch nicht verschoben, aber es werden der Index (und gegebenenfals das Arbeitsverzeichnis, wenn der Parameter
-    <code>--hard</code>
-    angegeben ist) an den Inhalt des letzten Commits angepasst.
-  </p>
+  <p>Mit der Option <code>--onto</code> läßt sich einschränken, wie weit
+  <code>rebase</code> beim Neuaufspielen zurückgehen soll. Das folgende Kommando
+  hängt an den <em>master</em> die letzten Commits aus dem aktuellen Branch
+  <em>nach</em> dem Commit <em>169a6</em> an (nur <em>2c33a</em>).</p>
 
-  <div class="center">
-    <img src='reset.svg.png'></div>
+  <div class="center"><img src='rebase-onto.svg.png'></div>
 
-  <p>
-    Wird ein Dateiname (und/oder die Option
-    <code>-p</code>
-    ) angegeben, so funktioniert das Kommando ähnlich wie ein
-    <a href='#checkout'>checkout</a>
-    mit einem Dateinamen, ausser, dass ausschließlich der Index (und nicht das Arbeitsverzeichnis) aktualisiert wird.
-  (Du kannst auch anstatt von
-    <em>HEAD</em>
-    den Commit angeben dessen Dateien genommen werden sollen.)
-  </p>
+  <p>Durch Verwendung von <code>git rebase --interactive</code> können
+  kompliziertere Aktionen mit den betroffenen Commits durchgeführt werden:
+  <em>drop</em> (Verwerfen), <em>reorder</em> (Ändern der Reihenfolge),
+  <em>modify</em> (Verändern eines Commits) und <em>squash</em> (Kombinieren
+  mehrerer Commits). Zu diesen Aktionen gibt es keine naheliegende
+  Visualisierung. Details können in der
+  <a href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>Dokumentation zu git-rebase(1)</a>
+  nachgelesen werden.</p>
 
-  <div class="center">
-    <img src='reset-files.svg.png'></div>
+  <h2 id="technical-notes">Technisches</h2>
 
-  <h3 id="merge">Merge</h3>
+  <p>Der Inhalt von Dateien wird nicht wirklich im Index (<em>.git/index</em>)
+  oder in Commit-Objekten gespeichert. Stattdessen wird jede Datei,
+  identifiziert durch ihren SHA-1-Hash, in der Objektdatenbank
+  (<em>.git/objects</em>) als <em>blob</em> gespeichert. Die Index-Datei enthält
+  Dateinamen neben den Bezeichnern des assozierten Blobs sowie weitere
+  Informationen. Für die Dateien von Commits existiert ein weiterer Datentyp,
+  der <em>tree</em> (Baum), der ebenfalls durch seinen Hash identifiziert wird.
+  Trees entsprechen Verzeichnissen im Arbeitsverzeichnis und enthalten,
+  entsprechend ihres Inhalts von Dateien und weiteren Verzeichnissen, eine Liste
+  von Blobs und Trees. Jeder Commit speichert den Bezeichner des zugehörigen
+  "top-level"-Trees. Dieser Tree wiederum enthält alle Blobs und weitere Trees
+  für Unterverzeichnisse, die zu diesem Commit gehören.</p>
 
-  <p>
-    Mit
-    <code>merge</code>
-    wird ein neuer Commit erstellt, der Änderungen eines weitern Commits berücksichtigt.
-  Vor dem
-    <code>merge</code>
-    muss der Index dem aktuellen Commit entsprechen.
-  Im einfachsten Fall ist der andere Commit ein Vorläufer des aktuellen. In diesem Fall muss gar nichts getan werden.
-  Im nächst einfacheren Fall ist der aktuelle Commit ein Vorfahre des anderen Commits.
-  Die Referenz des Branches wird einfach auf den anderen Commit verschoben und dieser Commit wird ausgecheckt.
-  Dies wird
-    <em>fast-forward</em>
-    merge genannt.
-  </p>
+  <p>Führst du einen Comit mit einem <em>detached HEAD</em> durch, so wird der
+  letzte Commit doch noch von etwas referenziert: Dem <em>reflog</em> von
+  <em>HEAD</em>. Allerdings verfällt diese Referenz (je nach Konfiguration) nach
+  einer Weile, so dass der Commit, ähnlich wie die verwaisten Commits aus
+  <code>git commit --amend</code> oder <code>git rebase</code>, von der
+  <em>Garbage Collection</em> (Müllabfuhr) gelöscht wird.</p>
 
-  <div class="center">
-    <img src='merge-ff.svg.png'></div>
+  <h2 id="appendix-stage">Schnelldurchgang: Was die Kommandos bewirken</h2>
 
-  <p>
-    In den anderen Fällen muss ein "richtiger" Merge durchgeführt werden.  Du kannst dich auch für andere Strategien entscheiden,
-    aber standardmäßig wird ein "rekursiver" merge durchgeführt, dieser nimmt im Prinzip den aktuellen Commit (
-    <em>ed489</em>
-    s.u.), den anderen Commit (
-    <em>33104</em>
-    ),
-  und ihren gemeinsamen Vorläufer (
-    <em>b325c</em>
-    ) und führt einen
-    <a
-    href='http://en.wikipedia.org/wiki/Three-way_merge'>three-way Merge</a>
-    durch.
-    Das Ergebnis wird im Arbeitsverzeichnis und dem Index gespeichert. Dies wird dann committet, wobei der dabei erzeugte Commit zwei Eltern (
-    <em>33104</em>
-    und
-    <em>ed489</em>
-    ) hat.
-  </p>
+  <p>Im Folgenden werden wir den Effekt einiger Kommandos Schritt für Schritt
+    nachvollziehen, ähnlich wie in
+    <a href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+    Concepts with D3</a> (englisch).</p>
 
-  <div class="center">
-    <img src='merge.svg.png'></div>
+  <p>Wir beginnen damit, ein Projektarchiv zu erstellen:</p>
 
-  <h3 id="cherry-pick">Cherry Pick</h3>
+  <pre><code>$ <strong>git init foo</strong>
+$ <strong>cd foo</strong>
+$ <strong>echo 1 &gt; myfile</strong>
+$ <strong>git add myfile</strong>
+$ <strong>git commit -m "version 1"</strong>
+</code></pre>
 
-  <p>
-    Der cherry-pick (Kirschen bzw. Rosinen rauspicken) Befehl "kopiert" einen Commit.
-    Er erzeugt einen neuen Commit auf dem aktuellen Branch mit dem selben Kommentar und Patch des anderen Commits.
-  </p>
+  <p>Mit Hilfe der folgenden Funktionen können wir den aktuellen Zustand des
+  Projektarchivs einsehen:</p>
 
-  <div class="center">
-    <img src='cherry-pick.svg.png'></div>
+  <pre><code>show_status() {
+  echo "HEAD:     $(git cat-file -p HEAD:myfile)"
+  echo "Stage:    $(git cat-file -p :myfile)"
+  echo "Worktree: $(cat myfile)"
+}
 
-  <h3 id="rebase">Rebase</h3>
+initial_setup() {
+  echo 3 &gt; myfile
+  git add myfile
+  echo 4 &gt; myfile
+  show_status
+}
+</code></pre>
 
-  <p>
-    Ein Rebase ist eine Alternative zu einem
-    <a href='#merge'>merge</a>
-    um meherere Branches zusammenzuziehen. Während ein Merge einen einzelnen neuen Commit mit zwei Eltern erzeugt und ein nicht linearen Vorgänger Historie hinterläßt,
-    spielt ein Rebase die Commits des aktuellen Branches auf einen anderen Branch erneut auf. Die Commit Historie bleibt linear.
-  Im Kern ist dies ein automatisierter Weg mehrere
-    <a
-    href='#cherry-pick'>cherry-pick</a>
-    Befehle nacheinander auszuführen.
-  </p>
+  <p>Anfangs ist alles im Zustand "1".</p>
 
-  <div class="center">
-    <img src='rebase.svg.png'></div>
+  <pre><code>$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 1
+</code></pre>
 
-  <p>
-    Der obige Befehl nimmt sich alle Commits die im Branch
-    <em>topic</em>
-    aber nicht im Branch
-    <em>master</em>
-    existieren (konkret:
-    <em>169a6</em>
-    und
-    <em>2c33a</em>
-    ), spielt dies auf den Branch
-    <em>master</em>
-    auf und verschiebt dann den
-    <em>HEAD</em>
-    auf die neue Spitze des Branches.
-  Beachte, die alten Commits werden verworfen, wenn nicht anderweitig Bezug auf sie genommen wird.
-  </p>
+  <p>Hier können wir die Änderungen des Zustands von Index ("Stage") und
+  Arbeitsverzeichnis ("Worktree") mit den Kommandos <em>add</em> und
+  <em>commit</em> sehen.</p>
 
-  <p>
-    Mit der Option
-    <code>--onto</code>
-    läßt die Anzahl der Commits, welche neu aufgespielt werden einschränken.
-  Der folgende Befehl spielt auf
-    <em>master</em>
-    die aktuellsten Commits aus dem aktuellen Branch seit dem Commit
-    <em>169a6</em>
-    (ausschließlich), und zwar
-    <em>2c33a</em>
-    .
-  </p>
+  <pre><code>$ <strong>echo 2 &gt; myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 2
+$ <strong>git add myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    2
+Worktree: 2
+$ <strong>git commit -m "version 2"</strong>
+[master 4156116] version 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
 
-  <div class="center">
-    <img src='rebase-onto.svg.png'></div>
+  <p>Wechseln wir nun zu einem initialen Zustand, in dem alle drei Stufen
+  verschieden sind.</p>
 
-  <p>
-    Des weiteren existiert noch der Befehl
-    <code>git rebase --interactive</code>
-    , dieser ermöglicht es einem noch weit komplizierteres als ein einfaches neu aufspielen durchzuführen. Genannt sei hier das
-    <em>dropping</em>
-    ,
-    <em>reordering</em>
-    ,
-    <em>modifying</em>
-    , und
-    <em>squashing</em>
-    von Commits. Zu diesen lässt schwer ein schlüssiges Bild der Darstellung finden. Zur Vertiefung kann man sich an
-    <a
-    href='http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_interactive_mode'>git-rebase(1)</a>
-    versuchen.
-  </p>
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+</code></pre>
 
-  <h2 id="technical-notes">Technische Notizen</h2>
+  <p>Entsprechend der Diagramme oben sehen wir hier die Veränderungen durch
+  verschiedene Kommandos.</p>
 
-  <p>
-    Der Inhalt der Dateien wird nicht wirklich im Index (
-    <em>.git/index</em>
-    ) oder in den Commit Objekten gespeichert.
-  Stattdessen wird jede Datei, identifiziert durch seinen SHA-1 Hash, in der Objekt Datenbank (
-    <em>.git/objects</em>
-    ) als
-    <em>blob</em>
-    gespeichert.
-Der Index führt die Dateinamen neben den Bezeichnern des assozierten Blobs, sowie weiterer Informationen, auf.
-Für Commits existiert ein weiterer Datentyp, der
-    <em>tree</em>
-    . Dieser ist auch durch seinen Hash identifiziert.
-Trees entsprechen den Verzeichnissen im Arbeitsverzeichnis und enthalten, entsprechend zu jedem Dateinamen und Verzeichnisnamen, eine Liste von Blobs und Trees.
-Jeder Commit speichert den Bezeichner seines "top-level" Tree Elementes.
-Dieser wiederum enthält alle Blobs und weitere Blobs die zu diesem Commit gehören.
-  </p>
+  <p><code>git reset -- myfile</code> kopiert vom HEAD in den Index:</p>
 
-  <p>
-    Führst du einen Comit mit einem
-    <em>detached HEAD</em>
-    durch so wird der letzte Commit doch noch von etwas referenziert: Dem "reflog" von
-    <em>HEAD</em>
-    .
-Allerdings verfällt diese Referenz nach einer Weile, so dass der Commit, ähnlich wie die verwaisten Commits aus
-    <code>git commit --amend</code>
-    oder
-    <code>git
-    rebase</code>
-    , von der "Garbage Collection" gelöscht wird.
-  </p>
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git reset -- myfile</strong>
+Unstaged changes after reset:
+M   myfile
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 4
+</code></pre>
 
-  <h2 id="glossary">Glossar</h2>
+  <p><code>git checkout -- myfile</code> kopiert vom Index ins
+  Arbeitsverzeichnis:</p>
 
-  <ul>
-    <li> <strong>Branch :</strong>
-      Zweig
-    </li>
-    <li> <strong>cherry-pick :</strong>
-      Kirschen bzw. Rosinen rauspicken
-    </li>
-    <li>
-      <strong>Commit :</strong>
-      [Nomen] Festlegung,
-      <em>commit</em>
-    </li>
-    <li>
-      <strong>commit :</strong>
-      [Verb] sich auf etwas festlegen,
-      <em>to commit</em>
-    </li>
-    <li>
-      <strong>Index :</strong>
-      Bühne,
-      <em>stage, index, staging area</em>
-    </li>
-    <li>
-      <strong>Merge :</strong>
-      [Nomen] Zusammenführen,
-      <em>merge</em>
-    </li>
-    <li>
-      <strong>merge :</strong>
-      [Verb] etwas zusammen zu führen,
-      <em>to merge</em>
-    </li>
-    <li>
-      <strong>Projektarchiv :</strong>
-      <em>history</em>
-    </li>
-    <li>
-      <strong>Referenz :</strong>
-      Verweis auf etwas,
-      <em>reference</em>
-    </li>
-    <li>
-      <strong>Schnappschuss :</strong>
-      Momentaufnahme,
-      <em>snapshot</em>
-    </li>
-    <li>
-      <strong>Tag :</strong>
-      Anhänger, Etikett,
-      <em>tag</em>
-    </li>
-  </ul>
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    3
+Worktree: 3
+</code></pre>
 
+  <p><code>git checkout HEAD -- myfile</code> kopiert vom HEAD sowohl in den
+  Index, als auch ins Arbeitsverzeichnis:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout HEAD -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p><code>git commit myfile</code> kopiert vom Arbeitsverzeichnis in den Index
+  und zum HEAD:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git commit myfile -m "version 4"</strong>
+[master 679ff51] version 4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     4
+Stage:    4
+Worktree: 4
+</code></pre>
 
   <hr>
 
   <p>Copyright &copy; 2010,
     <a href='mailto:lodatom@gmail.com'>Mark Lodato</a>.
-  German translation &copy; 2012,
-    <a href="mailto:mafulafunk@gmail.com">Martin Funk</a>.
+    German translation
+    &copy; 2012 <a href="mailto:mafulafunk@gmail.com">Martin Funk</a>,
+    &copy; 2017 <a href="mailto:mirko@westermeier.de">Mirko Westermeier</a>.
   </p>
 
   <p><a rel="license"
