@@ -8,7 +8,7 @@ body{
     width: 70%;
     padding: 20px 0px;
     background: white;
-	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
     color: rgba(0,0,0,0.7);
 }
 
@@ -28,9 +28,9 @@ h1{font-size: 4rem;}
 h2{font-size: 2rem;}
 h3{font-size: 1.2rem;}
 
-a{
+a, a:visited{
     text-decoration: none;
-    color: #FF3D00;
+    color: #f05033;
 }
 
 
