@@ -1,3 +1,51 @@
+html{
+    background: #FAFAFA;
+}
+
+body{
+    font-family: sans-serif;
+    margin: 0 auto;
+    width: 70%;
+    padding: 20px 0px;
+    background: white;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    color: rgba(0,0,0,0.7);
+}
+
+@media screen and (max-width: 900px){
+    body{
+        width: 100%;
+    }
+}
+
+h1, h2, h3{
+    color: rgba(0,0,0,0.8);
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1{font-size: 4rem;}
+h2{font-size: 2rem;}
+h3{font-size: 1.2rem;}
+
+a{
+    text-decoration: none;
+    color: #FF3D00;
+}
+
+
+p, div, ol, ul, pre, strong{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+hr{
+    color: #212121;
+    height: 1px;
+    background: #BDBDBD;
+}
+
+
 .center {
     text-align: center;
 }
@@ -9,13 +57,12 @@ ol ol {
 }
 #language-box {
     position: absolute;
-    top: 5px;
-    right: 10px;
+    top: 2px;
     font-family: sans-serif;
     list-style: none;
     margin: 0;
     padding: 0;
-    text-align: right;
+    text-align: center;
 }
 #language-box ul {
     display: inline;
