@@ -31,6 +31,7 @@ h3{font-size: 1.2rem;}
 a, a:visited{
     text-decoration: none;
     color: #f05033;
+    font-size: 1rem;
 }
 
 
@@ -81,6 +82,9 @@ ol ol {
 @media print {
     #language-box {
         display: none;
+    }
+    body{
+        width: 100%;
     }
 }
 pre {
