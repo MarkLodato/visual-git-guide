@@ -12,7 +12,7 @@ body{
     color: rgba(0,0,0,0.7);
 }
 
-@media screen and (max-width: 900px){
+@media handheld, screen and (max-width: 995px){
     body{
         width: 100%;
     }
