@@ -17,10 +17,10 @@ a domain-specific language to represent commit graphs, and I think the result
 turned out quite well.
 
 All of the common macros are stored in
-[common.tex](http://github.com/MarkLodato/visual-git-guide/blob/master/common.tex).
+[common.tex](http://github.com/MarkLodato/visual-git-guide/blob/main/common.tex).
 Each image source includes this file.  To see an example of how to use these
 macros, look at
-[commit-master.tex](http://github.com/MarkLodato/visual-git-guide/blob/master/commit-master.tex).
+[commit-main.tex](http://github.com/MarkLodato/visual-git-guide/blob/main/commit-main.tex).
 
 To generate the image files, I first create PDFs using
 [pdflatex](http://www.tug.org/applications/pdftex/), and from there I create

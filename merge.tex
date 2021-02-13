@@ -10,14 +10,14 @@
     \branch other -> 3;
 
     % draw the old branch manually with a long line
-    \node [old branch, above=1 of E] (old master) {master};
-    \path [old branch line] (old master) edge (E);
+    \node [old branch, above=1 of E] (old main) {main};
+    \path [old branch line] (old main) edge (E);
     \node [cancel ref, above=.2\g of E, anchor=center] {};
-    \oldHEAD -> old master;
+    \oldHEAD -> old main;
 
     \newcommit f8bc5 (F) -> E;
-    \branch master -> F;
-    \HEAD -> master;
+    \branch main -> F;
+    \HEAD -> main;
     \path [background line, bend right=15] (F) edge[-] (3);
     \path [commit line, bend right=15] (F) edge (3);
 

@@ -3,9 +3,9 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \usualsetup
-    \branch master -> E;
+    \branch main -> E;
     \branch maint -> A;
-    \oldHEAD -> master;
+    \oldHEAD -> main;
     \HEAD -> maint;
 
     \node [cmd] at (0, 3.75) {git checkout maint};

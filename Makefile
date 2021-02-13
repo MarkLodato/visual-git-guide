@@ -18,7 +18,7 @@ FILES := \
     commit-amend \
     commit-detached \
     commit-maint \
-    commit-master \
+    commit-main \
     conventions \
     diff \
     merge \

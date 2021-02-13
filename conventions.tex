@@ -4,12 +4,12 @@
     \boundingbox
     \usualsetup
     \branch maint -> A;
-    \branch master -> E;
-    \HEAD -> master;
+    \branch main -> E;
+    \HEAD -> main;
 
     \path [>=stealth', draw=black!50, very thick]
         (5,3.75) node {reference to current branch} edge [->] (HEAD label)
-        (6.5,2) node {current branch} edge [->] (master)
+        (6.5,2) node {current branch} edge [->] (main)
         (-5,3) node {another branch} edge [->] (maint)
         (-5,-0.5) node {files to go in next commit} edge [->] (index)
         (-5,-2) node {files that you ``see''} edge [->] (work)
