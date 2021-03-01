@@ -9,12 +9,12 @@
     \newcommit 4ca87 (4) -> D;
 
     % this is a special case, so I won't make high level commands for this
-    \refbelow [branch] "master" : master -> 4;
-    \addHEADbelow [attached HEAD] "HEAD" : HEAD -> master;
+    \refbelow [branch] "main" : main -> 4;
+    \addHEADbelow [attached HEAD] "HEAD" : HEAD -> main;
 
-    \branch maint -> A;
-    \oldbranch master -> E;
-    \oldHEAD -> old master;
+    \branch stable -> A;
+    \oldbranch main -> E;
+    \oldHEAD -> old main;
 
     \node [cmd] at (0, 3.75) {git commit --amend};
 

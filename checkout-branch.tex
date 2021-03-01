@@ -3,12 +3,12 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \usualsetup
-    \branch master -> E;
-    \branch maint -> A;
-    \oldHEAD -> master;
-    \HEAD -> maint;
+    \branch main -> E;
+    \branch stable -> A;
+    \oldHEAD -> main;
+    \HEAD -> stable;
 
-    \node [cmd] at (0, 3.75) {git checkout maint};
+    \node [cmd] at (0, 3.75) {git checkout stable};
 
     \path [line]
         (A) edge [bend right=22] (index)

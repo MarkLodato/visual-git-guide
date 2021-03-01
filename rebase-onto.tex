@@ -15,11 +15,11 @@
 
     \oldbranch topic -> 2;
     \oldHEAD -> old topic;
-    \branch master -> D;
+    \branch main -> D;
     \branch topic -> E;
     \HEAD -> topic;
 
-    \node [cmd,right] at (1, 3.75) {git rebase --onto master 169a6};
+    \node [cmd,right] at (1, 3.75) {git rebase --onto main 169a6};
 
     \path [line]
         (E) edge [bend left=20] (index)

@@ -103,7 +103,7 @@
   <div class="center"><img src='conventions.svg.png'></div>
 
   <p>綠色的5位元字元表示提交的ID，分別指向父節點。分支用橘色顯示，分別指向特定的提交。目前分支由附在其上的<em>HEAD</em>標識。
-這張圖片裡顯示最後5次提交，<em>ed489</em>是最新提交。 <em>master</em>分支指向此次提交，另一個<em>maint</em>分支指向祖父提交節點。</p>
+這張圖片裡顯示最後5次提交，<em>ed489</em>是最新提交。 <em>main</em>分支指向此次提交，另一個<em>stable</em>分支指向祖父提交節點。</p>
 
   <h2 id="commands-in-detail">命令詳解</h2>
 
@@ -115,15 +115,15 @@
 
   <h3 id="commit">Commit</h3>
 
-  <p>提交時，git用暫存區域的檔建立一個新的提交，並把此時的節點設為父節點。然後把目前分支指向新的提交節點。下圖中，目前分支是<em>master</em>。
-在執行命令之前，<em>master</em>指向<em>ed489</em>，提交後，<em>master</em>指向新的節點<em>f0cec</em>並以<em>ed489</em>作為父節點。</p>
+  <p>提交時，git用暫存區域的檔建立一個新的提交，並把此時的節點設為父節點。然後把目前分支指向新的提交節點。下圖中，目前分支是<em>main</em>。
+在執行命令之前，<em>main</em>指向<em>ed489</em>，提交後，<em>main</em>指向新的節點<em>f0cec</em>並以<em>ed489</em>作為父節點。</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
-  <p>即便目前分支是某次提交的祖父節點，git會同樣操作。下圖中，在<em>master</em>分支的祖父節點<em>maint</em>分支進行一次提交，產生了<em>1800b</em>。
-這樣，<em>maint</em>分支就不再是<em>master</em>分支的祖父節點。此時，<a href='#merge'>合併</a> (或者 <a href='#rebase'>衍合</a>) 是必須的。</p>
+  <p>即便目前分支是某次提交的祖父節點，git會同樣操作。下圖中，在<em>main</em>分支的祖父節點<em>stable</em>分支進行一次提交，產生了<em>1800b</em>。
+這樣，<em>stable</em>分支就不再是<em>main</em>分支的祖父節點。此時，<a href='#merge'>合併</a> (或者 <a href='#rebase'>衍合</a>) 是必須的。</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>如果想更改一次提交，使用  <code>git commit --amend</code>。git會使用與目前提交相同的父節點進行一次新提交，舊的提交會被取消。</p>
 
@@ -143,7 +143,7 @@
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <p>如果既沒有指定檔案名，也沒有指定分支名，而是一個標籤、遠端分支、SHA-1值或者是像<em>master~3</em>類似的東西，就得到一個匿名分支，稱作<em>detached HEAD</em>（被分離的<em>HEAD</em>標識）。這樣可以很方便地在歷史版本之間互相切換。比如說你想要編譯1.6.6.1版本的git，你可以執行<code>git checkout v1.6.6.1</code>（這是一個標籤，而非分支名），編譯，安裝，然後切換回另一個分支，比如說<code>git checkout master</code>。然而，當提交操作涉及到“分離的HEAD”時，其行為會略有不同，詳情見在<a href="#detached">下面</a>。</p>
+  <p>如果既沒有指定檔案名，也沒有指定分支名，而是一個標籤、遠端分支、SHA-1值或者是像<em>main~3</em>類似的東西，就得到一個匿名分支，稱作<em>detached HEAD</em>（被分離的<em>HEAD</em>標識）。這樣可以很方便地在歷史版本之間互相切換。比如說你想要編譯1.6.6.1版本的git，你可以執行<code>git checkout v1.6.6.1</code>（這是一個標籤，而非分支名），編譯，安裝，然後切換回另一個分支，比如說<code>git checkout main</code>。然而，當提交操作涉及到“分離的HEAD”時，其行為會略有不同，詳情見在<a href="#detached">下面</a>。</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
@@ -153,7 +153,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>一旦此後你切換到別的分支，比如說<em>master</em>，那麼這個提交節點（可能）再也不會被引用到，然後就會被放棄掉了。注意這個命令之後就不會有東西引用<em>2eecb</em>。</p>
+  <p>一旦此後你切換到別的分支，比如說<em>main</em>，那麼這個提交節點（可能）再也不會被引用到，然後就會被放棄掉了。注意這個命令之後就不會有東西引用<em>2eecb</em>。</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
@@ -203,9 +203,9 @@
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>上面的命令都在<em>topic</em>分支中進行，而不是<em>master</em>分支，在<em>master</em>分支上重演，並且把分支指向新的節點。注意舊提交沒有被引用，將被回收。</p>
+  <p>上面的命令都在<em>topic</em>分支中進行，而不是<em>main</em>分支，在<em>main</em>分支上重演，並且把分支指向新的節點。注意舊提交沒有被引用，將被回收。</p>
 
-  <p>要限制回滾範圍，使用<code>--onto</code>選項。下面的命令在<em>master</em>分支上重演目前分支從<em>169a6</em>以來的最近幾個提交，即<em>2c33a</em>。</p>
+  <p>要限制回滾範圍，使用<code>--onto</code>選項。下面的命令在<em>main</em>分支上重演目前分支從<em>169a6</em>以來的最近幾個提交，即<em>2c33a</em>。</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 

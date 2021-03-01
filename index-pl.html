@@ -102,7 +102,7 @@
   <div class="center"><img src='conventions.svg.png'></div>
 
   <p>Commity pokazane są w zielonych polach jako pięcioznakowe identyfikatory, które wskazują na swoich rodziców (wcześniejsze commity). Gałęzie (branche) pokazane są w pomarańczowych polach i wskazują na aktualne commity. Aktualne gałęzie (branche) można zidentyfikować dzięki specjalnemu oznaczeniu <em>HEAD</em>, które w rzeczywistości jest "przyczepione" do gałęzi (brancha), w której się aktualnie znajdujemy. Na pokazanej grafice widzimy pięć ostatnich commitów, spośród których <em>ed489</em> jest najbardziej aktualnym.
-  <em>master</em> (aktualna gałąź - branch) wskazuje na ten commit, podczas gdy <em>maint</em> (inna gałąź - branch) wskazuje na przodka gałęzi (branch) <em>master</em> i jej commit.</p>
+  <em>main</em> (aktualna gałąź - branch) wskazuje na ten commit, podczas gdy <em>stable</em> (inna gałąź - branch) wskazuje na przodka gałęzi (branch) <em>main</em> i jej commit.</p>
 
   <h2 id="commands-in-detail">Poszczególne komendy</h2>
 
@@ -114,13 +114,13 @@
 
   <h3 id="commit">Commit</h3>
 
-  <p>Kiedy zatwierdzasz (commitujesz) zmiany, Git tworzy nowy obiekt używając plików znajdujących się w przechowalni (stage), jednocześnie wskazując jako swojego rodzica ostatni istniejący commit. Następnie aktualna gałąź (branch) zaczyna wskazywać na właśnie tworzony commit. Na grafice umieszczonej poniżej aktualna gałąź (branch) to <em>master</em>. Zanim komenda została wykonana, gałąź (branch) <em>master</em> wskazywała na commit <em>ed489</em>. Po jej wykonaniu nowy commit oznaczony jako <em>f0cec</em> został utworzony z rodzicem w postaci <em>ed489</em>, a następnie gałąź (branch) <em>master</em> została przeniesiona na nowy commit.</p>
+  <p>Kiedy zatwierdzasz (commitujesz) zmiany, Git tworzy nowy obiekt używając plików znajdujących się w przechowalni (stage), jednocześnie wskazując jako swojego rodzica ostatni istniejący commit. Następnie aktualna gałąź (branch) zaczyna wskazywać na właśnie tworzony commit. Na grafice umieszczonej poniżej aktualna gałąź (branch) to <em>main</em>. Zanim komenda została wykonana, gałąź (branch) <em>main</em> wskazywała na commit <em>ed489</em>. Po jej wykonaniu nowy commit oznaczony jako <em>f0cec</em> został utworzony z rodzicem w postaci <em>ed489</em>, a następnie gałąź (branch) <em>main</em> została przeniesiona na nowy commit.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
-  <p>Ten sam proces następuje również w przypadku gałęzi (brancha) będącego przrodkiem innej gałęzi. Poniżej widzimy commit wykonany w gałęzi <em>maint</em>, która jest przodkiej gałęzi <em>master</em>. Nowy commit oznaczony jest jako <em>1800b</em>. Po tej operacji gałąź (branch) <em>maint</em> nie jest już przodkiem gałęzi <em>master</em>. Aby połączyć obie gałęzie będzie konieczne wykonanie <a href='#merge'>merge</a> (lub <a href='#rebase'>rebase</a>).</p>
+  <p>Ten sam proces następuje również w przypadku gałęzi (brancha) będącego przrodkiem innej gałęzi. Poniżej widzimy commit wykonany w gałęzi <em>stable</em>, która jest przodkiej gałęzi <em>main</em>. Nowy commit oznaczony jest jako <em>1800b</em>. Po tej operacji gałąź (branch) <em>stable</em> nie jest już przodkiem gałęzi <em>main</em>. Aby połączyć obie gałęzie będzie konieczne wykonanie <a href='#merge'>merge</a> (lub <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Czasem może zdarzyć się tak, że w commicie pojawi się błąd (na przykład zostanie zawarty inny komentarz niż był planowany). Wówczas można użyć komenty <code>git commit --amend</code>. Wówczas git utworzy nowy commit z tym samym rodzicem, co niedawno utworzony commit. Dzięki temu błędny commit zostanie zastąpiony nowym i nie będzie częścią całego łańcucha. Commit z błędem zostanie zwyczajnie usunięty, pod warunkiem, że żaden inny element nie jest z nim powiązany.</p>
 
@@ -141,7 +141,7 @@
 
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
-  <p>Kiedy ani nazwa pliku ani nazwa gałęzi (branch) z lokalnego repozytorium <em>nie</em> zostanie podana &mdash; zamiast tego może zostać podanty tag, gałąź zdalnego repozytorium, SHA-1 ID lub coś w rodzaju <em>master~3</em> &mdash; otrzymamy anonimową gałąź (branch) zwaną <em>detached HEAD</em>. Jest ona przydatna do skakania po całej historii commitów. Powiedzmy, że chcemy skompilować wersję 1.6.6.1 gita. Możemy wykonać komendę <code>git checkout v1.6.6.1</code> (jest to tag, nie nazwa gałęzi (branch)), skompilować, zainstalować gita, a następnie wrócić do głównej gałęzi master, wydając komendę <code>git checkout master</code>. Mimo tej prostoty i podobieństw do zwykłej wersji tej komendy, commitowanie z wykorzystaniem detached HEAD działa trochę inaczej niż zazwyczaj; zostało to opisane <a href="#detached">poniżej</a>.</p>
+  <p>Kiedy ani nazwa pliku ani nazwa gałęzi (branch) z lokalnego repozytorium <em>nie</em> zostanie podana &mdash; zamiast tego może zostać podanty tag, gałąź zdalnego repozytorium, SHA-1 ID lub coś w rodzaju <em>main~3</em> &mdash; otrzymamy anonimową gałąź (branch) zwaną <em>detached HEAD</em>. Jest ona przydatna do skakania po całej historii commitów. Powiedzmy, że chcemy skompilować wersję 1.6.6.1 gita. Możemy wykonać komendę <code>git checkout v1.6.6.1</code> (jest to tag, nie nazwa gałęzi (branch)), skompilować, zainstalować gita, a następnie wrócić do głównej gałęzi main, wydając komendę <code>git checkout main</code>. Mimo tej prostoty i podobieństw do zwykłej wersji tej komendy, commitowanie z wykorzystaniem detached HEAD działa trochę inaczej niż zazwyczaj; zostało to opisane <a href="#detached">poniżej</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
 
@@ -151,7 +151,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>W momencie, w którym HEAD zostanie przeniesiony w dowolne inne miejsce, takie jak na przykład gałąź (branch) <em>master</em>, nic już nie wskazuje na dany commit, w związku z czym commit przepada. W poniższym przykładzie widać, że po wydaniu komendy nie ma żadnego dowiązania do commita <em>2eecb</em>.</p>
+  <p>W momencie, w którym HEAD zostanie przeniesiony w dowolne inne miejsce, takie jak na przykład gałąź (branch) <em>main</em>, nic już nie wskazuje na dany commit, w związku z czym commit przepada. W poniższym przykładzie widać, że po wydaniu komendy nie ma żadnego dowiązania do commita <em>2eecb</em>.</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
 
@@ -197,9 +197,9 @@
 
   <div class="center"><img src='rebase.svg.png'></div>
 
-  <p>Powyższa komenda bierze wszystkie commity należące do gałęzi (branch) <em>topic</em>, ale które nie istnieją w <em>master</em> (widoczne jako <em>169a6</em> oraz <em>2c33a</em>), następnie kopiuje je do gałęzi (branch) <em>master</em> i na końcu przenosi wskaźnik gałęzi (branch head) do nowego miejsca. Ważną informacją jest fakt, że wszystkie commity, które nie posiadają żadnego wskaźnika zostaną zutylizowane.</p>
+  <p>Powyższa komenda bierze wszystkie commity należące do gałęzi (branch) <em>topic</em>, ale które nie istnieją w <em>main</em> (widoczne jako <em>169a6</em> oraz <em>2c33a</em>), następnie kopiuje je do gałęzi (branch) <em>main</em> i na końcu przenosi wskaźnik gałęzi (branch head) do nowego miejsca. Ważną informacją jest fakt, że wszystkie commity, które nie posiadają żadnego wskaźnika zostaną zutylizowane.</p>
 
-  <p>Aby ograniczyć historię commitów branych do rebase, należy użyć przełącznika <code>--onto</code>. Przedstawiona komenda przekopiuje do gałęzi (branch) <em>master</em> ostatnie commity z aktualnej gałęzi (branch) zaczynając od <em>169a6</em> (ale wykluczając ten commit), w tym przypadku będzie to commit oznaczony jako <em>2c33a</em>.</p>
+  <p>Aby ograniczyć historię commitów branych do rebase, należy użyć przełącznika <code>--onto</code>. Przedstawiona komenda przekopiuje do gałęzi (branch) <em>main</em> ostatnie commity z aktualnej gałęzi (branch) zaczynając od <em>169a6</em> (ale wykluczając ten commit), w tym przypadku będzie to commit oznaczony jako <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
@@ -263,7 +263,7 @@ HEAD:     1
 Stage:    2
 Worktree: 2
 $ <strong>git commit -m "version 2"</strong>
-[master 4156116] version 2
+[main 4156116] version 2
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     2
@@ -329,7 +329,7 @@ HEAD:     2
 Stage:    3
 Worktree: 4
 $ <strong>git commit myfile -m "version 4"</strong>
-[master 679ff51] version 4
+[main 679ff51] version 4
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     4

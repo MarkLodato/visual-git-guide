@@ -5,15 +5,15 @@
     \normalcommits
     \indexnode[0,-1.5]
     \worknode[0,-3.5]
-    \branch master -> E;
-    \branch maint -> A;
-    \HEAD -> master;
+    \branch main -> E;
+    \branch stable -> A;
+    \HEAD -> main;
 
     \path [line, bend right=20]
         (index) edge node[cmd, auto=left] {git diff} (work)
         (E) edge[bend left=20] node[cmd] {git diff --cached} (index)
         (E) edge[bend left=30, auto=left] node[cmd] {git diff HEAD} (work)
-        (A) edge node[cmd] {git diff maint} (work)
+        (A) edge node[cmd] {git diff stable} (work)
         (B) edge[bend left=25,auto=left] node[cmd] {git diff b325c da985} (D)
         ;
 

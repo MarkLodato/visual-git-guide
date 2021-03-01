@@ -3,11 +3,11 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \usualsetup
-    \branch maint -> A;
-    \oldbranch master -> E;
-    \branch master -> B;
-    \oldHEAD -> old master;
-    \HEAD -> master;
+    \branch stable -> A;
+    \oldbranch main -> E;
+    \branch main -> B;
+    \oldHEAD -> old main;
+    \HEAD -> main;
 
     \node [cmd] at (0, 3.75) {git reset HEAD\~{}3};
 

@@ -3,13 +3,13 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \usualsetup
-    \refbelow [branch] "master" : master -> E;
-    \oldbranch maint -> A;
-    \branch maint -> E;
-    \oldHEAD -> old maint;
-    \HEAD -> maint;
+    \refbelow [branch] "main" : main -> E;
+    \oldbranch stable -> A;
+    \branch stable -> E;
+    \oldHEAD -> old stable;
+    \HEAD -> stable;
 
-    \node [cmd] at (0, 3.75) {git merge master};
+    \node [cmd] at (0, 3.75) {git merge main};
 
     \path [line]
         (E) edge [bend right=5] (index.north east)

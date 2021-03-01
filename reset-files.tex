@@ -3,9 +3,9 @@
 \begin{tikzpicture}[main]
     \boundingbox
     \usualsetup
-    \branch master -> E;
-    \branch maint -> A;
-    \HEAD -> master;
+    \branch main -> E;
+    \branch stable -> A;
+    \HEAD -> main;
 
     \node [cmd] (cmd1) at (0, 3.75) {git reset -- \emph{files}};
 

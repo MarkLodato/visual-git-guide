@@ -124,8 +124,8 @@
   idendifiée par la référence <em>HEAD</em>, qui est "attachée" à cette branche.
   Dans cette image les cinq derniers commits sont représentés, <em>ed489</em> étant
   le plus récent.
-  <em>master</em> (la branche courante) pointe vers ce commit, alors que
-  <em>maint</em> (une autre branche) pointe vers un ancêtre du commit <em>master</em>.
+  <em>main</em> (la branche courante) pointe vers ce commit, alors que
+  <em>stable</em> (une autre branche) pointe vers un ancêtre du commit <em>main</em>.
   </p>
 
   <h2 id="commands-in-detail">Les commandes en détail</h2>
@@ -145,20 +145,20 @@
   les fichiers présents dans le stage, et en prenant comme parent le commit courant.
   Il déplace aussi la branche courante vers ce nouveau commit. Sur l'image ci-dessous,
   la branche courante est
-  <em>master</em>. Avant que la commande ne soit exécutée, <em>master</em> pointait sur
+  <em>main</em>. Avant que la commande ne soit exécutée, <em>main</em> pointait sur
   <em>ed489</em>. Après l'exécution de la commande, un nouveau commit <em>f0cec</em> est créé,
-  avec <em>ed489</em> comme parent, et <em>master</em> est déplacé pour pointer sur ce nouveau
+  avec <em>ed489</em> comme parent, et <em>main</em> est déplacé pour pointer sur ce nouveau
   commit.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Ce fonctionnement est systématique, même si la branche courante est un ancêtre d'une autre.
-  Ci-dessous, un commit a lieu sur une branche <em>maint</em>, qui est un ancêtre de <em>master</em>.
-  Le commit résultant est : <em>1800b</em> ; <em>maint</em> n'est alors plus un ancêtre de <em>master</em>.
+  Ci-dessous, un commit a lieu sur une branche <em>stable</em>, qui est un ancêtre de <em>main</em>.
+  Le commit résultant est : <em>1800b</em> ; <em>stable</em> n'est alors plus un ancêtre de <em>main</em>.
   Pour consolider ces deux histoires (maintenant divergentes), un <a href='#merge'>merge</a>
   (ou un <a href='#rebase'>rebase</a>) va être nécessaire.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Si vous commettez une erreur dans un commit, il est facile de la corriger avec
   <code>git commit --amend</code>. Quand vous utilisez cette commande, git crée un
@@ -195,11 +195,11 @@
 
   <p>Quand <em>aucun</em> nom de fichier n'est donné et que la référence n'est <em>pas</em> une
   banche (locale) &mdash; i.e. c'est un tag, une branche distante, un ID SHA-1 ou un truc du genre
-  <em>master~3</em> &mdash; on se retrouve avec une branche anonyme appelée
+  <em>main~3</em> &mdash; on se retrouve avec une branche anonyme appelée
   une <em>detached HEAD</em>. Ceci est utile pour se déplacer rapidement dans l'histoire.
   Supposons que vous souhaitiez compiler la version 1.6.6.1 de git. Vous pouvez faire un
   <code>git checkout v1.6.6.1</code> (qui est un tag, et non une branche), compiler, installer, 
-  et rebasculer sur une autre branche, avec par exemple <code>git checkout master</code>.
+  et rebasculer sur une autre branche, avec par exemple <code>git checkout main</code>.
   Cela dit, commiter fonctionne légèrement différemment avec une "detached HEAD" ;
   voir les détails <a href="#detached">ci-dessous</a>.</p>
 
@@ -213,7 +213,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Une fois que vous basculez sur une autre branche, par exemple <em>master</em>,
+  <p>Une fois que vous basculez sur une autre branche, par exemple <em>main</em>,
   le commit n'est (possiblement) plus référencé par aucun élément (branche, tag, ...),
   et est perdu. Notez qu'après la commande, le commit <em>2eecb</em> n'est plus référencé.</p>
 
@@ -290,14 +290,14 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>La commande ci-dessus prend tous les commits qui existent dans <em>topic</em> 
-  mais pas dans <em>master</em> (i.e. <em>169a6</em> et <em>2c33a</em>), les rejoue
-  sur <em>master</em>, puis déplace la branche (<em>topic</em>) en conséquence.
+  mais pas dans <em>main</em> (i.e. <em>169a6</em> et <em>2c33a</em>), les rejoue
+  sur <em>main</em>, puis déplace la branche (<em>topic</em>) en conséquence.
   Notez que les anciens commits seront supprimés (garbage collection) s'ils ne sont
   plus référencés.</p>
 
   <p>Pour indiquer jusqu'où vous souhaitez remonter dans l'histoire, utilisez
   l'otpion <code>--onto</code>.
-  La command suivante rejoue sur <em>master</em> les commits les plus récents
+  La command suivante rejoue sur <em>main</em> les commits les plus récents
   de la branche courante depuis <em>169a6</em> (exclu), autrement dit 
   <em>2c33a</em>.</p>
 
