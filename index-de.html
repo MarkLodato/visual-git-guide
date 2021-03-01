@@ -148,9 +148,9 @@
   dargestellt, sie zeigen auf einen bestimmten Commit. Der aktuelle Branch wird
   mit der speziellen Referenz <em>HEAD</em> identifiziert. In diesem Bild sieht
   man die fünf letzten Commits, wobei <em>ed489</em> der jüngste ist.
-  <em>master</em> ("current branch", der aktuelle Branch) zeigt auf genau diesen
-  Commit, wohingegen <em>maint</em> ("another branch", ein anderer Branch) auf
-  einen der Vorfahren von <em>master</em> verweist.</p>
+  <em>main</em> ("current branch", der aktuelle Branch) zeigt auf genau diesen
+  Commit, wohingegen <em>stable</em> ("another branch", ein anderer Branch) auf
+  einen der Vorfahren von <em>main</em> verweist.</p>
 
   <h2 id="commands-in-detail">Kommandos im Detail</h2>
 
@@ -173,21 +173,21 @@
   <p>Mit dem <code>commit</code>-Kommando erzeugt git ein neues Commit-Objekt
   mit den Dateien aus dem Index. Als Vorgänger wird der aktuelle Commit
   verwendet. Zusätzlich wird der aktuelle Branch auf den neuen Commit
-  verschoben. Im folgenden Bild ist der aktuelle Branch <em>master</em>. Vor der
-  Ausführung des Kommandos zeigte <em>master</em> auf <em>ed489</em>. Durch das
+  verschoben. Im folgenden Bild ist der aktuelle Branch <em>main</em>. Vor der
+  Ausführung des Kommandos zeigte <em>main</em> auf <em>ed489</em>. Durch das
   Kommando wird ein neuer Commit <em>f0cec</em> mit dem Vorläufer <em>ed489</em>
-  erstellt und der Branch <em>master</em> auf den neuen Commit verschoben.</p>
+  erstellt und der Branch <em>main</em> auf den neuen Commit verschoben.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Das gleiche geschieht auch, wenn der aktuelle Branch ein Vorgänger eines
   anderen ist. Im nachfolgenden Bild wird ein Commit auf dem Branch
-  <em>maint</em> ausgeführt, der ein Vorgänger von <em>master</em> ist, was
-  einen Commit <em>1800b</em> erzeugt. Danach ist <em>maint</em> kein Vorgänger
-  von <em>master</em> mehr. Um die beiden Branches wieder zusammenzuführen, ist
+  <em>stable</em> ausgeführt, der ein Vorgänger von <em>main</em> ist, was
+  einen Commit <em>1800b</em> erzeugt. Danach ist <em>stable</em> kein Vorgänger
+  von <em>main</em> mehr. Um die beiden Branches wieder zusammenzuführen, ist
   ein <a href="#merge">merge</a> oder <a href="#rebase">rebase</a> nötig.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Einen Fehler in einem Commit kannst Du mit <code>git commit --amend</code>
   korrigieren. Mit diesem Befehl erstellt git einen neuen Commit mit dem selben
@@ -227,13 +227,13 @@
 
   <p>Wenn <em>kein</em> Dateiname angegeben wird und die angegebene Referenz
   <em>kein</em> (lokaler) Branch ist (also z.B. ein Tag, ein Remote-Branch, eine
-  SHA-1-ID oder etwas wie <em>master~3</em>), erhalten wir einen anonymen
+  SHA-1-ID oder etwas wie <em>main~3</em>), erhalten wir einen anonymen
   Branch, genannt <em>detached HEAD</em>. Das bietet sich besonders an, um in
   der Versionsgeschichte herumzuspringen. Sagen wir mal, du willst die Version
   1.6.6.1 von git kompilieren. Dann kannst du einfach mit dem Befehl <code>git
   checkout v1.6.6.1</code> (welches ein Tag und kein Branch ist) den Quellcode
   von diesem Zeitpunkt auschecken und damit arbeiten. Später kannst Du zu einem
-  anderen Branch zurückspringen, z. B. mit <code>git checkout master</code>. Ein
+  anderen Branch zurückspringen, z. B. mit <code>git checkout main</code>. Ein
   Commit mit einem <em>detached HEAD</em> verhält sich jedoch etwas anders als
   wir es gewohnt sind. Dieser Fall wird <a href="#detached">unten</a>
   behandelt.</p>
@@ -249,9 +249,9 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Sobald du etwas anderes auscheckst, etwa den Branch <em>master</em>, wird
+  <p>Sobald du etwas anderes auscheckst, etwa den Branch <em>main</em>, wird
   der Commit (vermutlich) von nichts mehr referenziert und geht verloren. In der
-  Grafik gibt es nach dem <code>git checkout master</code> nichts mehr, das auf
+  Grafik gibt es nach dem <code>git checkout main</code> nichts mehr, das auf
   den Commit <em>2eecb</em> zeigt.</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
@@ -339,15 +339,15 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>Der obige Befehl nimmt alle Commits, die im Branch <em>topic</em>, aber
-  nicht im Branch <em>master</em> existieren (<em>169a6</em> und
-  <em>2c33a</em>), spielt diese auf den Branch <em>master</em> auf und verschiebt
+  nicht im Branch <em>main</em> existieren (<em>169a6</em> und
+  <em>2c33a</em>), spielt diese auf den Branch <em>main</em> auf und verschiebt
   dann den Branch sowie den <em>HEAD</em> auf den zuletzt angehängten Commit.
   Beachte, dass danach nichts mehr auf die alten Commits verweist und diese
   gegebenenfalls von der Garbage Collection gelöscht werden.</p>
 
   <p>Mit der Option <code>--onto</code> läßt sich einschränken, wie weit
   <code>rebase</code> beim Neuaufspielen zurückgehen soll. Das folgende Kommando
-  hängt an den <em>master</em> die letzten Commits aus dem aktuellen Branch
+  hängt an den <em>main</em> die letzten Commits aus dem aktuellen Branch
   <em>nach</em> dem Commit <em>169a6</em> an (nur <em>2c33a</em>).</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
@@ -439,7 +439,7 @@ HEAD:     1
 Stage:    2
 Worktree: 2
 $ <strong>git commit -m "version 2"</strong>
-[master 4156116] version 2
+[main 4156116] version 2
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     2
@@ -510,7 +510,7 @@ HEAD:     2
 Stage:    3
 Worktree: 4
 $ <strong>git commit myfile -m "version 4"</strong>
-[master 679ff51] version 4
+[main 679ff51] version 4
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     4

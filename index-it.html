@@ -121,8 +121,8 @@
   commit. Il branch corrente è identificato dalla speciale referenza
   <em>HEAD</em>, che è "attaccata" a quel branch. In questa immagine vengono
   mostrati gli ultimi 5 commit, il più recente è il <em>ed489</em>.
-  <em>master</em> (il branch corrente) punta a questo commit, mentre
-  <em>maint</em> (un altro branch) punta ad un antenato del commit del <em>master</em>.</p>
+  <em>main</em> (il branch corrente) punta a questo commit, mentre
+  <em>stable</em> (un altro branch) punta ad un antenato del commit del <em>main</em>.</p>
 
   <h2 id="commands-in-detail">Comandi nei Dettagli</h2>
 
@@ -140,19 +140,19 @@
   <p>Quando si esegue un commit git crea un nuovo oggetto commit utilizzando
   i file dello stage ed impostando il genitore al commit attuale. Successivamente
   punta il branch corrente a questo nuovo commit. Nell'immagine seguente il 
-  branch corrente è <em>master</em>. Prima dell'esecuzione del comando <em>master</em>
+  branch corrente è <em>main</em>. Prima dell'esecuzione del comando <em>main</em>
   puntava a <em>ed489</em>. In seguito, un nuovo commit, <em>f0cec</em>, è stato creato
-  con genitore <em>ed489</em>, quindi <em>master</em> è stato spostato sul nuovo commit.</p>
+  con genitore <em>ed489</em>, quindi <em>main</em> è stato spostato sul nuovo commit.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Lo stesso processo avviene anche quando il branch corrente è un antenato
-  di un altro. Di seguito vediamo un commit sul branch <em>maint</em>, che è un
-  antenato di <em>master</em>, risultante in <em>1800b</em>. Di conseguenza,
-  <em>maint</em> non è più un antenato di <em>master</em>.  Per unire le due 
+  di un altro. Di seguito vediamo un commit sul branch <em>stable</em>, che è un
+  antenato di <em>main</em>, risultante in <em>1800b</em>. Di conseguenza,
+  <em>stable</em> non è più un antenato di <em>main</em>.  Per unire le due 
   history sarà necessario un <a href='#merge'>merge</a> (o un <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>A volte può capitare di commettere un errore in un commit, questo è facile
   da correggere con <code>git commit --amend</code>. Quando si utilizza questo 
@@ -191,12 +191,12 @@
 
   <p>Quando il nome di un file <em>non</em> viene passato e la referenza <em>non</em>
   è ad un branch (locale) &mdash; si ipotizzi sia un tag, un branch remoto, un 
-  ID SHA-1 o qualcosa tipo <em>master~3</em> &mdash; abbiamo a che fare con un 
+  ID SHA-1 o qualcosa tipo <em>main~3</em> &mdash; abbiamo a che fare con un 
   branch anonimo chiamato <em>HEAD isolata</em>. Questo è utile per muoversi 
   liberamente nell'history. Supponiamo di voler compilare la versione 1.6.6.1 di git.
   Si può ricorrere a <code>git checkout v1.6.6.1</code> (che è un tag, non un branch),
   compilare, installare, e successivamente tornare ad un altro branch, per esempio
-  <code>git checkout master</code>.
+  <code>git checkout main</code>.
   Tuttavia eseguire dei commit con HEAD isolata richiede una procedura leggermente
   diversa; ne parliamo <a href="#detached">di seguito</a>.</p>
 
@@ -210,7 +210,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Una volto eseguito il checkout di qualcos'altro, per esempio di <em>master</em>,
+  <p>Una volto eseguito il checkout di qualcos'altro, per esempio di <em>main</em>,
   il commit (presumibilmente) non essendo più referenziato da nessun altro
   viene perso. Si noti come dopo il comando non ci sia più alcuna referenza
   a <em>2eecb</em>.</p>
@@ -294,12 +294,12 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>Il comando precedente prende tutti i commit esistenti in <em>topic</em>
-  ma non in <em>master</em> (precisamente <em>169a6</em> e <em>2c33a</em>), li 
-  riporta sul <em>master</em> e poi sposta l'head del branch sulla nuova 
+  ma non in <em>main</em> (precisamente <em>169a6</em> e <em>2c33a</em>), li 
+  riporta sul <em>main</em> e poi sposta l'head del branch sulla nuova 
   estremità.</p>
 
   <p>Per limitare quanto andare all'indietro utilizzare l'opzione <code>--onto</code>.
-  Il comando seguente riporta sul <em>master</em> i commit più recenti del branch corrente
+  Il comando seguente riporta sul <em>main</em> i commit più recenti del branch corrente
   da <em>169a6</em> (escluso), precisamente <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>

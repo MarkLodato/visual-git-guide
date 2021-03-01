@@ -129,9 +129,9 @@
   mostrados em laranja, e eles apontam para <em>commits</em> específicos. O ramo
   atual é identificado pela referência especial <em>HEAD</em>, que está
   unida àquele ramo. Nessa imagem, os últimos cinco <em>commits</em> são
-  mostrados, sendo <em>ed489</em> o mais recente. <em>master</em> (o ramo
-  atual) aponta para esse <em>commit</em>, enquanto <em>maint</em> (outro ramo)
-  aponta para um ancestral do <em>commit</em> do <em>master</em>.
+  mostrados, sendo <em>ed489</em> o mais recente. <em>main</em> (o ramo
+  atual) aponta para esse <em>commit</em>, enquanto <em>stable</em> (outro ramo)
+  aponta para um ancestral do <em>commit</em> do <em>main</em>.
 
   <h2 id="commands-in-detail">Comandos em Detalhe</h2>
 
@@ -149,22 +149,22 @@
   <p>Quando você comita, o git cria um novo <em>commit</em> usando os arquivos do
   <em>stage</em> e define os pais como o <em>commit</em> atual. Então ele aponta o ramo
   atual para esse novo <em>commit</em>. Na figura abaixo, o ramo atual é o
-  <em>master</em>. Antes do comando ser executado, <em>master</em>
+  <em>main</em>. Antes do comando ser executado, <em>main</em>
   apontava para <em>ed489</em>. Após, um novo <em>commit</em>, <em>f0cec</em>, foi
-  criado, com ancestral <em>ed489</em>, e então <em>master</em> foi movido
+  criado, com ancestral <em>ed489</em>, e então <em>main</em> foi movido
   para o novo <em>commit</em>.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Esse mesmo processo ocorre também quando o ramo atual é um
   ancestral de outro ramo. Abaixo, um <em>commit</em> ocorre no ramo
-  <em>maint</em>, o qual era um ancestral de <em>master</em>, resultando
-  em <em>1800b</em>. Após, <em>maint</em> não é mais um ancestral de
-  <em>master</em>. Para juntar as duas histórias, um <a
+  <em>stable</em>, o qual era um ancestral de <em>main</em>, resultando
+  em <em>1800b</em>. Após, <em>stable</em> não é mais um ancestral de
+  <em>main</em>. Para juntar as duas histórias, um <a
   href='#merge'>merge</a> (ou <a href='#rebase'>rebase</a>) será
   necessário.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>As vezes um engano ocorre em um <em>commit</em>, mas isso é fácil de corrigir
   com <code>git commit --amend</code>. Quando você usa esse comando, o git
@@ -205,12 +205,12 @@
   <p>Quando um nome de arquivo <em>não</em> é fornecido e a referência
   <em>não</em> é um ramo (local) &mdash; por exemplo, é uma etiqueta
   (tag), um ramo remoto, uma identidade SHA-1, ou algo como
-  <em>master~3</em> &mdash; nós obtemos um ramo anônimo, chamado <em>HEAD
+  <em>main~3</em> &mdash; nós obtemos um ramo anônimo, chamado <em>HEAD
     detachado</em>.  Isso é útil para se mover ao longo do histórico. Por
   exemplo, suponha que você queira compilar a versão 1.6.6.1 do git.  Você
   poder executar <code>git checkout v1.6.6.1</code> (que é uma etiqueta,
   não um ramo), compilar, instalar, e então passar de volta para outro
-  ramo, por exemplo executado <code>git checkout master</code>. Todavia,
+  ramo, por exemplo executado <code>git checkout main</code>. Todavia,
   efetuar um <em>commit</em> funciona um pouco diferente em um HEAD detachado; isso
   é discutido <a href="#detached">abaixo</a>.</p>
 
@@ -225,7 +225,7 @@
   <div class="center"><img src='commit-detached.svg.png'></div>
 
   <p>Uma vez que você fizer um checkout de alguma coisa, por exemplo
-  <em>master</em>, o <em>commit</em> (presumivelmente) não recebe outra referência,
+  <em>main</em>, o <em>commit</em> (presumivelmente) não recebe outra referência,
   e acaba excluído. Note que após o comando, não há nada fazendo
   referência para <em>2eecb</em>.</p>
 
@@ -310,13 +310,13 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>O comando acima considera todos os <em>commits</em> que existem em
-  <em>topic</em> mas não em <em>master</em> (a saber <em>169a6</em> e
-  <em>2c33a</em>), executa esses <em>commits</em> em <em>master</em>, e então move
+  <em>topic</em> mas não em <em>main</em> (a saber <em>169a6</em> e
+  <em>2c33a</em>), executa esses <em>commits</em> em <em>main</em>, e então move
   o HEAD para o novo <em>commit</em>. Note que os <em>commits</em> antigos serão descartados
   se nada mais fizer referência a eles.</p>
 
   <p>Para limitar quanto se quer ir para trás, use a opção
-  <code>--onto</code>. O seguinte comando executa em <em>master</em> os
+  <code>--onto</code>. O seguinte comando executa em <em>main</em> os
   <em>commits</em> mais recentes do ramo atual desde <em>169a6</em>
   (exclusivamente), a saber <em>2c33a</em>.</p>
 

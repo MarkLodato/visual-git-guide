@@ -126,9 +126,9 @@
   <p>커밋은 5글자의 ID로 표현하며, 부모 커밋을 화살표로 가리킵니다.
   브랜치는 오렌지색이며 어떤 특정 커밋을 가리키고 있습니다. <em>HEAD</em>
   라는 이름으로 현재 브랜치 가리킬 수 있습니다. 위의 그림에는 5개의 커밋이
-  있으며 <em>ed489</em> 커밋이 가장 최근의 커밋입니다. <em>master</em>
+  있으며 <em>ed489</em> 커밋이 가장 최근의 커밋입니다. <em>main</em>
   브랜치(현재 선택한 브랜치)는 가장 최근의 커밋을 가리키고 있으며
-  <em>maint</em> 브랜치는 <em>master</em> 브랜치의 뿌리 부분(Ancestor)
+  <em>stable</em> 브랜치는 <em>main</em> 브랜치의 뿌리 부분(Ancestor)
   입니다.</p>
 
   <h2 id="commands-in-detail">명령어 살펴보기</h2>
@@ -146,22 +146,22 @@
   <p>커밋을 하면 Git은 Stage 영역의 파일들과 부모 커밋 정보 그리고 현재 커밋
   정보를 사용하여 새로운 커밋 개체(Commit Object)를 만듭니다. 그리고 현재
   브랜치가 이 새로 만들어진 커밋을 가리키도록 만듭니다. 아래 그림에 보면 현재
-  브랜치는 <em>master</em> 이고 명령을 실행하기 전에는 <em>ed489</em> 커밋을
+  브랜치는 <em>main</em> 이고 명령을 실행하기 전에는 <em>ed489</em> 커밋을
   가리키고 있습니다. 새로 커밋을 하게 되면 커밋의 부모가 <em>ed489</em>
-  인<em>f0cec</em> 커밋이 만들어지고 <em>master</em> 브랜치는 <em>f0cec</em>
+  인<em>f0cec</em> 커밋이 만들어지고 <em>main</em> 브랜치는 <em>f0cec</em>
   커밋을 가리키게 됩니다.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>이런 새로운 커밋이 추가되는 과정은 현재 브랜치가 다른 브랜치의 뿌리 
   부분(Ancestor)이라고 해도 가능한 일입니다. 아래 그림을 보면 
-  <em>master</em> 브랜치의 뿌리가 되는 <em>maint</em> 브랜치에서 커밋을 할
-  경우 <em>1800b</em> 커밋이 만들어집니다. 이렇게 되면 <em>maint</em> 브랜치는
-  <em>master</em> 브랜치의 직접적인 뿌리 부분이 되지는 않습니다. 이 두 개의
+  <em>main</em> 브랜치의 뿌리가 되는 <em>stable</em> 브랜치에서 커밋을 할
+  경우 <em>1800b</em> 커밋이 만들어집니다. 이렇게 되면 <em>stable</em> 브랜치는
+  <em>main</em> 브랜치의 직접적인 뿌리 부분이 되지는 않습니다. 이 두 개의
   히스토리 내용을 합치기 위해서는 Merge(통합, 병합) 또는 Rebase 명령이
   필요합니다.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>가끔 커밋을 할 때 실수를 할 수 있습니다. 하지만 이미 커밋을 했다고 해도
   <code>git commit --amend</code> 명령으로 쉽게 실수를 고칠 수 있습니다. 이
@@ -199,13 +199,13 @@
   <div class="center"><img src='checkout-branch.svg.png'></div>
 
   <p> 파일 이름을 지정하지 않고, (로컬) 브랜치 이름도 지정하지 않은 경우 - 즉, 태그, 
-  리모트 브랜치, SHA-1 아이디, 혹은 <em>master~3</em>와 같은 유형을 인자로 지정했다면,
+  리모트 브랜치, SHA-1 아이디, 혹은 <em>main~3</em>와 같은 유형을 인자로 지정했다면,
   <em>detached HEAD</em>라고 부르는
   익명 브랜치(Anonymous Branch)를 사용하게 되는데 프로젝트의 히스토리를
   옮겨다닐 때 유용하게 사용할 수 있습니다. 'Git 프로젝트'의 1.6.6.1 버전을 컴파일
   해보고 싶다면 <code>git checkout v1.6.6.1</code> 명령으로 소스를 Checkout하여
   컴파일 하고, 그 결과 바이너리들을 설치해볼 수 있습니다(v1.6.6.1은 브랜치는 아니고
-  태그입니다). 그리고 나서 다시 <code>git checkout master</code> 명령으로 다른
+  태그입니다). 그리고 나서 다시 <code>git checkout main</code> 명령으로 다른
   브랜치로 변경할 수도 있습니다. <em>detached HEAD</em>에서 커밋을 하면 경우가 좀 
   달라지는데 <a href="#detached">아래</a>에서 다시 살펴볼 것입니다.</p>
 
@@ -220,7 +220,7 @@
   <div class="center"><img src='commit-detached.svg.png'></div>
 
   <p><em>detached HEAD</em>에서 다른 브랜치로 변경하게 되면(예를 들어
-  <em>master</em> 같은) <em>detached HEAD</em>의 커밋을 가리키는 어떤 이름도
+  <em>main</em> 같은) <em>detached HEAD</em>의 커밋을 가리키는 어떤 이름도
   갖지 못하게 되어 접근할 길을 잃고 맙니다. 아래 그림을 보면 브랜치를
   변경 후 어떤 이름도 <em>2eecb</em>를 가리키고 있지 않습니다.</p>
 
@@ -302,7 +302,7 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>위의 Rebase 명령은 <em>topic</em> 브랜치에만 포함되어 있는 모든 
-  커밋들(<em>169a6</em>와 <em>2c33a</em>)을 <em>master</em> 브랜치에 추가합니다.
+  커밋들(<em>169a6</em>와 <em>2c33a</em>)을 <em>main</em> 브랜치에 추가합니다.
   커밋들을 추가하고 나서 <em>topic</em> 브랜치가 마지막 커밋을 가리키도록
   이동시킵니다. Rebase하고 나서 더 이상 가리킬(Reference) 수 없는 커밋들은
   쓰레기통으로 사라집니다.</p>
@@ -310,7 +310,7 @@
   <p><code>--onto</code> 옵션을 사용하면 Rebase에 사용할 커밋을 얼마나 오래 전
   까지의 커밋을 사용할 지 제한할 수 있습니다.
   아래 명령은 <em>169a6</em> 커밋 이후의 모든 커밋들(여기에서는 
-  <em>2c33a</em> 커밋)을 <em>master</em> 브랜치에 적용시킵니다.</p>
+  <em>2c33a</em> 커밋)을 <em>main</em> 브랜치에 적용시킵니다.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
 
@@ -391,7 +391,7 @@ HEAD:     1
 Stage:    2
 Worktree: 2
 $ <strong>git commit -m "version 2"</strong>
-[master 4156116] version 2
+[main 4156116] version 2
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     2
@@ -459,7 +459,7 @@ HEAD:     2
 Stage:    3
 Worktree: 4
 $ <strong>git commit myfile -m "version 4"</strong>
-[master 679ff51] version 4
+[main 679ff51] version 4
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     4

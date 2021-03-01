@@ -114,8 +114,8 @@
   Vetvy sú zobrazené oranžovou farbou, pričom odkazujú na konkrétne revízie.
   Aktuálna vetva je identifikovaná špeciálnym odkazom
   <em>HEAD</em> (hlava), ktorý je "pripojený" k tejto vetve.  Na tomto obrázku je vyobrazených posledných päť revízií, kde najnovšou je revízia identifikovaná ako <em>ed489</em>.
-  <em>master</em> (aktuálna vetva) odkazuje na túto revíziu, zatiaľ čo
-  <em>maint</em> (iná vetva) odkazuje na jedného z predkov revízie vo vetve <em>master</em>.</p>
+  <em>main</em> (aktuálna vetva) odkazuje na túto revíziu, zatiaľ čo
+  <em>stable</em> (iná vetva) odkazuje na jedného z predkov revízie vo vetve <em>main</em>.</p>
 
   <h2 id="commands-in-detail">Podrobne o príkazoch</h2>
 
@@ -130,18 +130,18 @@
 
   <p>Keď komitujete, Git vytvorí nový objekt komitu (t.j. novú revíziu) použijúc súbory z predsiene, ktorému nastaví odkaz na rodiča na aktuálnu revíziu.
   Následne presmeruje odkaz aktuálnej vetvy na túto novú revíziu. Na obrázku nižšie je aktuálnou vetvou vetva
-  <em>master</em>.   Pred spustením príkazu odkazovala vetva <em>master</em> na
+  <em>main</em>.   Pred spustením príkazu odkazovala vetva <em>main</em> na
   <em>ed489</em>.  Následne bola vytvorená nová revízia <em>f0cec</em> s rodičom <em>ed489</em>.
-  Napokon sa odkaz vetvy <em>master</em> presunul na túto novú revíziu.</p>
+  Napokon sa odkaz vetvy <em>main</em> presunul na túto novú revíziu.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Rovnaký priebeh má dokonca i prípad, kedy aktuálna vetva je predkom inej.
-  Nižšie je zobrazený komit na vetve <em>maint</em>, ktorá bola predkom vetvy <em>master</em>.
-  Výsledkom je vznik revízie <em>1800b</em>.  Dôsledkom tohto komitu už vetva <em>maint</em> nie je viac predkom vetvy <em>master</em>.
+  Nižšie je zobrazený komit na vetve <em>stable</em>, ktorá bola predkom vetvy <em>main</em>.
+  Výsledkom je vznik revízie <em>1800b</em>.  Dôsledkom tohto komitu už vetva <em>stable</em> nie je viac predkom vetvy <em>main</em>.
   Na neskoršie spojenie zmien z takto vzniknutých dvoch línií histórie bude potrebné použiť príkaz <a href='#merge'>merge</a> (alebo <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Niekedy sa pritrafí, že komit obsahuje chybu, čo sa však dá ľahko napraviť pomocou príkazu
   <code>git commit --amend</code>.  Pri použití tohto príkazu, Git vytvorí novú revíziu s rovnakým rodičom ako má tá aktuálna.
@@ -174,11 +174,11 @@
 
   <p>Keď sa názov súboru <em>ne</em>uvedie a odkazom <em>nie</em> je
   (lokálna) vetva &mdash; povedzme, je to tag, vzdialená vetva, SHA-1 identifikátor revízie alebo referenčný výraz napr. ako
-  <em>master~3</em> &mdash; dostaneme anonymnú vetvu nazývanú <em>odpojená hlava (detached HEAD)</em>.
+  <em>main~3</em> &mdash; dostaneme anonymnú vetvu nazývanú <em>odpojená hlava (detached HEAD)</em>.
   Toto je užitočné pri prechádzaní cez históriu v archíve.
   Povedzme, že chcete skompilovať Git, verziu 1.6.6.1.  Môžete spustiť príkaz <code>git checkout
     v1.6.6.1</code> (v tomto prípade ide o tag, nie o vetvu), skompilovať, nainštalovať a napokon sa prepnúť späť do inej vetvy,
-  napríklad <code>git checkout master</code>.
+  napríklad <code>git checkout main</code>.
   Komitovanie s odpojenou hlavou však funguje trochu odlišne; toto pokrýva odstavec <a href="#detached">nižšie</a>.</p>
 
   <div class="center"><img src='checkout-detached.svg.png'></div>
@@ -190,7 +190,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Akonáhle skopírujete niektorú inú revíziu z archívu (prostredníctvom príkazu <code>git checkout</code>), napríklad z vetvy <em>master</em>, (je predpoklad, že) na pôvodnú revíziu
+  <p>Akonáhle skopírujete niektorú inú revíziu z archívu (prostredníctvom príkazu <code>git checkout</code>), napríklad z vetvy <em>main</em>, (je predpoklad, že) na pôvodnú revíziu
   už nič iné neodkazuje a táto sa teda stratí. Všimnite si, že po vykonaní príkazu už nič viac neodkazuje na revíziu <em>2eecb</em>.</p>
 
   <div class="center"><img src='checkout-after-detached.svg.png'></div>
@@ -260,13 +260,13 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>Vyššie uvedený príkaz vezme všetky také revízie, ktoré existujú vo vetve <em>topic</em>, nie však vo vetve
-  <em>master</em> (menovite <em>169a6</em> a <em>2c33a</em>), zreplikuje ich do vetvy <em>master</em>
+  <em>main</em> (menovite <em>169a6</em> a <em>2c33a</em>), zreplikuje ich do vetvy <em>main</em>
   a následne presunie hlavu vetvy na nový vrchol.
   Ak na staré revízie po vykonaní príkazu nič viac neodkazuje, budú tieto odstránené pomocou nástroja na odstraňovanie neplatných položiek
   (garbage collected).</p>
 
   <p>Pre obmedzenie toho ako ďaleko do histórie sa vracať, použite prepínač <code>--onto</code>.
-  Nasledujúci príkaz zreplikuje do vetvy <em>master</em> najnovšie komity z aktuálnej vetvy počnúc revíziou nasledujúcou po revízii <em>169a6</em>,
+  Nasledujúci príkaz zreplikuje do vetvy <em>main</em> najnovšie komity z aktuálnej vetvy počnúc revíziou nasledujúcou po revízii <em>169a6</em>,
   konkrétne revíziu <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>

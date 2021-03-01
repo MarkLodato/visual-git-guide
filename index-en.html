@@ -129,8 +129,8 @@
   commits.  The current branch is identified by the special reference
   <em>HEAD</em>, which is "attached" to that branch.  In this image, the five
   latest commits are shown, with <em>ed489</em> being the most recent.
-  <em>master</em> (the current branch) points to this commit, while
-  <em>maint</em> (another branch) points to an ancestor of <em>master</em>'s
+  <em>main</em> (the current branch) points to this commit, while
+  <em>stable</em> (another branch) points to an ancestor of <em>main</em>'s
   commit.</p>
 
   <h2 id="commands-in-detail">Commands in Detail</h2>
@@ -148,21 +148,21 @@
   <p>When you commit, git creates a new commit object using the files from the
   stage and sets the parent to the current commit.  It then points the current
   branch to this new commit.  In the image below, the current branch is
-  <em>master</em>.   Before the command was run, <em>master</em> pointed to
+  <em>main</em>.   Before the command was run, <em>main</em> pointed to
   <em>ed489</em>.  Afterward, a new commit, <em>f0cec</em>, was created, with
-  parent <em>ed489</em>, and then <em>master</em> was moved to the new
+  parent <em>ed489</em>, and then <em>main</em> was moved to the new
   commit.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>This same process happens even when the current branch is an ancestor of
-  another.  Below, a commit occurs on branch <em>maint</em>, which was an
-  ancestor of <em>master</em>, resulting in <em>1800b</em>.  Afterward,
-  <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
+  another.  Below, a commit occurs on branch <em>stable</em>, which was an
+  ancestor of <em>main</em>, resulting in <em>1800b</em>.  Afterward,
+  <em>stable</em> is no longer an ancestor of <em>main</em>.  To join the two
   histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
   will be necessary.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Sometimes a mistake is made in a commit, but this is easy to correct with
   <code>git commit --amend</code>.  When you use this command, git creates a
@@ -201,11 +201,11 @@
 
   <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
   (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
-  something like <em>master~3</em> &mdash; we get an anonymous branch, called
+  something like <em>main~3</em> &mdash; we get an anonymous branch, called
   a <em>detached HEAD</em>.  This is useful for jumping around the history.
   Say you want to compile version 1.6.6.1 of git.  You can <code>git checkout
     v1.6.6.1</code> (which is a tag, not a branch), compile, install, and then
-  switch back to another branch, say <code>git checkout master</code>.
+  switch back to another branch, say <code>git checkout main</code>.
   However, committing works slightly differently with a detached HEAD; this is
   covered <a href="#detached">below</a>.</p>
 
@@ -218,7 +218,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Once you check out something else, say <em>master</em>, the commit is
+  <p>Once you check out something else, say <em>main</em>, the commit is
   (presumably) no longer referenced by anything else, and gets lost.  Note
   that after the command, there is nothing referencing <em>2eecb</em>.</p>
 
@@ -299,13 +299,13 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>The above command takes all the commits that exist in <em>topic</em> but
-  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
-  them onto <em>master</em>, and then moves the branch head to the new tip.
+  not in <em>main</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
+  them onto <em>main</em>, and then moves the branch head to the new tip.
   Note that the old commits will be garbage collected if they are no longer
   referenced.</p>
 
   <p>To limit how far back to go, use the <code>--onto</code> option.  The
-  following command replays onto <em>master</em> the most recent commits on
+  following command replays onto <em>main</em> the most recent commits on
   the current branch since <em>169a6</em> (exclusive), namely
   <em>2c33a</em>.</p>
 
@@ -392,7 +392,7 @@ HEAD:     1
 Stage:    2
 Worktree: 2
 $ <strong>git commit -m "version 2"</strong>
-[master 4156116] version 2
+[main 4156116] version 2
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     2
@@ -461,7 +461,7 @@ HEAD:     2
 Stage:    3
 Worktree: 4
 $ <strong>git commit myfile -m "version 4"</strong>
-[master 679ff51] version 4
+[main 679ff51] version 4
  1 file changed, 1 insertion(+), 1 deletion(-)
 $ <strong>show_status</strong>
 HEAD:     4

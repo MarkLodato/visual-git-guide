@@ -128,9 +128,9 @@
   các commit cụ thể. Nhánh hiện tại được xác định bằng tham chiếu đặc biệt
   <em>HEAD</em> được "gắn (attached)" vào nhánh đó. Trong hình này, có 5
   "commit" mới nhất được hiển thị, trong đó <em>ed489</em> là commit mới nhất.
-  Nhánh <em>master</em> (nhánh hiện tại) trỏ tới commit này, trong khi đó nhánh
-  <em>maint</em> (một nhánh khác) trỏ tới "commit" tổ tiên (ancestor) của "commit"
-  trên nhánh <em>master</em></p>
+  Nhánh <em>main</em> (nhánh hiện tại) trỏ tới commit này, trong khi đó nhánh
+  <em>stable</em> (một nhánh khác) trỏ tới "commit" tổ tiên (ancestor) của "commit"
+  trên nhánh <em>main</em></p>
 
   <h2 id="commands-in-detail">Các lệnh chi tiết</h2>
 
@@ -146,21 +146,21 @@
 
   <p>Khi bạn "commit", git tạo một đối tượng "commit" mới sử dụng các tệp tin từ
   khu chuyển tiếp và đặt "commit" hiện tại làm cha. Sau đó nó trỏ nhánh hiện tại
-  tới "commit" mới này. Trong hình dưới đây, nhánh hiện tại là <em>master</em>.
-  Trước khi lệnh được chạy, <em>master</em> trỏ tới <em>ed489</em>. Sau đó một
+  tới "commit" mới này. Trong hình dưới đây, nhánh hiện tại là <em>main</em>.
+  Trước khi lệnh được chạy, <em>main</em> trỏ tới <em>ed489</em>. Sau đó một
   "commit" mới, <em>f0cec</em>, được tạo với cha là <em>ed489</em>, và cuối cùng
-  <em>master</em> được dịch chuyển đến "commit" mới.</p>
+  <em>main</em> được dịch chuyển đến "commit" mới.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Quá trình này cũng được thực hiện tương tự khi nhánh hiện tại là tổ tiên
   của nhánh khác. Theo hình dưới đây, một "commit" xảy ra tại nhánh
-  <em>maint</em>, đây là nhánh tổ tiên của <em>master</em>, tạo thành
-  <em>1800b</em>. Sau đó, <em>maint</em> không còn là nhánh tổ tiên của
-  <em>master</em> nữa. Để hợp hai lịch sử này cần dùng lệnh
+  <em>stable</em>, đây là nhánh tổ tiên của <em>main</em>, tạo thành
+  <em>1800b</em>. Sau đó, <em>stable</em> không còn là nhánh tổ tiên của
+  <em>main</em> nữa. Để hợp hai lịch sử này cần dùng lệnh
   <a href='#merge'>merge</a> (hoặc <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Đôi khi một "commit" bị lỗi, nhưng có thể dễ dàng sửa lỗi với
   <code>git commit --amend</code>. Khi bạn sử dụng lệnh này, git tạo ra một
@@ -200,12 +200,12 @@
 
   <p>Khi <em>không</em> chỉ ra tên tệp tin và tham chiếu <em>không</em> phải là
   nhánh nội vùng &mdash; có thể là một thẻ (tag), một nhánh ở xa (remote),
-  một SHA-1 ID, hoặc có thể <em>master~3</em> &mdash; chúng ta sẽ được chuyển
+  một SHA-1 ID, hoặc có thể <em>main~3</em> &mdash; chúng ta sẽ được chuyển
   qua nhánh vô danh (anonymous) và trường hợp này được gọi là <em>HEAD bị tách
   rời</em>. Trường hợp này rất hữu ích khi bạn muốn xem lịch sử. Ví dụ như bạn
   muốn biên dịch (compile) git phiên bản 1.6.6.1. Bạn có thể <code>git checkout
   v1.6.6.1</code> (đây là thẻ, không phải nhánh), biên dịch, cài đặt (install),
-  và sau đó chuyển tới một nhánh khác, có thể là <code>git checkout master</code>.
+  và sau đó chuyển tới một nhánh khác, có thể là <code>git checkout main</code>.
   Tuy nhiên, cách làm việc của "commit" hơi khác với HEAD bị tách rời; điều này
   sẽ được nói tới <a href='#detached'>sau đây</a>.</p>
 
@@ -219,7 +219,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Một khi bạn "check out" cái gì khác, có thể <em>master</em>, "commit" đó
+  <p>Một khi bạn "check out" cái gì khác, có thể <em>main</em>, "commit" đó
   (giả sử) không được tham chiếu ở bất kì đâu thì sẽ bị xoá bỏ. Chú ý rằng sau
   lệnh này, <em>2eecb</em> không được tham chiếu từ bất kì đâu.</p>
 
@@ -301,12 +301,12 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>Lệnh trên lấy tất cả các "commit" tồn tại trong <em>topic</em> nhưng không
-  có trong <em>master</em>, (các "commit" <em>169a6</em> và <em>2c33a</em>), tái
-  tạo lên <em>master</em>, và sau đó chuyển đầu nhánh tới đỉnh mới. Chú ý
+  có trong <em>main</em>, (các "commit" <em>169a6</em> và <em>2c33a</em>), tái
+  tạo lên <em>main</em>, và sau đó chuyển đầu nhánh tới đỉnh mới. Chú ý
   rằng các "commit" cũ sẽ bị xoá bỏ nếu chúng không được tham chiếu nữa.</p>
 
   <p>Để giới hạn quay trở lại bao xa, sử dụng thêm <code>--onto</code>. Lệnh sau
-  tái tạo lên <em>master</em> từ các "commit" mới nhất trên nhánh hiện tại tính
+  tái tạo lên <em>main</em> từ các "commit" mới nhất trên nhánh hiện tại tính
   từ <em>169a6</em> (không bao gồm), là "commit" <em>2c33a</em>.</p>
 
   <div class="center"><img src='rebase-onto.svg.png'></div>
