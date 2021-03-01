@@ -122,7 +122,7 @@
   <em>HEAD</em>, che è "attaccata" a quel branch. In questa immagine vengono
   mostrati gli ultimi 5 commit, il più recente è il <em>ed489</em>.
   <em>main</em> (il branch corrente) punta a questo commit, mentre
-  <em>maint</em> (un altro branch) punta ad un antenato del commit del <em>main</em>.</p>
+  <em>stable</em> (un altro branch) punta ad un antenato del commit del <em>main</em>.</p>
 
   <h2 id="commands-in-detail">Comandi nei Dettagli</h2>
 
@@ -147,12 +147,12 @@
   <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Lo stesso processo avviene anche quando il branch corrente è un antenato
-  di un altro. Di seguito vediamo un commit sul branch <em>maint</em>, che è un
+  di un altro. Di seguito vediamo un commit sul branch <em>stable</em>, che è un
   antenato di <em>main</em>, risultante in <em>1800b</em>. Di conseguenza,
-  <em>maint</em> non è più un antenato di <em>main</em>.  Per unire le due 
+  <em>stable</em> non è più un antenato di <em>main</em>.  Per unire le due 
   history sarà necessario un <a href='#merge'>merge</a> (o un <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>A volte può capitare di commettere un errore in un commit, questo è facile
   da correggere con <code>git commit --amend</code>. Quando si utilizza questo 

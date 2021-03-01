@@ -17,7 +17,7 @@ FILES := \
     cherry-pick \
     commit-amend \
     commit-detached \
-    commit-maint \
+    commit-stable \
     commit-main \
     conventions \
     diff \

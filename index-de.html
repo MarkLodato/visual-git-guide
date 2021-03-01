@@ -149,7 +149,7 @@
   mit der speziellen Referenz <em>HEAD</em> identifiziert. In diesem Bild sieht
   man die fünf letzten Commits, wobei <em>ed489</em> der jüngste ist.
   <em>main</em> ("current branch", der aktuelle Branch) zeigt auf genau diesen
-  Commit, wohingegen <em>maint</em> ("another branch", ein anderer Branch) auf
+  Commit, wohingegen <em>stable</em> ("another branch", ein anderer Branch) auf
   einen der Vorfahren von <em>main</em> verweist.</p>
 
   <h2 id="commands-in-detail">Kommandos im Detail</h2>
@@ -182,12 +182,12 @@
 
   <p>Das gleiche geschieht auch, wenn der aktuelle Branch ein Vorgänger eines
   anderen ist. Im nachfolgenden Bild wird ein Commit auf dem Branch
-  <em>maint</em> ausgeführt, der ein Vorgänger von <em>main</em> ist, was
-  einen Commit <em>1800b</em> erzeugt. Danach ist <em>maint</em> kein Vorgänger
+  <em>stable</em> ausgeführt, der ein Vorgänger von <em>main</em> ist, was
+  einen Commit <em>1800b</em> erzeugt. Danach ist <em>stable</em> kein Vorgänger
   von <em>main</em> mehr. Um die beiden Branches wieder zusammenzuführen, ist
   ein <a href="#merge">merge</a> oder <a href="#rebase">rebase</a> nötig.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Einen Fehler in einem Commit kannst Du mit <code>git commit --amend</code>
   korrigieren. Mit diesem Befehl erstellt git einen neuen Commit mit dem selben

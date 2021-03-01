@@ -103,7 +103,7 @@
   <div class="center"><img src='conventions.svg.png'></div>
 
   <p>綠色的5位元字元表示提交的ID，分別指向父節點。分支用橘色顯示，分別指向特定的提交。目前分支由附在其上的<em>HEAD</em>標識。
-這張圖片裡顯示最後5次提交，<em>ed489</em>是最新提交。 <em>main</em>分支指向此次提交，另一個<em>maint</em>分支指向祖父提交節點。</p>
+這張圖片裡顯示最後5次提交，<em>ed489</em>是最新提交。 <em>main</em>分支指向此次提交，另一個<em>stable</em>分支指向祖父提交節點。</p>
 
   <h2 id="commands-in-detail">命令詳解</h2>
 
@@ -120,10 +120,10 @@
 
   <div class="center"><img src='commit-main.svg.png'></div>
 
-  <p>即便目前分支是某次提交的祖父節點，git會同樣操作。下圖中，在<em>main</em>分支的祖父節點<em>maint</em>分支進行一次提交，產生了<em>1800b</em>。
-這樣，<em>maint</em>分支就不再是<em>main</em>分支的祖父節點。此時，<a href='#merge'>合併</a> (或者 <a href='#rebase'>衍合</a>) 是必須的。</p>
+  <p>即便目前分支是某次提交的祖父節點，git會同樣操作。下圖中，在<em>main</em>分支的祖父節點<em>stable</em>分支進行一次提交，產生了<em>1800b</em>。
+這樣，<em>stable</em>分支就不再是<em>main</em>分支的祖父節點。此時，<a href='#merge'>合併</a> (或者 <a href='#rebase'>衍合</a>) 是必須的。</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>如果想更改一次提交，使用  <code>git commit --amend</code>。git會使用與目前提交相同的父節點進行一次新提交，舊的提交會被取消。</p>
 

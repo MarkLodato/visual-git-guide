@@ -4,11 +4,11 @@
     \boundingbox
     \usualsetup
     \branch main -> E;
-    \branch maint -> A;
+    \branch stable -> A;
     \oldHEAD -> main;
-    \HEAD -> maint;
+    \HEAD -> stable;
 
-    \node [cmd] at (0, 3.75) {git checkout maint};
+    \node [cmd] at (0, 3.75) {git checkout stable};
 
     \path [line]
         (A) edge [bend right=22] (index)

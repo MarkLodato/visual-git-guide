@@ -128,7 +128,7 @@
   라는 이름으로 현재 브랜치 가리킬 수 있습니다. 위의 그림에는 5개의 커밋이
   있으며 <em>ed489</em> 커밋이 가장 최근의 커밋입니다. <em>main</em>
   브랜치(현재 선택한 브랜치)는 가장 최근의 커밋을 가리키고 있으며
-  <em>maint</em> 브랜치는 <em>main</em> 브랜치의 뿌리 부분(Ancestor)
+  <em>stable</em> 브랜치는 <em>main</em> 브랜치의 뿌리 부분(Ancestor)
   입니다.</p>
 
   <h2 id="commands-in-detail">명령어 살펴보기</h2>
@@ -155,13 +155,13 @@
 
   <p>이런 새로운 커밋이 추가되는 과정은 현재 브랜치가 다른 브랜치의 뿌리 
   부분(Ancestor)이라고 해도 가능한 일입니다. 아래 그림을 보면 
-  <em>main</em> 브랜치의 뿌리가 되는 <em>maint</em> 브랜치에서 커밋을 할
-  경우 <em>1800b</em> 커밋이 만들어집니다. 이렇게 되면 <em>maint</em> 브랜치는
+  <em>main</em> 브랜치의 뿌리가 되는 <em>stable</em> 브랜치에서 커밋을 할
+  경우 <em>1800b</em> 커밋이 만들어집니다. 이렇게 되면 <em>stable</em> 브랜치는
   <em>main</em> 브랜치의 직접적인 뿌리 부분이 되지는 않습니다. 이 두 개의
   히스토리 내용을 합치기 위해서는 Merge(통합, 병합) 또는 Rebase 명령이
   필요합니다.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>가끔 커밋을 할 때 실수를 할 수 있습니다. 하지만 이미 커밋을 했다고 해도
   <code>git commit --amend</code> 명령으로 쉽게 실수를 고칠 수 있습니다. 이

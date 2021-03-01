@@ -130,7 +130,7 @@
   <em>HEAD</em>, which is "attached" to that branch.  In this image, the five
   latest commits are shown, with <em>ed489</em> being the most recent.
   <em>main</em> (the current branch) points to this commit, while
-  <em>maint</em> (another branch) points to an ancestor of <em>main</em>'s
+  <em>stable</em> (another branch) points to an ancestor of <em>main</em>'s
   commit.</p>
 
   <h2 id="commands-in-detail">Commands in Detail</h2>
@@ -156,13 +156,13 @@
   <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>This same process happens even when the current branch is an ancestor of
-  another.  Below, a commit occurs on branch <em>maint</em>, which was an
+  another.  Below, a commit occurs on branch <em>stable</em>, which was an
   ancestor of <em>main</em>, resulting in <em>1800b</em>.  Afterward,
-  <em>maint</em> is no longer an ancestor of <em>main</em>.  To join the two
+  <em>stable</em> is no longer an ancestor of <em>main</em>.  To join the two
   histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
   will be necessary.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Sometimes a mistake is made in a commit, but this is easy to correct with
   <code>git commit --amend</code>.  When you use this command, git creates a

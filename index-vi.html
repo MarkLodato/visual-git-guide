@@ -129,7 +129,7 @@
   <em>HEAD</em> được "gắn (attached)" vào nhánh đó. Trong hình này, có 5
   "commit" mới nhất được hiển thị, trong đó <em>ed489</em> là commit mới nhất.
   Nhánh <em>main</em> (nhánh hiện tại) trỏ tới commit này, trong khi đó nhánh
-  <em>maint</em> (một nhánh khác) trỏ tới "commit" tổ tiên (ancestor) của "commit"
+  <em>stable</em> (một nhánh khác) trỏ tới "commit" tổ tiên (ancestor) của "commit"
   trên nhánh <em>main</em></p>
 
   <h2 id="commands-in-detail">Các lệnh chi tiết</h2>
@@ -155,12 +155,12 @@
 
   <p>Quá trình này cũng được thực hiện tương tự khi nhánh hiện tại là tổ tiên
   của nhánh khác. Theo hình dưới đây, một "commit" xảy ra tại nhánh
-  <em>maint</em>, đây là nhánh tổ tiên của <em>main</em>, tạo thành
-  <em>1800b</em>. Sau đó, <em>maint</em> không còn là nhánh tổ tiên của
+  <em>stable</em>, đây là nhánh tổ tiên của <em>main</em>, tạo thành
+  <em>1800b</em>. Sau đó, <em>stable</em> không còn là nhánh tổ tiên của
   <em>main</em> nữa. Để hợp hai lịch sử này cần dùng lệnh
   <a href='#merge'>merge</a> (hoặc <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Đôi khi một "commit" bị lỗi, nhưng có thể dễ dàng sửa lỗi với
   <code>git commit --amend</code>. Khi bạn sử dụng lệnh này, git tạo ra một

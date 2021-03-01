@@ -130,7 +130,7 @@
   atual é identificado pela referência especial <em>HEAD</em>, que está
   unida àquele ramo. Nessa imagem, os últimos cinco <em>commits</em> são
   mostrados, sendo <em>ed489</em> o mais recente. <em>main</em> (o ramo
-  atual) aponta para esse <em>commit</em>, enquanto <em>maint</em> (outro ramo)
+  atual) aponta para esse <em>commit</em>, enquanto <em>stable</em> (outro ramo)
   aponta para um ancestral do <em>commit</em> do <em>main</em>.
 
   <h2 id="commands-in-detail">Comandos em Detalhe</h2>
@@ -158,13 +158,13 @@
 
   <p>Esse mesmo processo ocorre também quando o ramo atual é um
   ancestral de outro ramo. Abaixo, um <em>commit</em> ocorre no ramo
-  <em>maint</em>, o qual era um ancestral de <em>main</em>, resultando
-  em <em>1800b</em>. Após, <em>maint</em> não é mais um ancestral de
+  <em>stable</em>, o qual era um ancestral de <em>main</em>, resultando
+  em <em>1800b</em>. Após, <em>stable</em> não é mais um ancestral de
   <em>main</em>. Para juntar as duas histórias, um <a
   href='#merge'>merge</a> (ou <a href='#rebase'>rebase</a>) será
   necessário.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>As vezes um engano ocorre em um <em>commit</em>, mas isso é fácil de corrigir
   com <code>git commit --amend</code>. Quando você usa esse comando, o git

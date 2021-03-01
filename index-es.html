@@ -120,7 +120,7 @@
   <em>HEAD</em>, que es "adjuntada" al branch.  En esta imagen, se muestran
   los cinco últimos commits, con <em>ed489</em> siendo el más reciente.
   <em>main</em> (el branch actual) apunta a este commit, mientras que
-  <em>maint</em> (otro branch) apunta a un antecesor del commit de <em>main</em>.</p>
+  <em>stable</em> (otro branch) apunta a un antecesor del commit de <em>main</em>.</p>
 
   <h2 id="commands-in-detail">Comandos en Detalle</h2>
 
@@ -144,12 +144,12 @@
   <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>Este mismo proceso sucede aún cuando el branch actual es un ancestro de
-  otro.  Debajo, un commit ocurre en el branch <em>maint</em>, el cual fue un
+  otro.  Debajo, un commit ocurre en el branch <em>stable</em>, el cual fue un
   ancestro de <em>main</em>, resultando en <em>1800b</em>.  Luego,
-  <em>maint</em> no es más un ancestro de <em>main</em>.  Para reunir las dos
+  <em>stable</em> no es más un ancestro de <em>main</em>.  Para reunir las dos
   historias, será necesario un <a href='#merge'>merge</a> (o <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>A veces pueden cometerse errores en un commit, pero son fáciles de corregir con
   <code>git commit --amend</code>.  Cuando usás este comando, git crea un nuevo commit

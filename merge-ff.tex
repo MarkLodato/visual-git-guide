@@ -4,10 +4,10 @@
     \boundingbox
     \usualsetup
     \refbelow [branch] "main" : main -> E;
-    \oldbranch maint -> A;
-    \branch maint -> E;
-    \oldHEAD -> old maint;
-    \HEAD -> maint;
+    \oldbranch stable -> A;
+    \branch stable -> E;
+    \oldHEAD -> old stable;
+    \HEAD -> stable;
 
     \node [cmd] at (0, 3.75) {git merge main};
 

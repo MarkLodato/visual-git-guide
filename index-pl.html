@@ -102,7 +102,7 @@
   <div class="center"><img src='conventions.svg.png'></div>
 
   <p>Commity pokazane są w zielonych polach jako pięcioznakowe identyfikatory, które wskazują na swoich rodziców (wcześniejsze commity). Gałęzie (branche) pokazane są w pomarańczowych polach i wskazują na aktualne commity. Aktualne gałęzie (branche) można zidentyfikować dzięki specjalnemu oznaczeniu <em>HEAD</em>, które w rzeczywistości jest "przyczepione" do gałęzi (brancha), w której się aktualnie znajdujemy. Na pokazanej grafice widzimy pięć ostatnich commitów, spośród których <em>ed489</em> jest najbardziej aktualnym.
-  <em>main</em> (aktualna gałąź - branch) wskazuje na ten commit, podczas gdy <em>maint</em> (inna gałąź - branch) wskazuje na przodka gałęzi (branch) <em>main</em> i jej commit.</p>
+  <em>main</em> (aktualna gałąź - branch) wskazuje na ten commit, podczas gdy <em>stable</em> (inna gałąź - branch) wskazuje na przodka gałęzi (branch) <em>main</em> i jej commit.</p>
 
   <h2 id="commands-in-detail">Poszczególne komendy</h2>
 
@@ -118,9 +118,9 @@
 
   <div class="center"><img src='commit-main.svg.png'></div>
 
-  <p>Ten sam proces następuje również w przypadku gałęzi (brancha) będącego przrodkiem innej gałęzi. Poniżej widzimy commit wykonany w gałęzi <em>maint</em>, która jest przodkiej gałęzi <em>main</em>. Nowy commit oznaczony jest jako <em>1800b</em>. Po tej operacji gałąź (branch) <em>maint</em> nie jest już przodkiem gałęzi <em>main</em>. Aby połączyć obie gałęzie będzie konieczne wykonanie <a href='#merge'>merge</a> (lub <a href='#rebase'>rebase</a>).</p>
+  <p>Ten sam proces następuje również w przypadku gałęzi (brancha) będącego przrodkiem innej gałęzi. Poniżej widzimy commit wykonany w gałęzi <em>stable</em>, która jest przodkiej gałęzi <em>main</em>. Nowy commit oznaczony jest jako <em>1800b</em>. Po tej operacji gałąź (branch) <em>stable</em> nie jest już przodkiem gałęzi <em>main</em>. Aby połączyć obie gałęzie będzie konieczne wykonanie <a href='#merge'>merge</a> (lub <a href='#rebase'>rebase</a>).</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Czasem może zdarzyć się tak, że w commicie pojawi się błąd (na przykład zostanie zawarty inny komentarz niż był planowany). Wówczas można użyć komenty <code>git commit --amend</code>. Wówczas git utworzy nowy commit z tym samym rodzicem, co niedawno utworzony commit. Dzięki temu błędny commit zostanie zastąpiony nowym i nie będzie częścią całego łańcucha. Commit z błędem zostanie zwyczajnie usunięty, pod warunkiem, że żaden inny element nie jest z nim powiązany.</p>
 
