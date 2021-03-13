@@ -32,7 +32,7 @@ SVGs and PNGs using
 
 First, the following must be installed:
 
-    sudo apt-get install texlive texlive-fonts-extra pdf2svg imagemagick
+    sudo apt-get install make texlive-base texlive-fonts-extra pdf2svg imagemagick ghostscript
 
 Then, build the images:
 
