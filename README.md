@@ -28,7 +28,7 @@ SVGs and PNGs using
 [pdf2svg](http://www.cityinthesky.co.uk/pdf2svg.html) and
 [convert](http://www.imagemagick.org/script/convert.php), respectively.
 
-### Building from Source###
+### Building from Source
 
 First, the following must be installed:
 
