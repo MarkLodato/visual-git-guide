@@ -38,9 +38,11 @@ Then, build the images:
 
     make
 
-Finally, create the gh-pages branch:
+The result is in the `./build` directory.
 
-    make gh-pages
+### Pushing to gh-pages
+
+Done via GitHubActions (`.github/workflows/publish.yaml`).
 
 License
 -------

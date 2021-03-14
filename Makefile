@@ -1,7 +1,3 @@
-# Instructions for pushing:
-#     make gh-pages
-#     git push
-
 PDFLATEX = pdflatex -halt-on-error -file-line-error
 PDF2SVG = pdf2svg
 PDF2PNG = convert -density 88
@@ -29,7 +25,8 @@ FILES := \
     reset-commit \
     reset-files
 
-HTML := \
+STATIC := \
+    index.html \
     index-de.html \
     index-en.html \
     index-es.html \
@@ -44,32 +41,37 @@ HTML := \
     index-vi.html \
     index-zh-cn.html \
     index-zh-tw.html \
-    translate-en.html
+    translate-en.html \
+    visual-git-guide.css \
+    visual-git-guide.js
 
-PDF_OUT = $(FILES:=.pdf)
+STATIC_OUT = $(addprefix build/,$(STATIC))
+PDF_OUT = $(addprefix build/,$(FILES:=.pdf))
 PNG_OUT = $(PDF_OUT:.pdf=.svg.png)
 SVG_OUT = $(PDF_OUT:.pdf=.svg)
-CRUFT = $(FILES:=.aux) $(FILES:=.log)
-EXTRA := index.html visual-git-guide.css visual-git-guide.js
 
-all : pdf png svg
+all : pdf png svg static
 pdf : $(PDF_OUT)
 png : $(PNG_OUT)
 svg : $(SVG_OUT)
+static : $(STATIC_OUT)
 
-gh-pages : all
-	./publish $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(HTML) $(EXTRA)
+build/% : % | build
+	cp $^ $@
 
-%.pdf : %.tex common.tex
-	$(PDFLATEX) $<
+build/%.pdf : %.tex common.tex | build
+	$(PDFLATEX) -output-directory=build $<
 
-%.svg : %.pdf
+build/%.svg : build/%.pdf | build
 	$(PDF2SVG) $^ $@
 
-%.svg.png : %.pdf
+build/%.svg.png : build/%.pdf | build
 	$(PDF2PNG) $^ $@
 
-clean :
-	$(RM) $(PDF_OUT) $(PNG_OUT) $(SVG_OUT) $(CRUFT)
+build :
+	mkdir -p $@
 
-.PHONY : clean all pdf png svg gh-pages
+clean :
+	$(RM) -r build
+
+.PHONY : clean all pdf png svg static

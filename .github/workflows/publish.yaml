@@ -1,0 +1,25 @@
+name: Publish to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Deps
+        run: sudo apt-get update && sudo apt-get install make texlive-base texlive-fonts-extra pdf2svg imagemagick ghostscript
+      - name: Fix ImageMagick policy
+        # https://askubuntu.com/questions/1081895
+        run: sudo sed -i -e '/domain="coder" rights="none" pattern="PDF"/d' /etc/ImageMagick-?/policy.xml
+      - name: Build
+        run: make
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          exclude_assets: '*.aux,*.log'

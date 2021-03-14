@@ -1,5 +1,1 @@
-*.aux
-*.log
-*.pdf
-*.png
-*.svg
+/build
