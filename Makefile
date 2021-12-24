@@ -26,6 +26,7 @@ FILES := \
     reset-files
 
 STATIC := \
+    goatcounter.js \
     index.html \
     index-de.html \
     index-en.html \
