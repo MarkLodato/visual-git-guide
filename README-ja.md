@@ -10,7 +10,7 @@
 
 オリジナルのページは、以下を参照して下さい。
 
-<http://marklodato.github.com/visual-git-guide/>
+<http://marklodato.github.io/visual-git-guide/>
 
 また、オリジナルのソースは、以下を参照して下さい。
 
