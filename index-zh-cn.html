@@ -76,7 +76,7 @@
     <li><code>git reset -- <em>files</em></code> 用来撤销最后一次<code>git add <em>files</em></code>，你也可以用<code>git reset</code>
     撤销所有暂存区域文件。</li>
 
-    <li><code>git checkout -- <em>files</em></code> 把文件从暂存区域复制到工作目录，用来丢弃本地修改。</li>
+    <li><code>git checkout -- <em>files</em></code> 把文件从暂存区域复制到工作目录，用来丢弃本地修改。如果本地修改后没有添加到暂存区，则丢弃本地修改回到和版本库一模一样的状态</li>
 
   </ul>
 
@@ -89,8 +89,8 @@
 
   <ul>
 
-    <li><code>git commit -a </code> 相当于运行 <tt>git add</tt>
-    把所有当前目录下的文件加入暂存区域再运行。<tt>git commit</tt>.</li>
+    <li><code>git commit -a </code> 针对版本库中存在的文件，相当于运行 <tt>git add</tt>
+    把所有当前工作区目录下的相应文件加入暂存区域再运行 <tt>git commit</tt>。对于新建的文件，不能通过该命令直接将文件从工作区提交至版本库。</li>
 
     <li><code>git commit <em>files</em></code> 进行一次包含最后一次提交加上工作目录中文件快照的提交。并且文件被添加到暂存区域。</li>
 
@@ -175,13 +175,13 @@
 
   <div class="center"><img src='reset.svg.png'></div>
 
-  <p>如果给了文件名(或者 <code>-p</code>选项), 那么工作效果和带文件名的<a href='#checkout'>checkout</a>差不多，除了索引被更新。</p>
+  <p>如果给了文件名(或者 <code>-p</code>选项), 那么将索引中该文件回滚到最后一次提交。</p>
 
   <div class="center"><img src='reset-files.svg.png'></div>
 
   <h3 id="merge">Merge</h3>
 
-  <p>merge 命令把不同分支合并起来。合并前，索引必须和当前提交相同。如果另一个分支是当前提交的祖父节点，那么合并命令将什么也不做。
+  <p>merge 命令把不同分支合并起来。合并前，当前分支通过“git status”查看状态必须是“working tree clean”，即工作区、暂存区和版本库内容一致。如果另一个分支是当前提交的祖父节点，那么合并命令将什么也不做。
   另一种情况是如果当前提交是另一个分支的祖父节点，就导致<em>fast-forward</em>合并。指向只是简单的移动，并生成一个新的提交。</p>
 
   <div class="center"><img src='merge-ff.svg.png'></div>
